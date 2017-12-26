@@ -12,7 +12,7 @@ import iPicUploader
 
 class ScreenshotController
 {
-    static let imagePath = "/Users/danielsmith/Desktop/hqTriviaMasterTemp.jpg"
+    static let imagePath = "PATH-HERE/hqTriviaMasterTemp.jpg"
     
     static func takeScreenshot(vc: NSViewController, line: NSBox, completion: @escaping () -> ())
     {
