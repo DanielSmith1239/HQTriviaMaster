@@ -15,31 +15,11 @@ class AnswerController
     static func getAnswer(question: String, options: [String], completion: @escaping ([Int]) -> ())
     {
         let type = getTypeForQuestion(question)
-        /*
-         static let other = AnswerType(title: "Other", check: { !$0.isEmpty }, searchFunctionCode: 0)
-         static let startsWhich = AnswerType(title: "Starts Which", check: { $0.starts(with: "Which") }, searchFunctionCode: 1)
-         static let startWhat = AnswerType(title: "Start What", check: { $0.starts(with: "What") }, searchFunctionCode: 2)
-         static let whichOfThese = AnswerType(title: "Which of These", check: { $0.lowercased().containsAtLeastOne("which of these", "which one of these", "which of the following") }, searchFunctionCode: 3)
-         static let midWhich = AnswerType(title: "Middle Which", check: { $0.contains(" which ") }, searchFunctionCode: 4)
-         static let correctSpelling = AnswerType(title: "Correct Spelling", check: { $0.containsAtLeastOne("spelling", "spelled", " spell ") }, searchFunctionCode: 5)
-         static let whose = AnswerType(title: "Whose", check: { $0.lowercased().contains("whose") }, searchFunctionCode: 6)
-         static let not = AnswerType(title: "Not", check: { $0.lowercased().contains(" not ") }, searchFunctionCode: 7)
-         static let who = AnswerType(title: "Who", check: { $0.lowercased().containsAtLeastOne(" who ", " who's", "whom") }, searchFunctionCode: 8)
-         static let whereIs = AnswerType(title: "Where", check: { $0.lowercased().contains(" where ") || $0.starts(with: "Where")}, searchFunctionCode: 9)
-         static let howMany = AnswerType(title: "How Many", check: { $0.lowercased().contains(" how many ") }, searchFunctionCode: 10) // TODO`
-         //    static let comparison = AnswerType(title: "Comparison", check: { $0.lowercased().containsAtLeastOne("most", "least", "closest", "furthest", "largest", "smallest", "biggest")}, searchFunctionCode: 11)
-         static let otherTwo = AnswerType(title: "Other Two", check: { $0.lowercased().contains(" other two ") }, searchFunctionCode: 12)
-         static let isWhat = AnswerType(title: "Is What", check: { $0.contains("is what?") }, searchFunctionCode: 13)
-         static let midWhat = AnswerType(title: "Middle What", check: { $0.contains(" what") }, searchFunctionCode: 14)
-         static let endWhat = AnswerType(title: "End What", check: { $0.hasSuffix("what?") }, searchFunctionCode: 15)
-         static let definition = AnswerType(title: "Definition", check: { $0.starts(with: "What") && $0.contains("word") && $0.contains("mean") }, searchFunctionCode: 16)
-         */
         
         print(type.title)
+        let skipCodes = [5, 7, 3]
         let searchCode = type.searchFunctionCode
-        if searchCode == 5 ||
-            searchCode == 7 ||
-            searchCode == 3
+        if skipCodes.contains(searchCode)
         {
             getSecondaryMatches(question: question, options: options)
             {
@@ -54,13 +34,10 @@ class AnswerController
             GoogleController.getMatchesWithOption(question, for: options)
             {
                 matches in
-                print("without matches: \(matches)")
                 if Set(matches).count != 1,
                     matches[getLargestIndex(matches).first ?? 0] > 0,
                     getLargestIndex(matches).count == 1
                 {
-                    let splitQ = question.split(separator: " ")[0...3].joined(separator: " ")
-                    print("used without: \(getLargestIndex(matches).first! == 0), \(splitQ)")
                     completion(getLargestIndex(matches))
                     return
                 }
@@ -69,7 +46,6 @@ class AnswerController
                     getSecondaryMatches(question: question, options: options)
                     {
                         matches in
-                        let splitQ = question.split(separator: " ")[0...3].joined(separator: " ")
                         completion(getLargestIndex(matches))
                     }
                 }
@@ -122,12 +98,6 @@ class AnswerController
                 matches in
                 completion(matches)
             }
-//        case 3:
-//            GoogleController.getMatchesWithAllOptions(question, for: options)
-//            {
-//                matches in
-//                completion(matches)
-//            }
         default:
             GoogleController.getMatchesWithOption(question, for: options)
             {

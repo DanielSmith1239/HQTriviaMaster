@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -512,12 +512,12 @@
 		254CC5B2A0DE1BE3D3BBDB593D6E940D /* Pods-HQ Trivia MasterUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HQ Trivia MasterUITests-resources.sh"; sourceTree = "<group>"; };
 		25742E1F6C70144C5AAA16C62D99A8B9 /* GPUImageGaussianBlurPositionFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageGaussianBlurPositionFilter.h; path = framework/Source/GPUImageGaussianBlurPositionFilter.h; sourceTree = "<group>"; };
 		2618971334660EED6CFAF08494BE5429 /* GPUImageExposureFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageExposureFilter.m; path = framework/Source/GPUImageExposureFilter.m; sourceTree = "<group>"; };
-		295A29DD587C2F30C1919B83F626D60C /* Pods_HQ_Trivia_MasterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_HQ_Trivia_MasterTests.framework; path = "Pods-HQ Trivia MasterTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		295A29DD587C2F30C1919B83F626D60C /* Pods_HQ_Trivia_MasterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HQ_Trivia_MasterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2997783AF097710A1EE881B9D9AE8448 /* GPUImageAmatorkaFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageAmatorkaFilter.h; path = framework/Source/GPUImageAmatorkaFilter.h; sourceTree = "<group>"; };
 		29C7639134D29E3556FD40BF113EBE1E /* GPUImageSwirlFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageSwirlFilter.m; path = framework/Source/GPUImageSwirlFilter.m; sourceTree = "<group>"; };
 		29DD034DB77164AEA302DDCECE3D2DEF /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29E1058F238F29F40904A683F92EB203 /* GPUImageBoxBlurFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageBoxBlurFilter.m; path = framework/Source/GPUImageBoxBlurFilter.m; sourceTree = "<group>"; };
-		2A8C0B9D7637855BB7D21B3960F06FD3 /* Pods_HQ_Trivia_MasterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_HQ_Trivia_MasterUITests.framework; path = "Pods-HQ Trivia MasterUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A8C0B9D7637855BB7D21B3960F06FD3 /* Pods_HQ_Trivia_MasterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HQ_Trivia_MasterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A9136906C1A321557C1EFDD459EAE74 /* GPUImageRGBDilationFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageRGBDilationFilter.h; path = framework/Source/GPUImageRGBDilationFilter.h; sourceTree = "<group>"; };
 		2DE343ABC1F4106AA0917E9D0E57D528 /* GPUImageLuminosityBlendFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageLuminosityBlendFilter.m; path = framework/Source/GPUImageLuminosityBlendFilter.m; sourceTree = "<group>"; };
 		2DEBE3EB0996DF06761987208BFDB097 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -548,7 +548,7 @@
 		39446A5080F344B63BD0038334F04A05 /* GPUImageChromaKeyBlendFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageChromaKeyBlendFilter.m; path = framework/Source/GPUImageChromaKeyBlendFilter.m; sourceTree = "<group>"; };
 		39610EA6A49136B1EE98EB01FFE91C9C /* GPUImageLocalBinaryPatternFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageLocalBinaryPatternFilter.h; path = framework/Source/GPUImageLocalBinaryPatternFilter.h; sourceTree = "<group>"; };
 		3A99F723FCA0A4C99E282465FFA70A21 /* GPUImageRGBErosionFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageRGBErosionFilter.m; path = framework/Source/GPUImageRGBErosionFilter.m; sourceTree = "<group>"; };
-		3AC6A4AC323BD9E64FBE44597544C2F4 /* SwiftOCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftOCR.framework; path = SwiftOCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AC6A4AC323BD9E64FBE44597544C2F4 /* SwiftOCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftOCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B3D6F181D0445759BBE0BE8E08388F6 /* GPUImageSwirlFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageSwirlFilter.h; path = framework/Source/GPUImageSwirlFilter.h; sourceTree = "<group>"; };
 		3B44AA15B59009755200BCF4A5EB45AD /* GPUImagePosterizeFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImagePosterizeFilter.h; path = framework/Source/GPUImagePosterizeFilter.h; sourceTree = "<group>"; };
 		3C8FA9955B9846F1E587E90DD4FAA07C /* GPUImageBoxBlurFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageBoxBlurFilter.h; path = framework/Source/GPUImageBoxBlurFilter.h; sourceTree = "<group>"; };
@@ -562,7 +562,7 @@
 		4392C7E9045A7A13DE86D324ED0A8D45 /* GPUImageMissEtikateFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageMissEtikateFilter.h; path = framework/Source/GPUImageMissEtikateFilter.h; sourceTree = "<group>"; };
 		43F25D70104CC24D24DAAFBC5F85A113 /* Pods-HQ Trivia Master.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HQ Trivia Master.debug.xcconfig"; sourceTree = "<group>"; };
 		44399DCCE29979AA0D56520E31EAD39E /* GPUImageLaplacianFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageLaplacianFilter.h; path = framework/Source/GPUImageLaplacianFilter.h; sourceTree = "<group>"; };
-		44497CD0CD50D4A5A99CECE7EF840D22 /* Pods-HQ Trivia MasterUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-HQ Trivia MasterUITests.modulemap"; sourceTree = "<group>"; };
+		44497CD0CD50D4A5A99CECE7EF840D22 /* Pods-HQ Trivia MasterUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-HQ Trivia MasterUITests.modulemap"; sourceTree = "<group>"; };
 		452D79BBB71B339EE3863EF774DDFCEC /* GPUImageMotionDetector.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageMotionDetector.m; path = framework/Source/GPUImageMotionDetector.m; sourceTree = "<group>"; };
 		4538FF414F18743D314CF39AA15B0C79 /* GPUImageTiltShiftFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageTiltShiftFilter.h; path = framework/Source/GPUImageTiltShiftFilter.h; sourceTree = "<group>"; };
 		46702407D51EC7A3C4D51C1527EAAF7B /* GPUImageHistogramFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageHistogramFilter.h; path = framework/Source/GPUImageHistogramFilter.h; sourceTree = "<group>"; };
@@ -570,16 +570,16 @@
 		476C13B30C45C0662D267331368FB593 /* GPUImageSubtractBlendFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageSubtractBlendFilter.m; path = framework/Source/GPUImageSubtractBlendFilter.m; sourceTree = "<group>"; };
 		478E0DDEA69F531932D3821FABB26166 /* Pods-HQ Trivia MasterTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HQ Trivia MasterTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		47B4B17563BCE8E775BAC57ED1EF0E65 /* SwiftOCR-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftOCR-umbrella.h"; sourceTree = "<group>"; };
-		47E8793D184EB7183FBA296B52ABC430 /* Fuzi.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = Fuzi.modulemap; sourceTree = "<group>"; };
+		47E8793D184EB7183FBA296B52ABC430 /* Fuzi.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Fuzi.modulemap; sourceTree = "<group>"; };
 		48B92104BE0F9DFBF483F8DE056DD836 /* GPUImageAlphaBlendFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageAlphaBlendFilter.h; path = framework/Source/GPUImageAlphaBlendFilter.h; sourceTree = "<group>"; };
 		492726C97C625578D6BFF35A48838BD9 /* Node.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Node.swift; path = Sources/Node.swift; sourceTree = "<group>"; };
 		49346DA91C6A4CD0AA7B03116FABF80C /* GPUImageHoughTransformLineDetector.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageHoughTransformLineDetector.h; path = framework/Source/GPUImageHoughTransformLineDetector.h; sourceTree = "<group>"; };
-		49382EAE81201B97DDB4A6C15A8B881D /* GPUImage.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = GPUImage.modulemap; sourceTree = "<group>"; };
+		49382EAE81201B97DDB4A6C15A8B881D /* GPUImage.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = GPUImage.modulemap; sourceTree = "<group>"; };
 		49481A39BFA8043B195747E3537911A9 /* GPUImageSharpenFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageSharpenFilter.h; path = framework/Source/GPUImageSharpenFilter.h; sourceTree = "<group>"; };
 		49744A8550D5F4CEF157FF4708EBD69E /* GPUImageFourInputFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageFourInputFilter.m; path = framework/Source/GPUImageFourInputFilter.m; sourceTree = "<group>"; };
 		4C602ACE1F0A0EC1D5B7C1B7406DF388 /* GPUImageSingleComponentGaussianBlurFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageSingleComponentGaussianBlurFilter.h; path = framework/Source/GPUImageSingleComponentGaussianBlurFilter.h; sourceTree = "<group>"; };
 		4C8C4EDDE61D7216FC76F4EABD7E2904 /* GPUImageColorConversion.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageColorConversion.h; path = framework/Source/GPUImageColorConversion.h; sourceTree = "<group>"; };
-		4CC49551FEA3B0CAC71CDC371C9E4356 /* Fuzi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Fuzi.framework; path = Fuzi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CC49551FEA3B0CAC71CDC371C9E4356 /* Fuzi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Fuzi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CD3BE8DA0B9F72069E9B3146701E922 /* GPUImagePolarPixellateFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImagePolarPixellateFilter.h; path = framework/Source/GPUImagePolarPixellateFilter.h; sourceTree = "<group>"; };
 		4D0A77562CA9C7249AE9CB8B681D4AC9 /* GPUImageOutput.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageOutput.h; path = framework/Source/GPUImageOutput.h; sourceTree = "<group>"; };
 		4E6122E276DD63FDE269FFBFEAEFCB6B /* GPUImageAdaptiveThresholdFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageAdaptiveThresholdFilter.m; path = framework/Source/GPUImageAdaptiveThresholdFilter.m; sourceTree = "<group>"; };
@@ -624,7 +624,7 @@
 		66D06C9C94211C87A706F8BB12D6E36F /* GPUImageVignetteFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageVignetteFilter.h; path = framework/Source/GPUImageVignetteFilter.h; sourceTree = "<group>"; };
 		679244853DE867645E2E930427F43E1F /* GPUImageMosaicFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageMosaicFilter.h; path = framework/Source/GPUImageMosaicFilter.h; sourceTree = "<group>"; };
 		67C01C42DCE487A249A72346CEAFA1BF /* GPUImageXYDerivativeFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageXYDerivativeFilter.m; path = framework/Source/GPUImageXYDerivativeFilter.m; sourceTree = "<group>"; };
-		6812EC69BC6B1545F75958CDD14B6467 /* Pods_HQ_Trivia_Master.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_HQ_Trivia_Master.framework; path = "Pods-HQ Trivia Master.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6812EC69BC6B1545F75958CDD14B6467 /* Pods_HQ_Trivia_Master.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HQ_Trivia_Master.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6813E2DDE23393913C912A3CD3206055 /* GPUImageDivideBlendFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageDivideBlendFilter.m; path = framework/Source/GPUImageDivideBlendFilter.m; sourceTree = "<group>"; };
 		686482E61466FFEAEB8461AC797F520C /* GPUImageVibranceFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageVibranceFilter.m; path = framework/Source/GPUImageVibranceFilter.m; sourceTree = "<group>"; };
 		6873CB757C1C27CFCCCBA11DD7BDE0A1 /* GPUImageHistogramFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageHistogramFilter.m; path = framework/Source/GPUImageHistogramFilter.m; sourceTree = "<group>"; };
@@ -696,7 +696,7 @@
 		9269C6696729CF32D390609E0E410CD8 /* Vector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Vector.swift; path = framework/SwiftOCR/FFNN/Vector.swift; sourceTree = "<group>"; };
 		9277AFAABD786BEF231DC213D06C8632 /* GPUImageFourInputFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageFourInputFilter.h; path = framework/Source/GPUImageFourInputFilter.h; sourceTree = "<group>"; };
 		92794660EB52096594889EF1DD2B6D55 /* GPUImageLinearBurnBlendFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageLinearBurnBlendFilter.m; path = framework/Source/GPUImageLinearBurnBlendFilter.m; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9426731C4564E3589FF314FACA6160CA /* GPUImageBrightnessFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageBrightnessFilter.h; path = framework/Source/GPUImageBrightnessFilter.h; sourceTree = "<group>"; };
 		9528722D0AB5A99E60AC60C2FE6857C4 /* Pods-HQ Trivia MasterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HQ Trivia MasterUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		95ADFB6688C9D6FF67B0E55070781F20 /* GPUImageSolidColorGenerator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageSolidColorGenerator.m; path = framework/Source/GPUImageSolidColorGenerator.m; sourceTree = "<group>"; };
@@ -811,7 +811,7 @@
 		D64D57A61A4593A7D49CEAB9F488C1B4 /* GPUImageGlassSphereFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageGlassSphereFilter.m; path = framework/Source/GPUImageGlassSphereFilter.m; sourceTree = "<group>"; };
 		D688D3D66C4D4C99CF0FB14EBDF50BA7 /* GPUImageRawDataInput.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageRawDataInput.m; path = framework/Source/GPUImageRawDataInput.m; sourceTree = "<group>"; };
 		D6CF1BAB179269107D8BC4386DEEAE87 /* GPUImageClosingFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageClosingFilter.m; path = framework/Source/GPUImageClosingFilter.m; sourceTree = "<group>"; };
-		D6DF986BFA73FBC12204F7024B5A0DE3 /* Pods-HQ Trivia Master.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-HQ Trivia Master.modulemap"; sourceTree = "<group>"; };
+		D6DF986BFA73FBC12204F7024B5A0DE3 /* Pods-HQ Trivia Master.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-HQ Trivia Master.modulemap"; sourceTree = "<group>"; };
 		D7329EE4C027894EFA7DDF02B2EEE3EA /* Helpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Helpers.swift; path = Sources/Helpers.swift; sourceTree = "<group>"; };
 		D7D01A5FADF9687E77F16D66E104B60B /* GPUImageBilateralFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageBilateralFilter.m; path = framework/Source/GPUImageBilateralFilter.m; sourceTree = "<group>"; };
 		D8C52A500191C54796994364B651DEF1 /* GPUImageCannyEdgeDetectionFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageCannyEdgeDetectionFilter.h; path = framework/Source/GPUImageCannyEdgeDetectionFilter.h; sourceTree = "<group>"; };
@@ -823,7 +823,7 @@
 		DB1F1C0994E979A9CE16E5A1DAE3446A /* GPUImageMonochromeFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageMonochromeFilter.m; path = framework/Source/GPUImageMonochromeFilter.m; sourceTree = "<group>"; };
 		DB3CD2FA2EB1018C008833D689B83FBA /* GPUImageDarkenBlendFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageDarkenBlendFilter.m; path = framework/Source/GPUImageDarkenBlendFilter.m; sourceTree = "<group>"; };
 		DC5D8EFD5C12821892F2697EE50C8FD5 /* GPUImage3x3TextureSamplingFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImage3x3TextureSamplingFilter.h; path = framework/Source/GPUImage3x3TextureSamplingFilter.h; sourceTree = "<group>"; };
-		DC65A45071FD0CE4B56F735B8E216924 /* Pods-HQ Trivia MasterTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-HQ Trivia MasterTests.modulemap"; sourceTree = "<group>"; };
+		DC65A45071FD0CE4B56F735B8E216924 /* Pods-HQ Trivia MasterTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-HQ Trivia MasterTests.modulemap"; sourceTree = "<group>"; };
 		DEDAB9FB036094785954299237E2A681 /* GPUImageSphereRefractionFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageSphereRefractionFilter.m; path = framework/Source/GPUImageSphereRefractionFilter.m; sourceTree = "<group>"; };
 		DF79172685739049E6E92C619181D2E0 /* GPUImageColorDodgeBlendFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageColorDodgeBlendFilter.h; path = framework/Source/GPUImageColorDodgeBlendFilter.h; sourceTree = "<group>"; };
 		DFCB0C2993083EB63BA70AFFD6E69B48 /* GPUImageSobelEdgeDetectionFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageSobelEdgeDetectionFilter.h; path = framework/Source/GPUImageSobelEdgeDetectionFilter.h; sourceTree = "<group>"; };
@@ -843,12 +843,12 @@
 		EBA33C7A7E367F5AB577F53037BDC3C9 /* GPUImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImage.h; path = framework/Source/GPUImage.h; sourceTree = "<group>"; };
 		EBACF591A1B5A091947F7C8FA8C35936 /* GPUImageOutput.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageOutput.m; path = framework/Source/GPUImageOutput.m; sourceTree = "<group>"; };
 		EBE350FC8E4E633B658AB1BC7E6BFB59 /* GPUImageThresholdEdgeDetectionFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageThresholdEdgeDetectionFilter.h; path = framework/Source/GPUImageThresholdEdgeDetectionFilter.h; sourceTree = "<group>"; };
-		EC05A2D261EEF0CE8D27395CC0146F3F /* GPUImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = GPUImage.framework; path = GPUImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC05A2D261EEF0CE8D27395CC0146F3F /* GPUImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GPUImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED3EEB12748A546A7D6A158A57488B0F /* GPUImageHueFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageHueFilter.m; path = framework/Source/GPUImageHueFilter.m; sourceTree = "<group>"; };
 		ED809C40B728A97A3408ED8A2C5A98C8 /* GPUImageDirectionalSobelEdgeDetectionFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageDirectionalSobelEdgeDetectionFilter.m; path = framework/Source/GPUImageDirectionalSobelEdgeDetectionFilter.m; sourceTree = "<group>"; };
-		EDBBEDC586538295837600FFC8F84160 /* iPicUploader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = iPicUploader.framework; path = iPicUploader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDBBEDC586538295837600FFC8F84160 /* iPicUploader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iPicUploader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE4D10ECE4CF6852477F6AFC361155C4 /* GPUImageLineGenerator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageLineGenerator.m; path = framework/Source/GPUImageLineGenerator.m; sourceTree = "<group>"; };
-		EEF7B010071116881FF0EC9492689CDE /* OCR-Network */ = {isa = PBXFileReference; includeInIndex = 1; name = "OCR-Network"; path = "framework/SwiftOCR/OCR-Network"; sourceTree = "<group>"; };
+		EEF7B010071116881FF0EC9492689CDE /* OCR-Network */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.bplist; name = "OCR-Network"; path = "framework/SwiftOCR/OCR-Network"; sourceTree = "<group>"; };
 		EF215E3E95DB55AFFCD006A137A6F572 /* GPUImageSaturationBlendFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageSaturationBlendFilter.m; path = framework/Source/GPUImageSaturationBlendFilter.m; sourceTree = "<group>"; };
 		EFDE4D5A13C760842D03404FA50A2E41 /* GPUImageCGAColorspaceFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageCGAColorspaceFilter.h; path = framework/Source/GPUImageCGAColorspaceFilter.h; sourceTree = "<group>"; };
 		F02887B9C83307D99A4B22507931E873 /* GPUImage3x3ConvolutionFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImage3x3ConvolutionFilter.h; path = framework/Source/GPUImage3x3ConvolutionFilter.h; sourceTree = "<group>"; };
@@ -857,7 +857,7 @@
 		F1360BF6DC9B4DF32F428914FF331D70 /* GPUImageUnsharpMaskFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageUnsharpMaskFilter.h; path = framework/Source/GPUImageUnsharpMaskFilter.h; sourceTree = "<group>"; };
 		F206D68D52CBB86CDCE12CAC27FEC894 /* GPUImageTwoInputFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageTwoInputFilter.m; path = framework/Source/GPUImageTwoInputFilter.m; sourceTree = "<group>"; };
 		F20A53E6D847049FED9330250E769817 /* GPUImageGammaFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageGammaFilter.h; path = framework/Source/GPUImageGammaFilter.h; sourceTree = "<group>"; };
-		F2238C24CBE4BFF5DD55A6B9EB3152EF /* iPicUploader.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = iPicUploader.modulemap; sourceTree = "<group>"; };
+		F2238C24CBE4BFF5DD55A6B9EB3152EF /* iPicUploader.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = iPicUploader.modulemap; sourceTree = "<group>"; };
 		F2B2A07ECB3AF401EBF3441225CB7631 /* GPUImagePosterizeFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImagePosterizeFilter.m; path = framework/Source/GPUImagePosterizeFilter.m; sourceTree = "<group>"; };
 		F317F79B95F9383F45356DF3832D2C33 /* SwiftOCR.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftOCR.xcconfig; sourceTree = "<group>"; };
 		F58C2DA801EFEA9EDFAFA10D41891C59 /* GPUImagePrewittEdgeDetectionFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImagePrewittEdgeDetectionFilter.h; path = framework/Source/GPUImagePrewittEdgeDetectionFilter.h; sourceTree = "<group>"; };
@@ -871,7 +871,7 @@
 		F91AA89E8FC0852937DDDED2EDC00F59 /* GPUImageAverageColor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageAverageColor.m; path = framework/Source/GPUImageAverageColor.m; sourceTree = "<group>"; };
 		F9757EAC4267E0D8E21C345FF92A7F71 /* iPicUploadResult.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = iPicUploadResult.swift; path = iPicUploader/Classes/iPicUploadResult.swift; sourceTree = "<group>"; };
 		FB73057A1C5934191C75C80A2C23927F /* Pods-HQ Trivia Master-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HQ Trivia Master-frameworks.sh"; sourceTree = "<group>"; };
-		FBC7B5ECA1337A94DF1D7ABA1FF5BD06 /* SwiftOCR.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SwiftOCR.modulemap; sourceTree = "<group>"; };
+		FBC7B5ECA1337A94DF1D7ABA1FF5BD06 /* SwiftOCR.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SwiftOCR.modulemap; sourceTree = "<group>"; };
 		FBE8495AE44355E51E482BBC198CF3DC /* GPUImageHighlightShadowTintFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageHighlightShadowTintFilter.m; path = framework/Source/GPUImageHighlightShadowTintFilter.m; sourceTree = "<group>"; };
 		FCC8BC999F43E876EF8DA52F779E877F /* GPUImageLevelsFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPUImageLevelsFilter.m; path = framework/Source/GPUImageLevelsFilter.m; sourceTree = "<group>"; };
 		FD27155EF159914C5304B3121168ACE3 /* GPUImageThreeInputFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPUImageThreeInputFilter.h; path = framework/Source/GPUImageThreeInputFilter.h; sourceTree = "<group>"; };
@@ -953,7 +953,6 @@
 				8B28F4AD6BE90EF1B6DEE18F58D82F1B /* Queryable.swift */,
 				AC84A2D92EF5A7D9E917CD868CD28480 /* Support Files */,
 			);
-			name = Fuzi;
 			path = Fuzi;
 			sourceTree = "<group>";
 		};
@@ -990,7 +989,6 @@
 				F9757EAC4267E0D8E21C345FF92A7F71 /* iPicUploadResult.swift */,
 				C47BF6B1EED22C50433AAEED5BC085D3 /* Support Files */,
 			);
-			name = iPicUploader;
 			path = iPicUploader;
 			sourceTree = "<group>";
 		};
@@ -1362,7 +1360,6 @@
 				5CE5EF4C61B2D2CA57FFC33BBF6BDB64 /* Resources */,
 				AEC0ADF37B88E9096C9C4152C4B18A70 /* Support Files */,
 			);
-			name = GPUImage;
 			path = GPUImage;
 			sourceTree = "<group>";
 		};
@@ -1414,7 +1411,6 @@
 				54DF0B6389EC1B12D4471D07FB90B248 /* Resources */,
 				2EDF87D627832D21550191F89034E5DB /* Support Files */,
 			);
-			name = SwiftOCR;
 			path = SwiftOCR;
 			sourceTree = "<group>";
 		};
@@ -1903,7 +1899,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0920;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -2714,6 +2710,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;

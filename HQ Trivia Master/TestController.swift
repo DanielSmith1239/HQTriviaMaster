@@ -66,21 +66,6 @@ class TestController
                 }
             }
         }
-        
-//        let answerTypes = [AnswerType.not, AnswerType.definition, AnswerType.otherTwo, AnswerType.whichOfThese, AnswerType.midWhich, AnswerType.correctSpelling, AnswerType.whose, AnswerType.who, AnswerType.howMany, AnswerType.startsWhich, AnswerType.isWhat, AnswerType.startWhat, AnswerType.endWhat, AnswerType.midWhat, AnswerType.whereIs, AnswerType.other]
-//        answerTypes.forEach {
-//            type in
-//            var temp = 0
-//            correctQuestions.forEach {
-//                q in
-//                if AnswerController.getTypeForQuestion(q) == type
-//                {
-//                    temp += 0
-//                    correctQuestions.remove(at: correctQuestions.index(of: q)!)
-//                }
-//            }
-//            print("\(type.title): \(temp)")
-//        }
     }
     
     private static func testQuestion(for q: question, completion: @escaping (Bool) -> ())

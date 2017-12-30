@@ -28,48 +28,6 @@ class WebAPIController
         task.resume()
     }
     
-    static func getGoogleNumSearchResults(for searchStr: String, completion: @escaping (Int) -> ())
-    {
-        if let url = TextController.getGoogleUrl(forQuestion: searchStr)
-        {
-            let request = URLRequest(url: url)
-            let session = URLSession.shared
-            
-            let task = session.dataTask(with: request)
-            { data, response, error in
-                guard let pageData = data else
-                {
-                    print("error getting google page for: \(searchStr)")
-                    return
-                }
-                
-                do
-                {
-                    if let json = try JSONSerialization.jsonObject(with: pageData, options: []) as? [String: Any],
-                        let searchInfo = json["searchInformation"] as? [String: Any],
-                        let results = searchInfo["totalResults"] as? Int
-                    {
-                        completion(results)
-                    }
-                    else
-                    {
-                        completion(0)
-                    }
-                }
-                catch
-                {
-                    print(error)
-                    completion(0)
-                }
-            }
-            task.resume()
-        }
-        else
-        {
-            completion(0)
-        }
-    }
-    
     static func getGooglePage(for searchStr: String, completion: @escaping (String, Int) -> ())
     {
         if let url = TextController.getGoogleUrl(forQuestion: searchStr)
@@ -84,8 +42,6 @@ class WebAPIController
                     print("error getting google page for: \(searchStr)")
                     return
                 }
-//                sleep(4) // Sleep for 4 seconds
-
                 do
                 {
                     if let json = try JSONSerialization.jsonObject(with: pageData, options: []) as? [String: Any]
@@ -125,63 +81,5 @@ class WebAPIController
         {
             completion("", 0)
         }
-    }
-    
-    static func getDiffenPage(for searchStr: String, completion: @escaping (String) -> ())
-    {
-        if let url = TextController.getDiffenUrl(forOption: searchStr)
-        {
-            let request = URLRequest(url: url)
-            let session = URLSession.shared
-            
-            let task = session.dataTask(with: request)
-            { data, response, error in
-                guard let pageData = data else
-                {
-                    print("error getting diffen page for: \(searchStr)")
-                    return
-                }
-                completion(String(data: pageData, encoding: .utf8) ?? "")
-            }
-            task.resume()
-        }
-        else
-        {
-            completion("")
-        }
-    }
-    
-    static func getImageText(_ imageUrlString: String, completion: @escaping (String) -> ())
-    {
-        let apiKey = "4159879d4788957"
-        
-        let url = URL(string: "https://api.ocr.space/parse/imageurl?apikey=\(apiKey)&url=\(URL(string: imageUrlString)!)")!
-        let request = URLRequest(url: url)
-        let session = URLSession.shared
-        
-        let task = session.dataTask(with: request)
-        { data, response, error in
-            guard let pageData = data else
-            {
-                print(error ?? "")
-                return
-            }
-            do
-            {
-                if let json = try JSONSerialization.jsonObject(with: pageData, options: []) as? [String: Any],
-                let results = json["ParsedResults"] as? [[String: Any]],
-                let text = results[0]["ParsedText"] as? String
-                {
-                    completion(text)
-                }
-                
-            }
-            catch
-            {
-                print(error)
-                completion(String(data: pageData, encoding: .ascii) ?? "")
-            }
-        }
-        task.resume()
     }
 }

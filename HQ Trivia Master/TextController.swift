@@ -21,24 +21,7 @@ class TextController
         let apiKey = "KEYHERE"
         let searchEngineId = "IDHERE"
         let url = URL(string: "https://www.googleapis.com/customsearch/v1?key=\(apiKey)&cx=\(searchEngineId)&q=\(forGoogle(question))")
-//        print(url!)
         return url
-    }
-    
-    static func getGoogleTranslateUrl(forWord word: String) -> URL?
-    {
-        // TODO
-        return URL(string: "https://translate.google.com/#auto/en/\(word)")
-    }
-    
-    static func getDictionaryUrl(forWord word: String) -> URL?
-    {
-        return URL(string: "http://www.dictionary.com/browse/\(forDictionary(word))")
-    }
-    
-    static func getDiffenUrl(forOption option: String) -> URL?
-    {
-        return URL(string: "https://data.diffen.com/\(forDiffen(option))")
     }
     
     static func getSearchWords(forQuestion question: String) -> [String]
@@ -77,11 +60,6 @@ class TextController
         return getFixedText(option.replacingOccurrences(of: " ", with: "_"))
     }
     
-    private static func forDiffen(_ option: String) -> String
-    {
-        return getFixedText(option.replacingOccurrences(of: " ", with: "_"))
-    }
-    
     private static func forGoogle(_ question: String) -> String
     {
         let punctuationToRemove = ["\"", "\\", "“", "”", "?", "#", "&", ".", ",", "’", "”", "“"]
@@ -108,12 +86,6 @@ class TextController
         else
         {
             fixed = fixed.withoutExtra()
-//            var words = fixed.components(separatedBy: " ")
-//            for (i, word) in words.enumerated()
-//            {
-//                words[i] = "intext:\(word) "
-//            }
-//            fixed = words.joined(separator: " ")
         }
 
         for item in punctuationToReplace
@@ -127,18 +99,6 @@ class TextController
         fixed = fixed.replacingOccurrences(of: "+intext:+", with: "+").replacingOccurrences(of: "++", with: "+") 
         if fixed.hasSuffix("+") { fixed.removeLast() }
         return fixed
-    }
-    
-    private static func forDictionary(_ question: String) -> String
-    {
-        // TODO
-//        let fixed = withoutIlligalCharacters(question)
-//        if AnswerController.getTypeForQuestion(question).searchFunctionCode == AnswerType.standFor.searchFunctionCode
-//        {
-////            let word = fixed.slice(from: "in ", to: " stand for")
-//            return fixed.replacingOccurrences(of: " ", with: "-")
-//        }
-        return ""
     }
     
     static func getMatchesForCorrectSpelling(_ options: [String]) -> [Int]
@@ -160,12 +120,13 @@ class TextController
 
 extension String
 {
-    func slice(from: String, to: String) -> String {
+    func slice(from: String, to: String) -> String
+    {
         return (range(of: from)?.upperBound).flatMap { substringFrom in
             (range(of: to, range: substringFrom..<endIndex)?.lowerBound).map { substringTo in
                 String(self[substringFrom..<substringTo])
             }
-            }!
+        }!
     }
     
     func asGoogleOption() -> String

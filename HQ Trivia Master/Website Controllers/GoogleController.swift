@@ -44,7 +44,9 @@ class GoogleController
             for (i, str) in searchStrings.map({ $0.withoutExtra() }).enumerated()
             {
                 let matches = getMatchesInPage(page: page, searchStringLong: str, searchStringShort: str.withoutExtra().lowercased())
-                ret[i] = matches
+                DispatchQueue.main.sync {
+                    ret[i] = matches
+                }
                 searched[i] = true
                 if searched[0] && searched[1] && searched[2]
                 {
@@ -125,9 +127,7 @@ class GoogleController
                 searched[i] = true
                 if searched[0] && searched[1] && searched[2]
                 {
-                    let typeCode = AnswerController.getTypeForQuestion(question).searchFunctionCode
-                    let shouldAdd = false //typeCode != 7 && typeCode != 4
-                    fixForSameNumberMatches(ret, numResults: results, shouldAddResults: shouldAdd)
+                    fixForSameNumberMatches(ret, numResults: results, shouldAddResults: false)
                     {
                         newRet in
                         ret = newRet
@@ -167,9 +167,7 @@ class GoogleController
             WebAPIController.getGooglePage(for: search)
             {
                 _, results in
-                DispatchQueue.main.sync {
-                    ret[i] = results
-                }
+                ret[i] = results
                 searched[i] = true
                 if searched[0] && searched[1] && searched[2]
                 {
@@ -245,8 +243,8 @@ class GoogleController
                 temp += matches(for: regEx, in: searchPage).count
             }
         }
-        ret += toDivide > 0 ? temp / toDivide : temp
         
+        ret += toDivide > 0 ? temp / toDivide : temp
         ret += searchPage.components(separatedBy: " \(shortStr.lowercased()))").count - 1
         
         return ret

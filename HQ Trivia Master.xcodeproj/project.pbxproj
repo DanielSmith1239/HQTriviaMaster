@@ -13,9 +13,6 @@
 		F7233D191FAFC6DB0076413C /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7233D181FAFC6DB0076413C /* TestController.swift */; };
 		F7BF647D1FB3A13800EB8110 /* AnswerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF647C1FB3A13800EB8110 /* AnswerController.swift */; };
 		F7BF647F1FB3A14300EB8110 /* AnswerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF647E1FB3A14300EB8110 /* AnswerType.swift */; };
-		F7BF64821FB3B24700EB8110 /* DictionaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF64811FB3B24700EB8110 /* DictionaryController.swift */; };
-		F7BF64841FB3B25300EB8110 /* GoogleTranslateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF64831FB3B25300EB8110 /* GoogleTranslateController.swift */; };
-		F7BF64861FB545E400EB8110 /* DiffenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF64851FB545E400EB8110 /* DiffenController.swift */; };
 		F7CB119D1FAAA4890040511B /* TerminalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CB119C1FAAA4890040511B /* TerminalController.swift */; };
 		F7CB119E1FAAB94D0040511B /* iPicUploader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CB119F1FAAB94D0040511B /* iPicUploader.framework */; };
 		F7CB11A11FAB76CB0040511B /* OCROutputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CB11A01FAB76CB0040511B /* OCROutputController.swift */; };
@@ -61,9 +58,6 @@
 		F7233D181FAFC6DB0076413C /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		F7BF647C1FB3A13800EB8110 /* AnswerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerController.swift; sourceTree = "<group>"; };
 		F7BF647E1FB3A14300EB8110 /* AnswerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerType.swift; sourceTree = "<group>"; };
-		F7BF64811FB3B24700EB8110 /* DictionaryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryController.swift; sourceTree = "<group>"; };
-		F7BF64831FB3B25300EB8110 /* GoogleTranslateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleTranslateController.swift; sourceTree = "<group>"; };
-		F7BF64851FB545E400EB8110 /* DiffenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffenController.swift; sourceTree = "<group>"; };
 		F7CB119C1FAAA4890040511B /* TerminalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalController.swift; sourceTree = "<group>"; };
 		F7CB119F1FAAB94D0040511B /* iPicUploader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iPicUploader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7CB11A01FAB76CB0040511B /* OCROutputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCROutputController.swift; sourceTree = "<group>"; };
@@ -148,9 +142,6 @@
 			children = (
 				F7ED39F21FAA3A21009F8907 /* GoogleController.swift */,
 				F7ED39EE1FA95F99009F8907 /* WikipediaController.swift */,
-				F7BF64811FB3B24700EB8110 /* DictionaryController.swift */,
-				F7BF64831FB3B25300EB8110 /* GoogleTranslateController.swift */,
-				F7BF64851FB545E400EB8110 /* DiffenController.swift */,
 			);
 			path = "Website Controllers";
 			sourceTree = "<group>";
@@ -527,9 +518,6 @@
 				F7BF647F1FB3A14300EB8110 /* AnswerType.swift in Sources */,
 				F7ED39F11FA9614A009F8907 /* WebAPIController.swift in Sources */,
 				F7ED39ED1FA95F8B009F8907 /* TextController.swift in Sources */,
-				F7BF64821FB3B24700EB8110 /* DictionaryController.swift in Sources */,
-				F7BF64841FB3B25300EB8110 /* GoogleTranslateController.swift in Sources */,
-				F7BF64861FB545E400EB8110 /* DiffenController.swift in Sources */,
 				F7CB11A11FAB76CB0040511B /* OCROutputController.swift in Sources */,
 				F7CB119D1FAAA4890040511B /* TerminalController.swift in Sources */,
 				F7233D191FAFC6DB0076413C /* TestController.swift in Sources */,

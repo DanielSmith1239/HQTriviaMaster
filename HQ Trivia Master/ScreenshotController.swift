@@ -8,7 +8,6 @@
 
 import Foundation
 import AppKit
-import iPicUploader
 
 class ScreenshotController
 {
@@ -49,25 +48,6 @@ class ScreenshotController
                 print("error: \(error)")
             }
             completion()
-        }
-    }
-    
-    private static func uploadImage(_ completion: @escaping (String) -> ())
-    {
-        print("uploading image")
-        let image = NSImage(contentsOfFile: imagePath)
-        
-        iPic.uploadImage(image: image!)
-        { imageLink, error in
-            if let imageLink = imageLink
-            {
-                completion(imageLink)
-            }
-            else if let error = error
-            {
-                // Some error happened
-                print(error)
-            }
         }
     }
     
