@@ -7,4 +7,5 @@ target 'HQ Trivia Master' do
 
   # Pods for HQ Trivia Master
     pod 'GPUImage', :git => 'https://github.com/BradLarson/GPUImage.git'
+    
 end
