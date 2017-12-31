@@ -16,7 +16,11 @@ class Google
     static let removeFromOption = ["of", "the", "?"]
     
     /**
-     
+     Finds matches for the options by Googling the question for every option, and includes the option in the search query.
+     -  Parameters:
+        - question: The questin being asked
+        - searchStrings: The possible options
+        - completion: The function to call on completion
      */
     static func matches(for question: String, including searchStrings: [String], completion: @escaping (AnswerCounts) -> ())
     {
@@ -41,7 +45,11 @@ class Google
     }
     
     /**
-     
+     Finds matches for the options in a Google page.
+     -  Parameters:
+        - question: The questin being asked
+        - searchStrings: The possible options
+        - completion: The function to call on completion
      */
     static func matches(for question: String, notIncluding searchStrings: [String], completion: @escaping (AnswerCounts) -> ())
     {
@@ -66,7 +74,11 @@ class Google
     }
     
     /**
-     
+     Finds matches for the options in the Google page by adding all of the options to the search query.
+     - Parameters:
+        - question: The questin being asked
+        - searchStrings: The possible options
+        - completion: The function to call on completion
      */
     static func matches(for question: String, includingAll searchStrings: [String], completion: @escaping (AnswerCounts) -> ())
     {
@@ -91,7 +103,11 @@ class Google
     }
     
     /**
-     
+     Finds matches for the options in the Google page, for when the question contains a quote.
+     - Parameters:
+        - question: The questin being asked
+        - searchStrings: The possible options
+        - completion: The function to call on completion
      */
     static func matches(for question: String, including quote: String, andIncluding searchStrings: [String], completion: @escaping (AnswerCounts) -> ())
     {
@@ -188,7 +204,11 @@ class Google
     }
     
     /**
-     
+     Finds matches for the options in the Google, for when you want the option with the least hits.
+     - Parameters:
+        - question: The questin being asked
+        - searchStrings: The possible options
+        - completion: The function to call on completion
      */
     static func inverseMatches(for question: String, with searchStrings: [String], completion: @escaping (AnswerCounts) -> ())
     {
@@ -207,9 +227,6 @@ class Google
         }
     }
     
-    /**
-     
-     */
     private static func numberOfMatches(in page: String, longString: String, shortString: String) -> Int
     {
         var ret = 0
