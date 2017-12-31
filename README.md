@@ -16,4 +16,4 @@
 * Switch from using Tesseract OCR to SwiftOCR
 
 ## Contributers
- [***Daniel Smith**](https://github.com/DanielSmith1239) (owner), [**Michael Schloss**](https://github.com/schlossm)
+ [**Daniel Smith**](https://github.com/DanielSmith1239) (owner), [**Michael Schloss**](https://github.com/schlossm)
