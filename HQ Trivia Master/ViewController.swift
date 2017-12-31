@@ -33,7 +33,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         getMatches()
     }
     
-    ///Starts automated scanning of the specified boundry
+    ///Starts automated scanning of the specified boundary
     @IBAction private func scanButtonPressed(_ sender: NSButton)
     {
         if sender.title.contains("Start")
@@ -57,8 +57,8 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         internalClearFields()
     }
     
-    ///Allows the user to draw a boundry for which to monitor the screen
-    @IBAction private func defineBoundry(sender: NSButton)
+    ///Allows the user to draw a boundary for which to monitor the screen
+    @IBAction private func defineboundary(sender: NSButton)
     {
         NSObject.cancelPreviousPerformRequests(withTarget: self)
         startScanningButton.title = "Start Scanning"
