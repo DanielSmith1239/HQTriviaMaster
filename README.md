@@ -12,8 +12,8 @@
 3. Sit back, relax, and let the program answer the questions for you!
 
 ## To do
-[ ] Improve accuracy (only 80% success rate right now).
-[ ] Switch from using Tesseract OCR to SwiftOCR.
+- [ ] Improve accuracy (only 80% success rate right now).
+- [ ] Switch from using Tesseract OCR to SwiftOCR.
 
 ## Contributers
  [**Daniel Smith**](https://github.com/DanielSmith1239) (owner), [**Michael Schloss**](https://github.com/schlossm)
