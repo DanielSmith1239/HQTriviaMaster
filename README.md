@@ -1,7 +1,7 @@
 # HQTriviaMaster
 
 ## Setup
-1. Install pods
+1. Install Pods.
 2. Get a google api key, open the SiteEncoding file, and replace the apiKey variable with your api key.
 3. Create a custom search engine, get the search engine id, open the SiteEncoding file, replace the searchEngineId variable to the search engine id.
 4. [Install Tesseract OCR](https://github.com/tesseract-ocr/tesseract/wiki).
