@@ -17,7 +17,7 @@ class Google
     
     /**
      Finds matches for the options by Googling the question for every option, and includes the option in the search query.
-     -  Parameters:
+     - Parameters:
         - question: The questin being asked
         - searchStrings: The possible options
         - completion: The function to call on completion
@@ -46,7 +46,7 @@ class Google
     
     /**
      Finds matches for the options in a Google page.
-     -  Parameters:
+     - Parameters:
         - question: The questin being asked
         - searchStrings: The possible options
         - completion: The function to call on completion
@@ -407,6 +407,7 @@ class Google
                 print(error)
                 completion(unknownReturnString.string, 0)
             }
-        }.resume()
+            }.resume()
     }
 }
+
