@@ -11,49 +11,53 @@ import AppKit
 
 class ScreenshotController
 {
-    static let imagePath = "PATH-HERE/hqTriviaMasterTemp.jpg"
+    static private let imagePath = "\(NSTemporaryDirectory())hqTriviaMasterTemp.jpg"
     
-    static func takeScreenshot(vc: NSViewController, line: NSBox, completion: @escaping () -> ())
+    /**
+     Takes a screenshot given a rectangle
+     - Parameter inRect: An `NSRect` that describes the location to take the screenshot
+     */
+    static func takeScreenshot(inRect: NSRect, completion: @escaping () -> Void)
     {
-        var displayCount: UInt32 = 0;
+        //ATTENTION: Quartz works in a different coordinate system than Cocoa
+        //Quartz's coordinate systems starts at the top-left
+        //While Cocoa starts at the bottom left.  The next lines convert coordinate spaces
+        var rect = inRect
+        rect.origin.y = (NSScreen.main?.frame.maxY ?? 0.0) - rect.maxY
+        
+        var displayCount : UInt32 = 0
         var result = CGGetActiveDisplayList(0, nil, &displayCount)
-        if (result != CGError.success)
+        guard result == .success else
         {
-            print("error: \(result)")
+            print("Unexpected display count.  Underlying error: \(result)")
             return
         }
         let allocated = Int(displayCount)
         let activeDisplays = UnsafeMutablePointer<CGDirectDisplayID>.allocate(capacity: allocated)
         result = CGGetActiveDisplayList(displayCount, activeDisplays, &displayCount)
-        
-        if (result != CGError.success)
+        guard result == .success else
         {
-            print("error: \(result)")
+            print("Unexpected display list.  Underlying error: \(result)")
             return
         }
         
         for i in 1...displayCount
         {
-            let fileUrl = URL(fileURLWithPath: imagePath, isDirectory: true)
-            let screenShot: CGImage = CGDisplayCreateImage(activeDisplays[Int(i - 1)], rect: getScreenshotRect(vc: vc, line: line))!
-            let bitmapRep = NSBitmapImageRep(cgImage: screenShot)
-            let jpegData = bitmapRep.representation(using: .jpeg, properties: [:])!
+            let fileUrl = URL(fileURLWithPath: imagePath)
             
+            guard let screenShot = CGDisplayCreateImage(activeDisplays[Int(i - 1)], rect: NSRectToCGRect(rect)) else { continue }
+            let bitmapRep = NSBitmapImageRep(cgImage: screenShot)
+            guard let jpegData = bitmapRep.representation(using: .jpeg, properties: [:]) else { continue }
             do
             {
                 try jpegData.write(to: fileUrl, options: .atomic)
             }
             catch
             {
-                print("error: \(error)")
+                print("Could not write screenshot to disk.  Underlying error: \(error)")
+                continue
             }
             completion()
         }
-    }
-    
-    private static func getScreenshotRect(vc: NSViewController, line: NSBox) -> CGRect
-    {
-        let view = vc.view
-        return CGRect(x: view.window!.frame.origin.x, y: view.window!.frame.origin.y - view.bounds.height + 50, width: line.frame.origin.x, height: view.bounds.height)
     }
 }

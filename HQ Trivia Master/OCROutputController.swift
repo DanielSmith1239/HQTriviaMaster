@@ -9,19 +9,18 @@
 import Foundation
 class OCROutputController
 {
-    private static let fileUrl = "file://\(NSHomeDirectory())/Desktop/output.txt"
+    private static let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent("output.txt")
     
-    static func getOutputText() -> String
+    static var outputText : String?
     {
         do
         {
-            let text = try String(contentsOf: URL(string: fileUrl)!)
-            return text
+            return try String(contentsOf: fileURL)
         }
         catch
         {
             print(error)
-            return ""
+            return nil
         }
     }
 }

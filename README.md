@@ -15,6 +15,6 @@
 4. The correct answer will have a check next to it
 
 ## To do
-* Clean up the code
+* Clean up the code (a lot)
 * Improve accuracy (only 80% success rate right now)
 * Make it safer (doesn't handle errors very well)

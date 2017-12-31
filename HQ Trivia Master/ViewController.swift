@@ -9,138 +9,211 @@
 import Cocoa
 import AVFoundation
 
-class ViewController: NSViewController, NSTextFieldDelegate
+class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowDelegate
 {
-    @IBOutlet weak var questionField: NSTextField!
-    @IBOutlet weak var optionOneField: NSTextField!
-    @IBOutlet weak var optionTwoField: NSTextField!
-    @IBOutlet weak var optionThreeField: NSTextField!
+    @IBOutlet private var questionField : NSTextField!
+    @IBOutlet private var optionOneField : NSTextField!
+    @IBOutlet private var optionTwoField : NSTextField!
+    @IBOutlet private var optionThreeField : NSTextField!
+    @IBOutlet private var optionOneMatchesLabel : NSTextField!
+    @IBOutlet private var optionTwoMatchesLabel : NSTextField!
+    @IBOutlet private var optionThreeMatchesLabel : NSTextField!
+    @IBOutlet private var startScanningButton : NSButton!
+    @IBOutlet private var answerButton : NSButton!
+    @IBOutlet private var resetButton : NSButton!
     
-    @IBOutlet weak var optionOneMatchesLabel: NSTextField!
-    @IBOutlet weak var optionTwoMatchesLabel: NSTextField!
-    @IBOutlet weak var optionThreeMatchesLabel: NSTextField!
+    private lazy var labels = { return [optionOneField : optionOneMatchesLabel, optionTwoField : optionTwoMatchesLabel, optionThreeField : optionThreeMatchesLabel] }()
+    private var screenshotRect = NSRect.zero
+    private var interactableWindow : InteractableWindow?
     
-    @IBOutlet weak var lineSeparator: NSBox!
-    
-    override func viewDidLoad()
-    {
-        super.viewDidLoad()
-        questionField.delegate = self
-        optionOneField.delegate = self
-        optionTwoField.delegate = self
-        optionThreeField.delegate = self
-    }
-    
-    func fixSpelling()
-    {
-        let corrector = NSSpellChecker.shared
-        let fields = [questionField, optionOneField, optionTwoField, optionThreeField]
-        for field in fields
-        {
-            var newStr = field!.stringValue
-            for word in newStr.split(separator: " ")
-            {
-                let range = corrector.checkSpelling(of: newStr, startingAt: 0)
-                if range.length > 0
-                {
-                    if let replacement = corrector.correction(forWordRange: range, in: String(word), language: "en", inSpellDocumentWithTag: 0)
-                    {
-                        newStr = newStr.replacingOccurrences(of: word, with: replacement)
-                    }
-                    else
-                    {
-                        field!.becomeFirstResponder()
-                    }
-                }
-            }
-            field?.stringValue = newStr
-        }
-    }
-
-    @IBAction func answerButtonPressed(_ sender: NSButton)
+    ///Manually starts the answering process
+    @IBAction private func answerButtonPressed(_ sender: NSButton)
     {
         clearMatches()
         getMatches()
     }
     
-    @IBAction func removeLastButtonPressed(_ sender: Any)
+    ///Starts automated scanning of the specified boundary
+    @IBAction private func scanButtonPressed(_ sender: NSButton)
     {
-        TestController.removeLastTestQuestion()
-    }
-    
-    func setCorrectLabel(forOption labelNum: Int)
-    {
-        let labels = [optionOneMatchesLabel, optionTwoMatchesLabel, optionThreeMatchesLabel]
-        DispatchQueue.main.async {
-            labels[labelNum]!.stringValue = "✔️"
+        if sender.title.contains("Start")
+        {
+            sender.title = "Stop Scanning"
+            takeScreenshot()
+        }
+        else
+        {
+            sender.title = "Start Scanning"
+            NSObject.cancelPreviousPerformRequests(withTarget: self)
         }
     }
     
-    func getLargestIndex(_ arr: [Int]) -> Int
+    ///Resets all fields and stops scanning
+    @IBAction private func clearFields(sender: NSButton)
     {
-        let last = arr.sorted().last!
-        return arr.index(of: last)!
+        self.answerButton.isEnabled = false
+        self.resetButton.isEnabled = false
+        self.startScanningButton.title = "Start Scanning"
+        internalClearFields()
     }
     
-    @IBAction func scanButtonPressed(_ sender: Any)
+    ///Allows the user to draw a boundary for which to monitor the screen
+    @IBAction private func defineboundary(sender: NSButton)
     {
-        clearFields()
-        let window =  NSApplication.shared.mainWindow!
-        let group = DispatchGroup()
-        group.enter()
-        DispatchQueue.global(qos: .default).async {
-            window.setIsVisible(false)
-            group.leave()
-        }
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
+        startScanningButton.title = "Start Scanning"
         
-        group.wait()
-                
-        ScreenshotController.takeScreenshot(vc: self, line: lineSeparator)
+        if let window = interactableWindow
         {
+            window.becomeKey()
             window.setIsVisible(true)
-            TerminalController.getImageText()
-            let text = OCROutputController.getOutputText()
-            self.setFieldValues(fromText: text)
-            self.getMatches()
+            window.becomeFirstResponder()
         }
-    }
-    
-    @IBAction func runTestsPressed(_ sender: Any)
-    {
-        print("Running test...")
-        TestController.testAll()
+        else
         {
-            questionsTested, questionsCorrect in
-            print("-----------------------------")
-            print("Tested:  \(questionsTested)")
-            print("Correct: \(questionsCorrect)")
-            print("-----------------------------")
+            let window = InteractableWindow()
+            window.interactableWindowDelegate = self
+            window.titleVisibility = .hidden
+            window.titlebarAppearsTransparent = true
+            window.isOpaque = false
+            window.backgroundColor = NSColor.black.withAlphaComponent(0.5)
+            window.isMovable = false
+            window.styleMask.remove(.resizable)
+            window.styleMask.insert(.borderless)
+            
+            let view = NSView()
+            view.frame = NSScreen.main?.frame ?? .zero
+            let label = NSTextField(labelWithString: "Please choose area of screen to watch for gameplay")
+            label.alignment = .center
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.textColor = .white
+            label.font = .systemFont(ofSize: 50.0, weight: .bold)
+            view.addSubview(label)
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 40.0).isActive = true
+            label.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, multiplier: 1.0, constant: -100).isActive = true
+            label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+            label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+            label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            label.setContentHuggingPriority(.defaultLow, for: .vertical)
+            
+            window.contentView = view
+            window.setFrame(NSScreen.main?.frame ?? .zero, display: true)
+            window.makeKey()
+            window.setIsVisible(true)
+            window.becomeFirstResponder()
+            interactableWindow = window
         }
     }
     
-    @IBAction func addForTestingPressed(_ sender: Any)
+    ///Protocol method that's called when the user has finished choosing their rectangle
+    func drew(rect: NSRect)
     {
-        if !questionField.stringValue.isEmpty,
-            !optionOneField.stringValue.isEmpty,
-            !optionTwoField.stringValue.isEmpty,
-            !optionThreeField.stringValue.isEmpty
-        {
-            let q: TestController.question = (question: questionField.stringValue, correctOption: optionOneField.stringValue, option2: optionTwoField.stringValue, option3: optionThreeField.stringValue)
-            TestController.addTestQuestion(q)
+        screenshotRect = rect
+        startScanningButton.isEnabled = true
+        view.window?.makeKey()
+        interactableWindow?.setIsVisible(false)
+    }
+    
+    override func controlTextDidChange(_ obj: Notification)
+    {
+        resetButton.isEnabled = !allFieldsAreEmpty()
+        answerButton.isEnabled = !fieldIsEmpty()
+    }
+    
+    ///Takes the screenshot
+    ///On failure to read, it repeats the screenshot after a 0.3 second wait
+    ///On success, it begins to process the information and search for the answer, waiting 10 seconds (this is the amount of time given for each question)
+    @objc private func takeScreenshot()
+    {
+        guard !startScanningButton.title.contains("Start") else { return }
+        internalClearFields()
+        ScreenshotController.takeScreenshot(inRect: screenshotRect) {
+            DispatchQueue.main.async {
+                Shell.convertImageToText()
+                guard let text = OCROutputController.outputText else { return }
+                if HQTriviaMaster.debug
+                {
+                    print(text)
+                }
+                self.setFieldValues(fromText: text)
+                if !self.fieldIsEmpty()
+                {
+                    self.perform(#selector(ViewController.takeScreenshot), with: nil, afterDelay: 10.0)
+                    self.answerButton.isEnabled = true
+                    self.resetButton.isEnabled = true
+                    self.clearMatches()
+                    self.getMatches()
+                }
+                else
+                {
+                    self.perform(#selector(ViewController.takeScreenshot), with: nil, afterDelay: 0.3)
+                }
+            }
         }
     }
     
+    ///Determines if every field is empty
+    private func allFieldsAreEmpty() -> Bool
+    {
+        return questionField.stringValue.isEmpty && optionOneField.stringValue.isEmpty && optionTwoField.stringValue.isEmpty && optionThreeField.stringValue.isEmpty
+    }
+    
+    ///Determines if at least one field is empty
+    private func fieldIsEmpty() -> Bool
+    {
+        return questionField.stringValue.isEmpty || optionOneField.stringValue.isEmpty || optionTwoField.stringValue.isEmpty || optionThreeField.stringValue.isEmpty
+    }
+    
+    ///Clears all data from UI
+    private func internalClearFields()
+    {
+        self.questionField.stringValue = ""
+        self.optionOneField.stringValue = ""
+        self.optionTwoField.stringValue = ""
+        self.optionThreeField.stringValue = ""
+        self.clearMatches()
+    }
+    
+    ///Resets the match labels
+    private func clearMatches()
+    {
+        self.optionOneMatchesLabel.stringValue = "---"
+        self.optionTwoMatchesLabel.stringValue = "---"
+        self.optionThreeMatchesLabel.stringValue = "---"
+    }
+    
+    ///Retrieves the correct answer
+    private func getMatches()
+    {
+        if !fieldIsEmpty()
+        {
+            let options = [optionOneField.stringValue, optionTwoField.stringValue, optionThreeField.stringValue]
+            AnswerController.answer(for: questionField.stringValue, answers: options) { correctAnswer in
+                if HQTriviaMaster.debug
+                {
+                    print("Predicted Correct Answer: \(correctAnswer)")
+                }
+                self.labels.first(where: { $0.0.stringValue == correctAnswer })?.1?.stringValue = "✔️"
+            }
+        }
+    }
+    
+    ///Sets the values in UI
     func setFieldValues(fromText text: String)
     {
         var arr = text.split(separator: "\n").filter { !$0.isEmpty}.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-        let questionEnd = findQuestionEnd(arr)
-
+        guard let questionEnd = findQuestionEnd(arr) else
+        {
+            return
+        }
+        
         var questionArr = arr[0...questionEnd].map { (value: String) -> String in
             var ret = value
             if ret.first == " " { ret.removeFirst() }
             if ret.last != " " && ret.last != "?" { ret += " " }
             return ret
-            }
+        }
         
         while questionArr.first!.isEmpty || questionArr.first!.count < 10
         {
@@ -156,68 +229,54 @@ class ViewController: NSViewController, NSTextFieldDelegate
             }
         }
         
-        let option3 = TextController.getFixedText(String(fixedArr.removeLast()))
-        let option2 = TextController.getFixedText(String(fixedArr.removeLast()))
-        let option1 = TextController.getFixedText(String(fixedArr.removeLast()))
-        let question = TextController.getFixedText(String(questionArr.joined()))
-
-        DispatchQueue.main.async
+        let option3 = String(fixedArr.removeLast()).fixedText
+        let option2 = String(fixedArr.removeLast()).fixedText
+        let option1 = String(fixedArr.removeLast()).fixedText
+        let question = String(questionArr.joined()).fixedText
+        
+        self.optionOneField.stringValue = option1
+        self.optionTwoField.stringValue = option2
+        self.optionThreeField.stringValue = option3
+        self.questionField.stringValue = question
+        if AnswerController.type(forQuestion: question) != QuestionType.correctSpelling
         {
-            self.optionOneField.stringValue = option1
-            self.optionTwoField.stringValue = option2
-            self.optionThreeField.stringValue = option3
-            self.questionField.stringValue = question
-            if AnswerController.getTypeForQuestion(question) != AnswerType.correctSpelling
-            {
-                self.fixSpelling()
-            }
+            self.fixSpelling()
         }
     }
     
-    private func findQuestionEnd(_ arr: [String]) -> Int
+    ///Finds the index of end of the question
+    private func findQuestionEnd(_ arr: [String]) -> Int?
     {
         let qElement = arr.filter { $0.replacingOccurrences(of: "\"", with: "?").replacingOccurrences(of: "”", with: "?").last == "?" }
-        return arr.index(of: qElement.last!)!
+        guard let last = qElement.last else
+        {
+            return nil
+        }
+        return arr.index(of: last)
     }
     
-    func getMatches()
+    ///Auto-Correct
+    private func fixSpelling()
     {
-        if !questionField.stringValue.isEmpty,
-            !optionOneField.stringValue.isEmpty,
-            !optionTwoField.stringValue.isEmpty,
-            !optionThreeField.stringValue.isEmpty
+        let corrector = NSSpellChecker.shared
+        let fields = [questionField, optionOneField, optionTwoField, optionThreeField]
+        for field in fields
         {
-            let options = [optionOneField.stringValue, optionTwoField.stringValue, optionThreeField.stringValue]
-            AnswerController.getAnswer(question: questionField.stringValue, options: options)
+            guard var textFieldValue = field?.stringValue else { continue }
+            for word in textFieldValue.split(separator: " ")
             {
-                correctIndexes in
-                for correct in correctIndexes
+                let range = corrector.checkSpelling(of: textFieldValue, startingAt: 0)
+                if range.length > 0
                 {
-                    self.setCorrectLabel(forOption: correct)
+                    guard let replacement = corrector.correction(forWordRange: range, in: String(word), language: "en", inSpellDocumentWithTag: 0) else
+                    {
+                        field?.becomeFirstResponder()
+                        continue
+                    }
+                    textFieldValue = textFieldValue.replacingOccurrences(of: word, with: replacement)
                 }
             }
-        }
-    }
-    
-    func clearFields()
-    {
-        DispatchQueue.main.async
-        {
-            self.questionField.stringValue = ""
-            self.optionOneField.stringValue = ""
-            self.optionTwoField.stringValue = ""
-            self.optionThreeField.stringValue = ""
-            self.clearMatches()
-        }
-    }
-    
-    func clearMatches()
-    {
-        DispatchQueue.main.async
-        {
-            self.optionOneMatchesLabel.stringValue = "---"
-            self.optionTwoMatchesLabel.stringValue = "---"
-            self.optionThreeMatchesLabel.stringValue = "---"
+            field?.stringValue = textFieldValue
         }
     }
 }

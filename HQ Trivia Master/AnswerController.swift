@@ -6,136 +6,117 @@
 //  Copyright © 2017 Daniel Smith. All rights reserved.
 //
 
-import Foundation
+import AppKit
 
 class AnswerController
 {
-    private static let answerTypes = [AnswerType.not, AnswerType.definition, AnswerType.otherTwo, AnswerType.whichOfThese, AnswerType.midWhich, AnswerType.correctSpelling, AnswerType.whose, AnswerType.who, AnswerType.howMany, AnswerType.startsWhich, AnswerType.isWhat, AnswerType.startWhat, AnswerType.endWhat, AnswerType.midWhat, AnswerType.whereIs, AnswerType.other]
+    private static let answerTypes = [QuestionType.not, QuestionType.definition, QuestionType.otherTwo, QuestionType.whichOfThese, QuestionType.midWhich, QuestionType.correctSpelling, QuestionType.whose, QuestionType.who, QuestionType.howMany, QuestionType.startsWhich, QuestionType.isWhat, QuestionType.startWhat, QuestionType.endWhat, QuestionType.midWhat, QuestionType.whereIs, QuestionType.other]
     
-    static func getAnswer(question: String, options: [String], completion: @escaping ([Int]) -> ())
+    /**
+     Attempts to answer a question by using Google.  Questions can range in type, as such this method serves as a delegator to various question types
+     - Parameter question: The question being asked
+     - Parameter answers: The list of answers
+     - Parameter completion: A closure accepting the correct answer
+     - Parameter answer: The correct answer
+     */
+    static func answer(for question: String, answers: [String], completion: @escaping (_ answer: String) -> ())
     {
-        let type = getTypeForQuestion(question)
+        let questionType = type(forQuestion: question)
         
-        print(type.title)
-        let skipCodes = [5, 7, 3]
-        let searchCode = type.searchFunctionCode
-        if skipCodes.contains(searchCode)
+        if HQTriviaMaster.debug
         {
-            getSecondaryMatches(question: question, options: options)
-            {
-                matches in
-                print(matches)
-                completion(getLargestIndex(matches))
+            print("Question type: \(questionType.title)")
+            print("Question search function code: \(questionType.searchFunctionCode)")
+        }
+        
+        switch questionType.searchFunctionCode
+        {
+        case 5, 7, 3:
+            //Questions that include "not", questions that are spelling questions, and questions that ask "which of these" cannot be easily answered, and thus require more precise processing
+            matches(for: question, answers: answers) { matches in
+                if HQTriviaMaster.debug
+                {
+                    print("\nAnswers:\n\(matches)")
+                }
+                completion(matches.largest.0)
                 return
             }
-        }
-        else
-        {
-            GoogleController.getMatchesWithOption(question, for: options)
-            {
-                matches in
-                if Set(matches).count != 1,
-                    matches[getLargestIndex(matches).first ?? 0] > 0,
-                    getLargestIndex(matches).count == 1
+            break
+            
+        default:
+            //For everything else, questions have the potential to be answered without needing precision
+            Google.matches(for: question, including: answers) { matches in
+                if HQTriviaMaster.debug
                 {
-                    completion(getLargestIndex(matches))
+                    print("\nAnswers:\n\(matches)")
+                }
+                guard matches.count != 1, matches.largest.1 > 0 else
+                {
+                    //We need precision anyways since the imprecise didn't give us enough accuracy
+                    AnswerController.matches(for: question, answers: answers) { matches in
+                        completion(matches.largest.0)
+                    }
                     return
                 }
-                else
-                {
-                    getSecondaryMatches(question: question, options: options)
-                    {
-                        matches in
-                        completion(getLargestIndex(matches))
-                    }
-                }
+                completion(matches.largest.0)
             }
         }
     }
     
-    private static func getSecondaryMatches(question: String, options: [String], completion: @escaping ([Int]) -> ())
+    /**
+     Dispatches more precise question answering
+     - Parameter question: The question being asked
+     - Parameter answers: The answers
+     - Parameter completion: A closure accepting an `AnswerCounts` object
+     - Parameter counts: An `AnswerCounts` object that hold the number of results for each answer
+     */
+    private static func matches(for question: String, answers: [String], completion: @escaping (_ counts: AnswerCounts) -> ())
     {
-        let type = getTypeForQuestion(question)
+        let type = AnswerController.type(forQuestion: question)
         switch type.searchFunctionCode
         {
         case 13:
-            GoogleController.getMatchesFromNumResults(question, for: options)
-            {
-                matches in
+            Google.numberOfResultsBasedMatches(for: question, including: answers) { matches in
                 completion(matches)
             }
         case 1, 3, 4, 9, 16:
-            GoogleController.getMatchesWithReplacing(question, for: options, withQuestion: true)
-            {
-                matches in
+            Google.matches(for: question, withReplacingLargestAnswerIn: answers, queryContainsQuestion: true) { matches in
                 completion(matches)
             }
         case 2, 6, 8:
-            GoogleController.getMatchesWithReplacing(question, for: options)
-            {
-                matches in
+            Google.matches(for: question, withReplacingLargestAnswerIn: answers) { matches in
                 completion(matches)
             }
         case 10, 11, 14:
-            GoogleController.getMatchesWithOption(question, for: options)
-            {
-                matches in
+            Google.matches(for: question, including: answers) { matches in
                 completion(matches)
             }
         case 7:
-            GoogleController.getMatchesForNot(question, for: options)
-            {
-                matches in
+            Google.inverseMatches(for: question, with: answers) { matches in
                 completion(matches)
             }
         case 5:
-            let matches = TextController.getMatchesForCorrectSpelling(options)
+            let matches = AnswerController.matches(withCorrectlySpelledAnswers: answers)
             completion(matches)
             break
         case 15:
-            GoogleController.getMatchesFromNumResults(question, for: options)
-            {
-                matches in
+            Google.matches(for: question, including: answers) { matches in
                 completion(matches)
             }
         default:
-            GoogleController.getMatchesWithOption(question, for: options)
-            {
+            Google.matches(for: question, including: answers) {
                 matches in
                 completion(matches)
             }
         }
     }
     
-    static func getLargestIndex(_ arr: [Int]) -> [Int]
-    {
-        var ret = [Int]()
-        let sorted = arr.sorted()
-        let last = sorted.last!
-        var i = sorted.index(of: last)!
-        while sorted[i] == last && i != 0
-        {
-            ret.append(arr.index(of: sorted[i])!)
-            i -= 1
-        }
-        return ret
-    }
-    
-    static func getSmallestIndex(_ arr: [Int]) -> [Int]
-    {
-        var ret = [Int]()
-        let sorted: [Int] = arr.sorted().reversed()
-        let last = sorted.last!
-        var i = sorted.index(of: last)!
-        while sorted[i] == last && i != 0
-        {
-            ret.append(arr.index(of: sorted[i])!)
-            i -= 1
-        }
-        return ret
-    }
-    
-    static func getTypeForQuestion(_ question: String) -> AnswerType
+    /**
+     Determines the type of question being asked
+     - Parameter question: The questin being asked
+     - Returns: An `QuestionType` determining the type of question that is being asked
+     */
+    static func type(forQuestion question: String) -> QuestionType
     {
         for type in answerTypes
         {
@@ -144,6 +125,27 @@ class AnswerController
                 return type
             }
         }
-        return AnswerType.other
+        return QuestionType.other
+    }
+    
+    /**
+     Finds the first answer in a list of answers that is spelled correctly.  Can be done locally as macOS has a built-in spell checker
+     - Parameter: answers: A list of answers to check against
+     - Returns: An `AnswerCounts` object where the correct answer will be the one with a `1`
+     */
+    static func matches(withCorrectlySpelledAnswers answers: [String]) -> AnswerCounts
+    {
+        var answerCounts = AnswerCounts()
+        for answer in answers
+        {
+            let corrector = NSSpellChecker.shared
+            let range = corrector.checkSpelling(of: answer, startingAt: 0)
+            if range.length == 0
+            {
+                answerCounts[answer] = 1
+                break
+            }
+        }
+        return answerCounts
     }
 }
