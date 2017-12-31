@@ -17,3 +17,6 @@
 
 ## Contributers
  [**Daniel Smith**](https://github.com/DanielSmith1239) (owner), [**Michael Schloss**](https://github.com/schlossm)
+ 
+ ## License
+ [MIT License](https://github.com/DanielSmith1239/HQTriviaMaster/blob/master/LICENSE)
