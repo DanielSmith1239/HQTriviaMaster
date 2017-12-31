@@ -14,6 +14,7 @@
 ## To do
 - [ ] Improve accuracy (only 80% success rate right now).
 - [ ] Switch from using Tesseract OCR to SwiftOCR.
+- [ ] Add a way to answer a large amount of questions at once to test the program's accuracy.
 
 ## Contributers
  [**Daniel Smith**](https://github.com/DanielSmith1239) (owner), [**Michael Schloss**](https://github.com/schlossm)
