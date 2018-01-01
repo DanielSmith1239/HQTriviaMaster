@@ -1,5 +1,7 @@
 # HQTriviaMaster
 
+> If you have not entered a referral code in HQ Trivia, I would appreciate it if you could enter mine, **ds1239**.
+
 ## Setup
 1. Install Pods.
 2. Get a google api key, open the SiteEncoding file, and replace the apiKey variable with your api key.
@@ -20,7 +22,7 @@
 - [ ] Add the question type and accuracy to the UI.
 
 ## Contributers
- [**Daniel Smith**](https://github.com/DanielSmith1239) (owner), [**Michael Schloss**](https://github.com/schlossm)
+ [**Daniel Smith**](https://github.com/DanielSmith1239) (owner), [**Michael Schloss**](https://github.com/schlossm).
  
  ## License
  [MIT License](https://github.com/DanielSmith1239/HQTriviaMaster/blob/master/LICENSE)
