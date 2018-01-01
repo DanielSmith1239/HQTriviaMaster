@@ -1,7 +1,5 @@
 # HQTriviaMaster
 
-> If you have not entered a referral code in HQ Trivia, I would appreciate it if you could enter mine, **ds1239**.
-
 ## Setup
 1. Install Pods.
 2. Get a google api key, open the SiteEncoding file, and replace the apiKey variable with your api key.
