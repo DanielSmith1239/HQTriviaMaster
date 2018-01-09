@@ -6,7 +6,7 @@
 //  Copyright © 2017 Daniel Smith. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 ///Stores information on the number of times a string is seen
 struct AnswerCounts : CustomStringConvertible, CustomDebugStringConvertible
@@ -122,6 +122,41 @@ private extension Array where Element : StringProtocol
             returnArray.append((element as? String)?.lowercased() ?? "")
         }
         return returnArray
+    }
+}
+
+//Borrowed from https://stackoverflow.com/a/36006764
+extension NSWindow
+{
+    /**
+     Shakes an NSWindow to simulate an error response á la Login window
+     - Parameter intensity: The intensity with which to shake
+     - Parameter duration: How long the shake should last
+     */
+    func shake(with intensity: CGFloat = 0.02, duration: Double = 0.3)
+    {
+        if animations.isEmpty
+        {
+            let numberOfShakes = 3
+            let frame = self.frame
+            let shakeAnimation = CAKeyframeAnimation()
+            
+            let shakePath = CGMutablePath()
+            shakePath.move(to: CGPoint(x: NSMinX(frame), y: NSMinY(frame)))
+            
+            for _ in 0...numberOfShakes - 1
+            {
+                shakePath.addLine(to: CGPoint(x:NSMinX(frame) - frame.size.width * intensity,y:NSMinY(frame)))
+                shakePath.addLine(to: CGPoint(x:NSMinX(frame) + frame.size.width * intensity,y:NSMinY(frame)))
+            }
+            
+            shakePath.closeSubpath()
+            shakeAnimation.path = shakePath
+            shakeAnimation.duration = duration
+            
+            animations = [NSAnimatablePropertyKey(rawValue: "frameOrigin") : shakeAnimation]
+        }
+        animator().setFrameOrigin(self.frame.origin)
     }
 }
 

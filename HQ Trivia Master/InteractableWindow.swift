@@ -63,8 +63,8 @@ class InteractableWindow : NSWindow
         if HQTriviaMaster.debug
         {
             print("Mouse Released")
+            print(view.convert(view.bounds, to: nil))
         }
-        print(view.convert(view.bounds, to: nil))
         interactableWindowDelegate?.drew(rect: view.convert(view.bounds, to: nil))
         view.frame = .zero
         super.mouseUp(with: event)

@@ -17,5 +17,10 @@ class HQTriviaMaster : NSObject, NSApplicationDelegate
     {
         return true
     }
+    
+    @IBAction func showPreferences(sender: Any)
+    {
+        (NSApplication.shared.keyWindow?.contentViewController as? ViewController)?.showGoogleAPIChangeWindow(sender: sender)
+    }
 }
 

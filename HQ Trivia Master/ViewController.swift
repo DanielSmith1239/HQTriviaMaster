@@ -21,9 +21,46 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
     @IBOutlet private var answerButton : NSButton!
     @IBOutlet private var resetButton : NSButton!
     
+    @IBOutlet private var optionOneCorrectBox : NSBox!
+    @IBOutlet private var optionTwoCorrectBox : NSBox!
+    @IBOutlet private var optionThreeCorrectBox : NSBox!
+    @IBOutlet private var optionOneCorrectCenterConstraint : NSLayoutConstraint!
+    @IBOutlet private var optionTwoCorrectCenterConstraint : NSLayoutConstraint!
+    @IBOutlet private var optionThreeCorrectCenterConstraint : NSLayoutConstraint!
+    private var optionOneCorrectOffScreenCenterConstraint : NSLayoutConstraint?
+    private var optionTwoCorrectOffScreenCenterConstraint : NSLayoutConstraint?
+    private var optionThreeCorrectOffScreenCenterConstraint : NSLayoutConstraint?
+    
     private lazy var labels = { return [optionOneField : optionOneMatchesLabel, optionTwoField : optionTwoMatchesLabel, optionThreeField : optionThreeMatchesLabel] }()
     private var screenshotRect = NSRect.zero
     private var interactableWindow : InteractableWindow?
+    
+    override func viewDidLoad()
+    {
+        hideAnswerBoxes()
+    }
+    
+    override func viewDidAppear()
+    {
+        super.viewDidAppear()
+        if Shell.sipCheck()
+        {
+            let alert = NSAlert()
+            alert.messageText = "System Integrity Protection Enabled"
+            alert.informativeText = "HQ Trivia Master requires System Integrety Protection (SIP) be disabled.  Please reboot to Recovery and run \"csrutil disable\" in Terminal to disable SIP.  Then, reboot to macOS and reinstall Tesseract and ImageMagick."
+            alert.runModal()
+            exit(-1)
+        }
+        else
+        {
+            SiteEncoding.checkGoogleAPICredentials()
+        }
+    }
+    
+    @IBAction func showGoogleAPIChangeWindow(sender: Any)
+    {
+        SiteEncoding.checkGoogleAPICredentials(force: true)
+    }
     
     ///Manually starts the answering process
     @IBAction private func answerButtonPressed(_ sender: NSButton)
@@ -120,9 +157,50 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         answerButton.isEnabled = !fieldIsEmpty()
     }
     
+    private func hideAnswerBoxes(shouldAnimate: Bool = false)
+    {
+        if self.optionOneCorrectOffScreenCenterConstraint == nil
+        {
+            self.optionOneCorrectOffScreenCenterConstraint = NSLayoutConstraint(item: self.optionOneCorrectBox, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1.0, constant: 0.0)
+        }
+        if self.optionTwoCorrectOffScreenCenterConstraint == nil
+        {
+            self.optionTwoCorrectOffScreenCenterConstraint = NSLayoutConstraint(item: self.optionTwoCorrectBox, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1.0, constant: 0.0)
+        }
+        if self.optionThreeCorrectOffScreenCenterConstraint == nil
+        {
+            self.optionThreeCorrectOffScreenCenterConstraint = NSLayoutConstraint(item: self.optionThreeCorrectBox, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1.0, constant: 0.0)
+        }
+        
+        if shouldAnimate
+        {
+            NSAnimationContext.runAnimationGroup({ context in
+                context.duration = 0.2
+                context.allowsImplicitAnimation = true
+                
+                self.optionOneCorrectCenterConstraint.animator().isActive = false
+                self.optionTwoCorrectCenterConstraint.animator().isActive = false
+                self.optionThreeCorrectCenterConstraint.animator().isActive = false
+                self.optionOneCorrectOffScreenCenterConstraint?.animator().isActive = true
+                self.optionTwoCorrectOffScreenCenterConstraint?.animator().isActive = true
+                self.optionThreeCorrectOffScreenCenterConstraint?.animator().isActive = true
+                self.view.animator().layout()
+            }, completionHandler: nil)
+        }
+        else
+        {
+            optionOneCorrectCenterConstraint.isActive = false
+            optionTwoCorrectCenterConstraint.isActive = false
+            optionThreeCorrectCenterConstraint.isActive = false
+            optionOneCorrectOffScreenCenterConstraint?.isActive = true
+            optionTwoCorrectOffScreenCenterConstraint?.isActive = true
+            optionThreeCorrectOffScreenCenterConstraint?.isActive = true
+        }
+    }
+    
     ///Takes the screenshot
     ///On failure to read, it repeats the screenshot after a 0.3 second wait
-    ///On success, it begins to process the information and search for the answer, waiting 10 seconds (this is the amount of time given for each question)
+    ///On success, it begins to process the information and search for the answer, waiting 20 seconds (this is the amount of time given for each question)
     @objc private func takeScreenshot()
     {
         guard !startScanningButton.title.contains("Start") else { return }
@@ -177,6 +255,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
     ///Resets the match labels
     private func clearMatches()
     {
+        hideAnswerBoxes(shouldAnimate: true)
         self.optionOneMatchesLabel.stringValue = "---"
         self.optionTwoMatchesLabel.stringValue = "---"
         self.optionThreeMatchesLabel.stringValue = "---"
@@ -193,7 +272,42 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
                 {
                     print("Predicted Correct Answer: \(correctAnswer)")
                 }
-                self.labels.first(where: { $0.0.stringValue == correctAnswer })?.1?.stringValue = "✔️"
+                self.labels.first(where: { $0.0.stringValue == correctAnswer })?.1?.stringValue = "✓"
+                
+                switch options.index(of: correctAnswer) ?? -1
+                {
+                case 0:
+                    NSAnimationContext.runAnimationGroup({ context in
+                        context.duration = 0.2
+                        context.allowsImplicitAnimation = true
+                        
+                        self.optionOneCorrectOffScreenCenterConstraint?.animator().isActive = false
+                        self.optionOneCorrectCenterConstraint.animator().isActive = true
+                        self.view.animator().layout()
+                    }, completionHandler: nil)
+                    
+                case 1:
+                    NSAnimationContext.runAnimationGroup({ context in
+                        context.duration = 0.2
+                        context.allowsImplicitAnimation = true
+                        
+                        self.optionTwoCorrectOffScreenCenterConstraint?.animator().isActive = false
+                        self.optionTwoCorrectCenterConstraint.animator().isActive = true
+                        self.view.animator().layout()
+                    }, completionHandler: nil)
+                    
+                case 2:
+                    NSAnimationContext.runAnimationGroup({ context in
+                        context.duration = 0.2
+                        context.allowsImplicitAnimation = true
+                        
+                        self.optionThreeCorrectOffScreenCenterConstraint?.animator().isActive = false
+                        self.optionThreeCorrectCenterConstraint.animator().isActive = true
+                        self.view.animator().layout()
+                    }, completionHandler: nil)
+                    
+                default: break
+                }
             }
         }
     }
