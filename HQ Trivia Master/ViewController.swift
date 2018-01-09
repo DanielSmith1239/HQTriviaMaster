@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import AVFoundation
 
 class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowDelegate
 {
@@ -139,7 +138,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
                 self.setFieldValues(fromText: text)
                 if !self.fieldIsEmpty()
                 {
-                    self.perform(#selector(ViewController.takeScreenshot), with: nil, afterDelay: 10.0)
+                    self.perform(#selector(ViewController.takeScreenshot), with: nil, afterDelay: 20.0)
                     self.answerButton.isEnabled = true
                     self.resetButton.isEnabled = true
                     self.clearMatches()

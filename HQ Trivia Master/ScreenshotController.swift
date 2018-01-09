@@ -6,7 +6,6 @@
 //  Copyright © 2017 Daniel Smith. All rights reserved.
 //
 
-import Foundation
 import AppKit
 
 class ScreenshotController
