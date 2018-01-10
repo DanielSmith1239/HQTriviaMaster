@@ -8,30 +8,38 @@
 
 import Foundation
 
+/**
+ Holds basic information about the type of question
+ 
+ The question's type is used for more precise searches, or to flip results where needed
+ */
 struct QuestionType : Equatable
 {
     private static let replacementWords = ["which of these", "which one of these", "whose", "who", "whom", "which", "what", "where"]
 
     var title : String
-    var check : (String) -> (Bool)
+    var check : (String) -> Bool
     var searchFunctionCode : Int
     
-    private init(title: String, check: @escaping (String) -> (Bool), searchFunctionCode: Int)
+    private init(title: String, check: @escaping (String) -> Bool, searchFunctionCode: Int)
     {
         self.title = title
         self.searchFunctionCode = searchFunctionCode
         self.check = check
     }
     
-    static func replaceInQuestion(question: String, replaceWith toReplace: String) -> String
+    /**
+     Replaces any instance of a phrase in `replacementWords` with the specified String
+     - Parameter question: The string to search in
+     - Parameter toReplace: The string to substitute in
+     - Returns: A string with all instances of a phrase in `replacementWords` replaced with the specified string
+     */
+    static func replace(in question: String, replaceWith toReplace: String) -> String
     {
         let lowercaseQuestion = question.lowercased()
-        for str in replacementWords
+        for str in replacementWords where lowercaseQuestion.contains(str)
         {
-            if lowercaseQuestion.contains(str)
-            {
-                return lowercaseQuestion.replacingOccurrences(of: str, with: toReplace)
-            }
+            return lowercaseQuestion.replacingOccurrences(of: str, with: toReplace)
         }
         return question
     }
@@ -58,5 +66,4 @@ struct QuestionType : Equatable
     static let midWhat = QuestionType(title: "Middle What", check: { $0.contains(" what") }, searchFunctionCode: 14)
     static let endWhat = QuestionType(title: "End What", check: { $0.hasSuffix("what?") }, searchFunctionCode: 15)
     static let definition = QuestionType(title: "Definition", check: { $0.starts(with: "What") && $0.contains("word") && $0.contains("mean") }, searchFunctionCode: 16)
-
 }

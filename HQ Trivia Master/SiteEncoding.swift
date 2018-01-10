@@ -65,6 +65,7 @@ struct SiteEncoding : Equatable, CustomStringConvertible, CustomDebugStringConve
         return SiteEncoding(name: "Google - Custom Search", url: url)
     }()
     
+    ///Verifies the user has recently inputted Google CSE credentials.  If not, a critical alert is presented prompting for them
     static func checkGoogleAPICredentials(force: Bool = false)
     {
         if keychain.get(googleSearchAPIKeyConstant) == nil || keychain.get(googleSearchSearchEngineIDConstant) == nil || force
@@ -74,6 +75,7 @@ struct SiteEncoding : Equatable, CustomStringConvertible, CustomDebugStringConve
         }
     }
     
+    ///Stores the credentials into the user's Secure Keychain
     static func addGoogleAPICredentials(apiKey: String, searchEngineID: String)
     {
         keychain.set(apiKey, forKey: googleSearchAPIKeyConstant)

@@ -135,6 +135,10 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         answerButton.isEnabled = !fieldIsEmpty()
     }
     
+    /**
+     Removes the green overlays from screen possibly with an animation
+     - Parameter shouldAnimate: Determines whether the transition off-screen should be animated or not.  Defaults to `false`
+     */
     private func hideAnswerBoxes(shouldAnimate: Bool = false)
     {
         if self.optionOneCorrectOffScreenCenterConstraint == nil
@@ -176,9 +180,13 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         }
     }
     
-    ///Takes the screenshot
-    ///On failure to read, it repeats the screenshot after a 0.3 second wait
-    ///On success, it begins to process the information and search for the answer, waiting 20 seconds (this is the amount of time given for each question)
+    /**
+     Takes the screenshot.
+     
+     On failure to read, it repeats the screenshot after a 0.3 second wait.
+     
+     On success, it begins to process the information and search for the answer, waiting 20 seconds (this is the amount of time given for each question)
+     */
     @objc private func takeScreenshot()
     {
         guard !startScanningButton.title.contains("Start") else { return }

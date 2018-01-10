@@ -140,6 +140,7 @@ private extension Array where Element : StringProtocol
     }
 }
 
+//Quick formatting for decimal numbers
 extension CGFloat
 {
     func format(f: String) -> String

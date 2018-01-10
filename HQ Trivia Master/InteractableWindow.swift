@@ -13,6 +13,9 @@ protocol InteractableWindowDelegate : class
     func drew(rect: NSRect)
 }
 
+/**
+ The window where the user chooses the part of the screen to be watched for questions popping up
+ */
 class InteractableWindow : NSPanel
 {
     weak var interactableWindowDelegate: InteractableWindowDelegate?
@@ -31,6 +34,7 @@ class InteractableWindow : NSPanel
     
     private var origin = NSPoint.zero
     
+    ///Sets up the UI for the interactable window
     func setup()
     {
         titleVisibility = .hidden

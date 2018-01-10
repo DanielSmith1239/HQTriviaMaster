@@ -10,7 +10,7 @@ import Foundation
 
 class Shell
 {
-    ///Checks if System Integrity Protection is enabled.  If SIP is on, the app won't function properly
+    ///Checks if System Integrity Protection is enabled.  If SIP is on, the app may not function properly
     static func sipCheck() -> Bool
     {
         return runCommand(cmd: "/usr/bin/csrutil", args: "status").output.first?.contains("enabled") ?? true
@@ -29,6 +29,7 @@ class Shell
         
     }
     
+    ///Asynchronously runs a command with the given inputs
     private static func shell(_ args: String..., completion: @escaping () -> Void)
     {
         let task = Process()

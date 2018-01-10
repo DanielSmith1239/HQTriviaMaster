@@ -8,6 +8,11 @@
 
 import AppKit
 
+/**
+ Stores information about each answer and its probability of being the correct answer
+ 
+ The most probable answer is stored separately for more explicit and quicker recall
+ */
 struct Answer
 {
     let correctAnswer : String
@@ -32,7 +37,7 @@ class AnswerController
      - Parameter question: The question being asked
      - Parameter answers: The list of answers
      - Parameter completion: A closure accepting the correct answer
-     - Parameter answer: The correct answer
+     - Parameter answer: An instance on `Answer` containing the correct answer and probabilities for all 3 answers
      */
     static func answer(for question: String, answers: [String], completion: @escaping (_ answer: Answer) -> ())
     {

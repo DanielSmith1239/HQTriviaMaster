@@ -18,6 +18,7 @@ class HQTriviaMaster : NSObject, NSApplicationDelegate
         return true
     }
     
+    ///Shows the Google CSE edit window
     @IBAction func showPreferences(sender: Any)
     {
         (NSApplication.shared.keyWindow?.contentViewController as? ViewController)?.showGoogleAPIChangeWindow(sender: sender)

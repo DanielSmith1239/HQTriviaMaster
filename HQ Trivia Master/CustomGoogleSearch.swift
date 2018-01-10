@@ -8,6 +8,9 @@
 
 import Cocoa
 
+/**
+ Prompts the user to input their Google CSE credentials
+ */
 class CustomGoogleSearch : NSViewController
 {
     @IBOutlet private var apiKeyTextField : NSTextField!
