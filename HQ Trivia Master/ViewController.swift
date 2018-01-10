@@ -44,7 +44,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
     override func viewDidAppear()
     {
         super.viewDidAppear()
-        if Shell.sipCheck(), NSUserDefaultsController.shared.value(forKey: "ShowSIPDialog") as? Bool == false, let window = view.window
+        if Shell.sipCheck(), UserDefaults.standard.bool(forKey: "ShowSIPDialog"), let window = view.window
         {
             let alert = NSAlert()
             alert.messageText = "System Integrity Protection Enabled"
@@ -53,7 +53,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
             alert.beginSheetModal(for: window, completionHandler: { _ in
                 if alert.suppressionButton?.state == .on
                 {
-                    NSUserDefaultsController.shared.setValue(true, forKey: "ShowSIPDialog")
+                    UserDefaults.standard.set(true, forKey: "ShowSIPDialog")
                 }
             })
         }
