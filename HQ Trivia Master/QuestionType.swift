@@ -42,8 +42,8 @@ struct QuestionType : Equatable
     }
     
     static let other = QuestionType(title: "Other", check: { !$0.isEmpty }, searchFunctionCode: 0)
-    static let startsWhich = QuestionType(title: "Starts Which", check: { $0.starts(with: "Which") }, searchFunctionCode: 1)
-    static let startWhat = QuestionType(title: "Start What", check: { $0.starts(with: "What") }, searchFunctionCode: 2)
+    static let startsWhich = QuestionType(title: "Starts with \"Which\"", check: { $0.starts(with: "Which") }, searchFunctionCode: 1)
+    static let startWhat = QuestionType(title: "Start with \"What\"", check: { $0.starts(with: "What") }, searchFunctionCode: 2)
     static let whichOfThese = QuestionType(title: "Which of These", check: { $0.lowercased().contains(atLeastOneElementIn: ["which of these", "which one of these", "which of the following"]) }, searchFunctionCode: 3)
     static let midWhich = QuestionType(title: "Middle Which", check: { $0.contains(" which ") }, searchFunctionCode: 4)
     static let correctSpelling = QuestionType(title: "Correct Spelling", check: { $0.contains(atLeastOneElementIn: ["spelling", "spelled", " spell "]) }, searchFunctionCode: 5)

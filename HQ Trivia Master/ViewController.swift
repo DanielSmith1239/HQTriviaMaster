@@ -17,6 +17,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
     @IBOutlet private var optionOneMatchesLabel : NSTextField!
     @IBOutlet private var optionTwoMatchesLabel : NSTextField!
     @IBOutlet private var optionThreeMatchesLabel : NSTextField!
+    @IBOutlet private var questionTypeLabel : NSTextField!
     @IBOutlet private var startScanningButton : NSButton!
     @IBOutlet private var answerButton : NSButton!
     @IBOutlet private var resetButton : NSButton!
@@ -109,35 +110,12 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         {
             let window = InteractableWindow()
             window.interactableWindowDelegate = self
-            window.titleVisibility = .hidden
-            window.titlebarAppearsTransparent = true
-            window.isOpaque = false
-            window.backgroundColor = NSColor.black.withAlphaComponent(0.5)
-            window.isMovable = false
-            window.styleMask.remove(.resizable)
-            window.styleMask.insert(.borderless)
-            
-            let view = NSView()
-            view.frame = NSScreen.main?.frame ?? .zero
-            let label = NSTextField(labelWithString: "Please choose area of screen to watch for gameplay")
-            label.alignment = .center
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.textColor = .white
-            label.font = .systemFont(ofSize: 50.0, weight: .bold)
-            view.addSubview(label)
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 40.0).isActive = true
-            label.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, multiplier: 1.0, constant: -100).isActive = true
-            label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-            label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-            label.setContentHuggingPriority(.defaultLow, for: .horizontal)
-            label.setContentHuggingPriority(.defaultLow, for: .vertical)
-            
-            window.contentView = view
+            window.setup()
             window.setFrame(NSScreen.main?.frame ?? .zero, display: true)
             window.makeKey()
             window.setIsVisible(true)
             window.becomeFirstResponder()
+            view.window?.resignFirstResponder()
             interactableWindow = window
         }
     }
@@ -207,24 +185,21 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         internalClearFields()
         ScreenshotController.takeScreenshot(inRect: screenshotRect) {
             DispatchQueue.main.async {
-                Shell.convertImageToText()
-                guard let text = OCROutputController.outputText else { return }
-                if HQTriviaMaster.debug
-                {
-                    print(text)
-                }
-                self.setFieldValues(fromText: text)
-                if !self.fieldIsEmpty()
-                {
-                    self.perform(#selector(ViewController.takeScreenshot), with: nil, afterDelay: 20.0)
-                    self.answerButton.isEnabled = true
-                    self.resetButton.isEnabled = true
-                    self.clearMatches()
-                    self.getMatches()
-                }
-                else
-                {
-                    self.perform(#selector(ViewController.takeScreenshot), with: nil, afterDelay: 0.3)
+                Shell.convertImageToText { text in
+                    guard let text = text else { return }
+                    self.setFieldValues(from: text)
+                    if !self.fieldIsEmpty()
+                    {
+                        self.perform(#selector(ViewController.takeScreenshot), with: nil, afterDelay: 20.0)
+                        self.answerButton.isEnabled = true
+                        self.resetButton.isEnabled = true
+                        self.clearMatches()
+                        self.getMatches()
+                    }
+                    else
+                    {
+                        self.perform(#selector(ViewController.takeScreenshot), with: nil, afterDelay: 0.3)
+                    }
                 }
             }
         }
@@ -245,6 +220,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
     ///Clears all data from UI
     private func internalClearFields()
     {
+        self.questionTypeLabel.stringValue = ""
         self.questionField.stringValue = ""
         self.optionOneField.stringValue = ""
         self.optionTwoField.stringValue = ""
@@ -267,86 +243,95 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         if !fieldIsEmpty()
         {
             let options = [optionOneField.stringValue, optionTwoField.stringValue, optionThreeField.stringValue]
-            AnswerController.answer(for: questionField.stringValue, answers: options) { correctAnswer in
+            AnswerController.answer(for: questionField.stringValue, answers: options) { answer in
                 if HQTriviaMaster.debug
                 {
-                    print("Predicted Correct Answer: \(correctAnswer)")
+                    print("Predicted Correct Answer: \(answer.correctAnswer)")
                 }
-                self.labels.first(where: { $0.0.stringValue == correctAnswer })?.1?.stringValue = "✓"
                 
-                switch options.index(of: correctAnswer) ?? -1
+                //No answer was able to be determined
+                if answer.probability == 0 && answer.correctAnswer == ""
                 {
-                case 0:
-                    NSAnimationContext.runAnimationGroup({ context in
-                        context.duration = 0.2
-                        context.allowsImplicitAnimation = true
-                        
+                    let alert = NSAlert()
+                    alert.icon = nil
+                    alert.messageText = "Answers Not Found in Results"
+                    alert.informativeText = "HQ Trivia Master could not find any instance of any answer in the search results."
+                    return
+                }
+                
+                self.processProbabilities(for: answer)
+                
+                //Make sure there's a "strong" enough probability to warrant showing which one is correct.  Otherwise, let the user decide
+                guard answer.probability > 0.4 else { return }
+                NSAnimationContext.runAnimationGroup({ context in
+                    context.duration = 0.2
+                    context.allowsImplicitAnimation = true
+                    
+                    switch options.index(of: answer.correctAnswer) ?? -1
+                    {
+                    case 0:
                         self.optionOneCorrectOffScreenCenterConstraint?.animator().isActive = false
                         self.optionOneCorrectCenterConstraint.animator().isActive = true
                         self.view.animator().layout()
-                    }, completionHandler: nil)
-                    
-                case 1:
-                    NSAnimationContext.runAnimationGroup({ context in
-                        context.duration = 0.2
-                        context.allowsImplicitAnimation = true
                         
+                    case 1:
                         self.optionTwoCorrectOffScreenCenterConstraint?.animator().isActive = false
                         self.optionTwoCorrectCenterConstraint.animator().isActive = true
                         self.view.animator().layout()
-                    }, completionHandler: nil)
-                    
-                case 2:
-                    NSAnimationContext.runAnimationGroup({ context in
-                        context.duration = 0.2
-                        context.allowsImplicitAnimation = true
                         
+                    case 2:
                         self.optionThreeCorrectOffScreenCenterConstraint?.animator().isActive = false
                         self.optionThreeCorrectCenterConstraint.animator().isActive = true
                         self.view.animator().layout()
-                    }, completionHandler: nil)
-                    
-                default: break
-                }
+                        
+                    default: break
+                    }
+                }, completionHandler: nil)
             }
         }
     }
     
-    ///Sets the values in UI
-    func setFieldValues(fromText text: String)
+    ///Updates the probabilites for each answer.  The probability is the liklihood the answer is correct based on how many instances were found in the search results
+    private func processProbabilities(for answer: Answer)
     {
-        var arr = text.split(separator: "\n").filter { !$0.isEmpty}.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-        guard let questionEnd = findQuestionEnd(arr) else
+        let correctPercentage = answer.probability * 100.0
+        let firstCorrectPercentage = (answer.others.first?.1 ?? 0.0) * 100.0
+        let lastCorrectPercentage = (answer.others.last?.1 ?? 0.0) * 100.0
+        let correctProbabilityString = correctPercentage.format(f: correctPercentage == floor(correctPercentage) ? ".0" : ".2")
+        let firstOtherAnswerProbabilityString = firstCorrectPercentage.format(f: firstCorrectPercentage == floor(firstCorrectPercentage) ? ".0" : ".2")
+        let lastOtherAnswerProbabilityString = lastCorrectPercentage.format(f: lastCorrectPercentage == floor(lastCorrectPercentage) ? ".0" : ".2")
+        labels.first(where: { $0.0.stringValue == answer.correctAnswer })?.1?.stringValue = "Probability: \(correctProbabilityString.isEmpty ? "0" : correctProbabilityString)%"
+        labels.first(where: { $0.0.stringValue == answer.others.first?.0 })?.1?.stringValue = "Probability: \(firstOtherAnswerProbabilityString.isEmpty ? "0" : firstOtherAnswerProbabilityString)%"
+        labels.first(where: { $0.0.stringValue == answer.others.last?.0 })?.1?.stringValue = "Probability: \(lastOtherAnswerProbabilityString.isEmpty ? "0" : lastOtherAnswerProbabilityString)%"
+    }
+    
+    ///Sets the values in UI
+    private func setFieldValues(from text: String)
+    {
+        var splitText = text.split(separator: "\n").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }
+        guard let questionEnd = splitText.index(where: { string -> Bool in string.contains("?") }) else
         {
+            if HQTriviaMaster.debug
+            {
+                print("Did not find question end")
+            }
             return
         }
+        let questionArr = splitText[0...questionEnd]
         
-        var questionArr = arr[0...questionEnd].map { (value: String) -> String in
-            var ret = value
-            if ret.first == " " { ret.removeFirst() }
-            if ret.last != " " && ret.last != "?" { ret += " " }
-            return ret
-        }
+        var fixedText = splitText.filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: .illegalCharacters).isEmpty }
         
-        while questionArr.first!.isEmpty || questionArr.first!.count < 10
+        let option3 = String(fixedText.removeLast()).fixedText
+        let option2 = String(fixedText.removeLast()).fixedText
+        let option1 = String(fixedText.removeLast()).fixedText
+        let question = String(questionArr.joined(separator: " ")).fixedText
+        
+        if HQTriviaMaster.debug
         {
-            questionArr.removeFirst()
+            print(question, option1, option2, option3, separator: "\n", terminator: "\n")
         }
         
-        var fixedArr = [String]()
-        for op in arr
-        {
-            if !op.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: .illegalCharacters).isEmpty
-            {
-                fixedArr.append(op)
-            }
-        }
-        
-        let option3 = String(fixedArr.removeLast()).fixedText
-        let option2 = String(fixedArr.removeLast()).fixedText
-        let option1 = String(fixedArr.removeLast()).fixedText
-        let question = String(questionArr.joined()).fixedText
-        
+        self.questionTypeLabel.stringValue = "Question Type: \(AnswerController.type(forQuestion: question).title)"
         self.optionOneField.stringValue = option1
         self.optionTwoField.stringValue = option2
         self.optionThreeField.stringValue = option3
@@ -355,17 +340,6 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         {
             self.fixSpelling()
         }
-    }
-    
-    ///Finds the index of end of the question
-    private func findQuestionEnd(_ arr: [String]) -> Int?
-    {
-        let qElement = arr.filter { $0.replacingOccurrences(of: "\"", with: "?").replacingOccurrences(of: "”", with: "?").last == "?" }
-        guard let last = qElement.last else
-        {
-            return nil
-        }
-        return arr.index(of: last)
     }
     
     ///Auto-Correct

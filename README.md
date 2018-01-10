@@ -3,7 +3,7 @@
 ## Setup
 1. Install [Tesseract OCR](https://github.com/tesseract-ocr/tesseract/wiki) and [ImageMagick](https://www.imagemagick.org/script/download.php) (or in Terminal with `brew install tesseract imagemagick`)
 2. Visit [Custom Search Engine](https://cse.google.com/cse/) to create a Custom Google Search Engine (CSE).  Record the API Key and Search Engine ID
-3. When running HQTriviaMaster for the first time, you will be prompted for the CSE API Key and Search Engine ID
+3. When running HQTriviaMaster for the first time, you will be prompted for the CSE API Key and Search Engine ID.  You can change these at anytime by pressing `⌘,` or going to `HQTriviaMaster > Preferences`
 
 ## Usage
 1. Click on the "Define Boundary" button to set the boundry of where the question will be appearing
@@ -12,11 +12,10 @@
 
 ## To Do
 - [ ] Improve accuracy (only 80% success rate right now).
-- [ ] Switch from using Tesseract OCR to SwiftOCR.
 - [ ] Add a way to answer a large amount of questions at once to test the program's accuracy.
 - [x] Make the correct answer more obvious on the UI.
-- [ ] Let the user know when the program doesn't find any matches for all of the options.
-- [ ] Add the question type and accuracy to the UI.
+- [x] Let the user know when the program doesn't find any matches for all of the options.
+- [x] Add the question type and accuracy to the UI.
 
 ## Contributers
  [**Daniel Smith**](https://github.com/DanielSmith1239) (owner), [**Michael Schloss**](https://github.com/schlossm).

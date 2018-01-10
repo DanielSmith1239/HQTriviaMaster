@@ -29,6 +29,10 @@ class Google
         for answer in searchStrings
         {
             group.enter()
+            if HQTriviaMaster.debug
+            {
+                print("Search String: \(question) \(answer)")
+            }
             getGooglePage(for: "\(question) \(answer)") { page, _ in
                 defer
                 {
@@ -56,6 +60,10 @@ class Google
         var answerCounts = AnswerCounts()
         let group = DispatchGroup()
         group.enter()
+        if HQTriviaMaster.debug
+        {
+            print("Search String: \(question)")
+        }
         getGooglePage(for: question) { page, _ in
             defer
             {
@@ -85,6 +93,10 @@ class Google
         var answerCounts = AnswerCounts()
         let group = DispatchGroup()
         group.enter()
+        if HQTriviaMaster.debug
+        {
+            print("Search String: \(question) \(searchStrings[0]) \(searchStrings[1]) \(searchStrings[2])")
+        }
         getGooglePage(for: "\(question) \(searchStrings[0]) \(searchStrings[1]) \(searchStrings[2])") { page, _ in
             defer
             {
@@ -116,6 +128,10 @@ class Google
         group.enter()
         let allSearchStrs = searchStrings + question.replacingOccurrences(of: quote, with: "").withoutExtraneousWords.components(separatedBy: " ")
         let searchStr = "\(allSearchStrs.joined(separator: " ").components(separatedBy: " ").joined(separator: ". .")) \(quote)"
+        if HQTriviaMaster.debug
+        {
+            print("Search String: \(searchStr)")
+        }
         getGooglePage(for: searchStr) { page, _ in
             defer
             {
@@ -148,6 +164,10 @@ class Google
             let search = wordArr.count > 1 ? QuestionType.replaceInQuestion(question: question, replaceWith: "\(wordArr.joined(separator: ". ."))") :
                 QuestionType.replaceInQuestion(question: question, replaceWith: "\(answer).")
             let searchStr = queryContainsQuestion ? search.withoutExtraneousWords : answer
+            if HQTriviaMaster.debug
+            {
+                print("Search String: \(search)")
+            }
             getGooglePage(for: search) { page, numberOfResults in
                 defer
                 {
@@ -193,6 +213,10 @@ class Google
         {
             group.enter()
             let search = QuestionType.replaceInQuestion(question: question, replaceWith: answer).withoutExtraneousWords
+            if HQTriviaMaster.debug
+            {
+                print("Search String: \(search)")
+            }
             getGooglePage(for: search) { _, numberOfResults in
                 answerCounts[answer] = numberOfResults
                 group.leave()

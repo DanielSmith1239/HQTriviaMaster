@@ -33,6 +33,21 @@ struct AnswerCounts : CustomStringConvertible, CustomDebugStringConvertible
         return innerRepresentation.count
     }
     
+    var sumOfResults : Int
+    {
+        var sum = 0
+        for integer in innerRepresentation.map({ return $1 })
+        {
+            sum += integer
+        }
+        return sum
+    }
+    
+    var dump : [(String, Int)]
+    {
+        return innerRepresentation.map({ return ($0, $1) })
+    }
+    
     ///Returns the String and visibility count with the largest visibility count
     var largest : (String, Int)
     {
@@ -125,6 +140,14 @@ private extension Array where Element : StringProtocol
     }
 }
 
+extension CGFloat
+{
+    func format(f: String) -> String
+    {
+        return String(format: "%\(f)f", self)
+    }
+}
+
 //Borrowed from https://stackoverflow.com/a/36006764
 extension NSWindow
 {
@@ -142,12 +165,12 @@ extension NSWindow
             let shakeAnimation = CAKeyframeAnimation()
             
             let shakePath = CGMutablePath()
-            shakePath.move(to: CGPoint(x: NSMinX(frame), y: NSMinY(frame)))
+            shakePath.move(to: CGPoint(x: frame.minX, y: frame.minY))
             
             for _ in 0...numberOfShakes - 1
             {
-                shakePath.addLine(to: CGPoint(x:NSMinX(frame) - frame.size.width * intensity,y:NSMinY(frame)))
-                shakePath.addLine(to: CGPoint(x:NSMinX(frame) + frame.size.width * intensity,y:NSMinY(frame)))
+                shakePath.addLine(to: CGPoint(x: frame.minX - frame.size.width * intensity, y: frame.minY))
+                shakePath.addLine(to: CGPoint(x: frame.minX + frame.size.width * intensity, y: frame.minY))
             }
             
             shakePath.closeSubpath()

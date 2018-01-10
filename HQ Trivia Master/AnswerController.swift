@@ -8,9 +8,24 @@
 
 import AppKit
 
+struct Answer
+{
+    let correctAnswer : String
+    let probability : CGFloat
+    
+    let others : [(String, CGFloat)]
+    
+    init(correctAnswer: String, probability: CGFloat, others: [(String, CGFloat)])
+    {
+        self.correctAnswer = correctAnswer
+        self.probability = probability
+        self.others = others
+    }
+}
+
 class AnswerController
 {
-    private static let answerTypes = [QuestionType.not, QuestionType.definition, QuestionType.otherTwo, QuestionType.whichOfThese, QuestionType.midWhich, QuestionType.correctSpelling, QuestionType.whose, QuestionType.who, QuestionType.howMany, QuestionType.startsWhich, QuestionType.isWhat, QuestionType.startWhat, QuestionType.endWhat, QuestionType.midWhat, QuestionType.whereIs, QuestionType.other]
+    private static let questionTypes : [QuestionType] = [.not, .definition, .otherTwo, .whichOfThese, .midWhich, .correctSpelling, .whose, .who, .howMany, .startsWhich, .isWhat, .startWhat, .endWhat, .midWhat, .whereIs, .other]
     
     /**
      Attempts to answer a question by using Google.  Questions can range in type, as such this method serves as a delegator to various question types
@@ -19,9 +34,33 @@ class AnswerController
      - Parameter completion: A closure accepting the correct answer
      - Parameter answer: The correct answer
      */
-    static func answer(for question: String, answers: [String], completion: @escaping (_ answer: String) -> ())
+    static func answer(for question: String, answers: [String], completion: @escaping (_ answer: Answer) -> ())
     {
         let questionType = type(forQuestion: question)
+        
+        func processAnswer(for matches: AnswerCounts)
+        {
+            if HQTriviaMaster.debug
+            {
+                print("\nAnswers:\n\(matches)")
+            }
+            let largestMatch = matches.largest
+            let sum : Int = matches.sumOfResults
+            var others = [(String, CGFloat)]()
+            if sum == 0
+            {
+                completion(Answer(correctAnswer: "", probability: 0.0, others: []))
+            }
+            else
+            {
+                for match in matches.dump where match.0 != largestMatch.0
+                {
+                    others.append((match.0, CGFloat(match.1) / CGFloat(sum)))
+                }
+                completion(Answer(correctAnswer: largestMatch.0, probability: CGFloat(largestMatch.1) / CGFloat(sum), others: others))
+            }
+            
+        }
         
         if HQTriviaMaster.debug
         {
@@ -34,31 +73,21 @@ class AnswerController
         case 5, 7, 3:
             //Questions that include "not", questions that are spelling questions, and questions that ask "which of these" cannot be easily answered, and thus require more precise processing
             matches(for: question, answers: answers) { matches in
-                if HQTriviaMaster.debug
-                {
-                    print("\nAnswers:\n\(matches)")
-                }
-                completion(matches.largest.0)
-                return
+                processAnswer(for: matches)
             }
-            break
             
         default:
             //For everything else, questions have the potential to be answered without needing precision
             Google.matches(for: question, including: answers) { matches in
-                if HQTriviaMaster.debug
-                {
-                    print("\nAnswers:\n\(matches)")
-                }
                 guard matches.count != 1, matches.largest.1 > 0 else
                 {
                     //We need precision anyways since the imprecise didn't give us enough accuracy
                     AnswerController.matches(for: question, answers: answers) { matches in
-                        completion(matches.largest.0)
+                        processAnswer(for: matches)
                     }
                     return
                 }
-                completion(matches.largest.0)
+                processAnswer(for: matches)
             }
         }
     }
@@ -118,7 +147,7 @@ class AnswerController
      */
     static func type(forQuestion question: String) -> QuestionType
     {
-        for type in answerTypes
+        for type in questionTypes
         {
             if type.check(question)
             {

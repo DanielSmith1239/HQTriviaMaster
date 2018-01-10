@@ -10,31 +10,38 @@ import Foundation
 
 class Shell
 {
-    ///Checks if System Integrity Protection is enabled.  If SIP is on, tesseract doesn't function properly as the '/usr/local/bin/convert' is unavailable
+    ///Checks if System Integrity Protection is enabled.  If SIP is on, the app won't function properly
     static func sipCheck() -> Bool
     {
         return runCommand(cmd: "/usr/bin/csrutil", args: "status").output.first?.contains("enabled") ?? true
     }
     
     ///Runs Tesseract to convert the image to text
-    static func convertImageToText()
+    static func convertImageToText(completion: @escaping (String?) -> Void)
     {
-        shell("/usr/local/bin/convert", "\(NSTemporaryDirectory())hqTriviaMasterTemp.jpg", "-resize", "400%", "-type", "Grayscale", "\(NSTemporaryDirectory())/hqTriviaMasterTemp.tif")
-        if HQTriviaMaster.debug
-        {
-            print("Converted .tif: \(NSTemporaryDirectory())hqTriviaMasterTemp.tif")
-        }
-        shell("/usr/local/bin/tesseract", "\(NSTemporaryDirectory())hqTriviaMasterTemp.tif", "output")
+        shell("/usr/local/bin/convert", "\(NSTemporaryDirectory())hqTriviaMasterTemp.jpg", "-resize", "400%", "-type", "Grayscale", "\(NSTemporaryDirectory())/hqTriviaMasterTemp.tif", completion: {
+            shell("/usr/local/bin/tesseract", "\(NSTemporaryDirectory())hqTriviaMasterTemp.tif", "output", completion: {
+                DispatchQueue.main.async {
+                    completion(try? String(contentsOf: FileManager.default.temporaryDirectory.appendingPathComponent("output.txt")))
+                }
+            })
+        })
+        
     }
     
-    private static func shell(_ args: String...)
+    private static func shell(_ args: String..., completion: @escaping () -> Void)
     {
         let task = Process()
+        if !HQTriviaMaster.debug
+        {
+            task.standardOutput = FileHandle()
+            task.standardError = FileHandle()
+        }
         task.launchPath = "/usr/bin/env"
         task.currentDirectoryURL = FileManager.default.temporaryDirectory
         task.arguments = args
         task.launch()
-        task.waitUntilExit()
+        task.terminationHandler = { _ in completion() }
     }
     
     /**
