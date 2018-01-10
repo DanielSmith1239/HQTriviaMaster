@@ -44,17 +44,18 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
     override func viewDidAppear()
     {
         super.viewDidAppear()
-        if Shell.sipCheck(), NSUserDefaultsController.shared.value(forKey: "ShowSIPDialog") as? Bool == false
+        if Shell.sipCheck(), NSUserDefaultsController.shared.value(forKey: "ShowSIPDialog") as? Bool == false, let window = view.window
         {
             let alert = NSAlert()
             alert.messageText = "System Integrity Protection Enabled"
             alert.informativeText = "System Integrety Protection (SIP) is enabled.  HQ Trivia Master may have issues communicating with Tesseract and ImageMagick.  If you experience issues, you will need to disable SIP.  To disable SIP, reboot to Recovery and run \"csrutil disable\" in Terminal"
             alert.showsSuppressionButton = true
-            alert.runModal()
-            if alert.suppressionButton?.state == .on
-            {
-                NSUserDefaultsController.shared.setValue(true, forKey: "ShowSIPDialog")
-            }
+            alert.beginSheetModal(for: window, completionHandler: { _ in
+                if alert.suppressionButton?.state == .on
+                {
+                    NSUserDefaultsController.shared.setValue(true, forKey: "ShowSIPDialog")
+                }
+            })
         }
         let hasRequiredFiles = Shell.checkForRequiredFiles()
         if !hasRequiredFiles.hasConvert || !hasRequiredFiles.hasTesseract, let window = view.window
