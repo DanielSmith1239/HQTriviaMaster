@@ -48,9 +48,8 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         {
             let alert = NSAlert()
             alert.messageText = "System Integrity Protection Enabled"
-            alert.informativeText = "HQ Trivia Master requires System Integrety Protection (SIP) be disabled.  Please reboot to Recovery and run \"csrutil disable\" in Terminal to disable SIP.  Then, reboot to macOS and reinstall Tesseract and ImageMagick."
+            alert.informativeText = "System Integrety Protection (SIP) is enabled.  HQ Trivia Master may have issues communicating with Tesseract and ImageMagick.  If you experience issues, you will need to disable SIP.  To disable SIP, reboot to Recovery and run \"csrutil disable\" in Terminal"
             alert.runModal()
-            exit(-1)
         }
         else
         {
