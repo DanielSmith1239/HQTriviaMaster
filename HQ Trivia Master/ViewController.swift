@@ -44,17 +44,40 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
     override func viewDidAppear()
     {
         super.viewDidAppear()
-        if Shell.sipCheck()
+        if Shell.sipCheck(), NSUserDefaultsController.shared.value(forKey: "ShowSIPDialog") as? Bool == false
         {
             let alert = NSAlert()
             alert.messageText = "System Integrity Protection Enabled"
             alert.informativeText = "System Integrety Protection (SIP) is enabled.  HQ Trivia Master may have issues communicating with Tesseract and ImageMagick.  If you experience issues, you will need to disable SIP.  To disable SIP, reboot to Recovery and run \"csrutil disable\" in Terminal"
+            alert.showsSuppressionButton = true
             alert.runModal()
+            if alert.suppressionButton?.state == .on
+            {
+                NSUserDefaultsController.shared.setValue(true, forKey: "ShowSIPDialog")
+            }
         }
-        else
+        let hasRequiredFiles = Shell.checkForRequiredFiles()
+        if !hasRequiredFiles.hasConvert || !hasRequiredFiles.hasTesseract, let window = view.window
         {
-            SiteEncoding.checkGoogleAPICredentials()
+            let alert = NSAlert()
+            alert.messageText = "Missing Files"
+            switch hasRequiredFiles
+            {
+            case (false, false):
+                alert.informativeText = "You are missing Tesseract and ImageMagick.  You can install them by running \"brew install tesseract imagemagick\" if you have Homebrew installed."
+                
+            case (false, true):
+                alert.informativeText = "You are missing ImageMagick.  You can install it by running \"brew install imagemagick\" if you have Homebrew installed."
+                
+            case (true, false):
+                alert.informativeText = "You are missing Tesseract.  You can install it by running \"brew install tesseract\" if you have Homebrew installed."
+                
+            default: return
+            }
+            alert.beginSheetModal(for: window, completionHandler: { _ in exit(-1) })
+            return
         }
+        SiteEncoding.checkGoogleAPICredentials()
     }
     
     @IBAction func showGoogleAPIChangeWindow(sender: Any)

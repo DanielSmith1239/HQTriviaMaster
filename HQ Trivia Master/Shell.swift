@@ -16,6 +16,14 @@ class Shell
         return runCommand(cmd: "/usr/bin/csrutil", args: "status").output.first?.contains("enabled") ?? true
     }
     
+    ///Returns the status of the two required files to make sure we're not going to run into any issues.
+    static func checkForRequiredFiles() -> (hasConvert: Bool, hasTesseract: Bool)
+    {
+        let hasConvert = runCommand(cmd: "/usr/local/bin/convert", args: "").output.contains("Usage: convert [options ...] file [ [options ...] file ...] [options ...] file")
+        let hasTesseract = runCommand(cmd: "/usr/local/bin/tesseract", args: "").output.contains("  /usr/local/bin/tesseract --help | --help-psm | --help-oem | --version")
+        return (hasConvert, hasTesseract)
+    }
+    
     ///Runs Tesseract to convert the image to text
     static func convertImageToText(completion: @escaping (String?) -> Void)
     {
