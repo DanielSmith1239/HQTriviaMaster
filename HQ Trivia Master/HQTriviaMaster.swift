@@ -11,7 +11,14 @@ import Cocoa
 @NSApplicationMain
 class HQTriviaMaster : NSObject, NSApplicationDelegate
 {
-    static let debug = true
+    static private(set) var debug = true
+    
+    @IBOutlet var loggingMenuItem : NSMenuItem!
+    
+    func applicationDidFinishLaunching(_ notification: Notification)
+    {
+        loggingMenuItem.title = "Toggle Logging (\(HQTriviaMaster.debug ? "Enabled" : "Disabled"))"
+    }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool
     {
@@ -22,6 +29,12 @@ class HQTriviaMaster : NSObject, NSApplicationDelegate
     @IBAction func showPreferences(sender: Any)
     {
         (NSApplication.shared.keyWindow?.contentViewController as? ViewController)?.showGoogleAPIChangeWindow(sender: sender)
+    }
+    
+    @IBAction func toggleLogging(sender: NSMenuItem)
+    {
+        HQTriviaMaster.debug = !HQTriviaMaster.debug
+        sender.title = "Toggle Logging (\(HQTriviaMaster.debug ? "Enabled" : "Disabled"))"
     }
 }
 

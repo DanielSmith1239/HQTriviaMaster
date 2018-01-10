@@ -30,6 +30,12 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
+                                        <menuItem title="Toggle Logging" id="Vzp-8u-Dp9">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="toggleLoggingWithSender:" target="Voe-Tx-rLC" id="Tuv-WZ-65C"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="4je-JR-u6R"/>
                                         <menuItem title="Hide HQ Trivia Master" keyEquivalent="h" id="Olw-nP-bQN">
                                             <connections>
@@ -282,7 +288,11 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="HQTriviaMaster" customModule="HQ_Trivia_Master" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="HQTriviaMaster" customModule="HQ_Trivia_Master" customModuleProvider="target">
+                    <connections>
+                        <outlet property="loggingMenuItem" destination="Vzp-8u-Dp9" id="TPa-TY-6T3"/>
+                    </connections>
+                </customObject>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
@@ -451,7 +461,7 @@ Gw
                                 <rect key="frame" x="0.0" y="0.0" width="703" height="445"/>
                                 <subviews>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="r7J-g8-xMW">
-                                        <rect key="frame" x="0.0" y="445" width="700" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="445" width="703" height="0.0"/>
                                         <constraints>
                                             <constraint firstAttribute="height" id="1gi-KA-GQG"/>
                                         </constraints>
@@ -460,7 +470,7 @@ Gw
                                         <rect key="frame" x="0.0" y="272" width="703" height="165"/>
                                         <subviews>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="MUj-fr-sFp">
-                                                <rect key="frame" x="0.0" y="41" width="0.0" height="124"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="165"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" id="g7k-A3-tqj"/>
                                                 </constraints>
@@ -519,7 +529,7 @@ Gw
                                                 </customSpacing>
                                             </stackView>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="JqV-HX-KW0">
-                                                <rect key="frame" x="703" y="41" width="0.0" height="124"/>
+                                                <rect key="frame" x="703" y="0.0" width="0.0" height="165"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" id="glX-Wv-jl0"/>
                                                 </constraints>
@@ -712,7 +722,7 @@ Gw
                                         <rect key="frame" x="0.0" y="8" width="703" height="166"/>
                                         <subviews>
                                             <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jiB-Nz-GfJ">
-                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="125"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="166"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" id="efD-hs-R6P"/>
                                                 </constraints>
@@ -775,7 +785,7 @@ Gw
                                                 </customSpacing>
                                             </stackView>
                                             <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="D3M-Mm-rL5">
-                                                <rect key="frame" x="703" y="0.0" width="0.0" height="125"/>
+                                                <rect key="frame" x="703" y="0.0" width="0.0" height="166"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" id="LQp-To-K7u"/>
                                                 </constraints>
@@ -793,7 +803,7 @@ Gw
                                         </customSpacing>
                                     </stackView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="F38-ih-JSn">
-                                        <rect key="frame" x="0.0" y="0.0" width="700" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="703" height="0.0"/>
                                         <constraints>
                                             <constraint firstAttribute="height" id="EuI-Dv-HdY"/>
                                         </constraints>
