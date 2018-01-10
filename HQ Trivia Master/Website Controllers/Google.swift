@@ -8,9 +8,6 @@
 
 import Foundation
 
-@available(*, deprecated: 10.0, renamed: "Google")
-typealias GoogleController = Google
-
 class Google
 {
     static let removeFromOption = ["of", "the", "?"]
