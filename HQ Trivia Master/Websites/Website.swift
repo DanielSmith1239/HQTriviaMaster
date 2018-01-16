@@ -10,7 +10,10 @@ import Foundation
 
 protocol Website
 {
+    ///A list of strings to remove from each answer
     static var removeFromOption : [String] { get }
+    
+    ///The corresponding `SiteEncoding`
     var siteEncoding : SiteEncoding? { get set }
     
     /**

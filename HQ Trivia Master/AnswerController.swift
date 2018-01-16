@@ -31,9 +31,10 @@ struct Answer
 class AnswerController
 {
     /**
-     Attempts to answer a question by using Google.  Questions can range in type, as such this method serves as a delegator to various question types
+     Attempts to answer a question.  Questions can range in type, as such this method serves as a delegator to various question types
      - Parameter question: The question being asked
      - Parameter answers: The list of answers
+     - Parameter using: The `SiteEncoding` to use to answer the question
      - Parameter completion: A closure accepting the correct answer
      - Parameter answer: An instance on `Answer` containing the correct answer and probabilities for all 3 answers
      */
