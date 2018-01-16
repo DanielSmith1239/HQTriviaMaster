@@ -8,6 +8,215 @@
 
 import Foundation
 
+struct _Google : Website
+{
+    func process(question: String, possibleAnswers: [String], completion: @escaping (AnswerCounts) -> Void)
+    {
+        guard possibleAnswers.count == 3 else
+        {
+            completion(AnswerCounts.invalid)
+            return
+        }
+        let analysis = QuestionAnalysis(question: question)
+        if HQTriviaMaster.debug
+        {
+            print(analysis)
+        }
+        guard !analysis.invalid else { return }
+        
+        let group = DispatchGroup()
+        var answerCounts = AnswerCounts()
+        var searchStrings = [(searchString: String, answer: String, longString: String, shortString: String)]()
+        
+        if [QuestionType.startsWhich, .whichOfThese].contains(analysis.start) || analysis.middle == .midWhich || analysis.unique == .whereIs
+        {
+            for answer in possibleAnswers.map({ $0.googleOption })
+            {
+                let wordArr = answer.split(separator: " ")
+                let search = wordArr.count > 1 ? question.replacingHotPhrases(with: "\(wordArr.joined(separator: " "))") : question.replacingHotPhrases(with: "\(answer) ")
+                searchStrings.append((search.withoutExtraneousWords, answer, search, answer))
+            }
+        }
+        else if [QuestionType.whose, .who].contains(analysis.start)
+        {
+            for answer in possibleAnswers.map({ $0.googleOption })
+            {
+                let wordArr = answer.split(separator: " ")
+                let search = wordArr.count > 1 ? question.replacingHotPhrases(with: "\(wordArr.joined(separator: " "))") : question.replacingHotPhrases(with: "\(answer) ")
+                searchStrings.append((answer, answer, search, answer))
+            }
+        }
+        else if analysis.ending == .isWhat
+        {
+            for answer in possibleAnswers.map({ $0.googleOption })
+            {
+                searchStrings.append((question.replacingHotPhrases(with: answer).withoutExtraneousWords, answer, "", ""))
+            }
+        }
+        else
+        {
+            for possibleAnswer in possibleAnswers
+            {
+                let searchString = question + " " + possibleAnswer
+                if HQTriviaMaster.debug
+                {
+                    print("Search String: " + searchString)
+                }
+                searchStrings.append((searchString, possibleAnswer, possibleAnswer, possibleAnswer))
+            }
+        }
+        
+        for searchString in searchStrings
+        {
+            group.enter()
+            if HQTriviaMaster.debug
+            {
+                print("_Google Search String: \(searchString)")
+            }
+            perform(search: searchString.searchString, completion: { page, numberOfResults in
+                defer { group.leave() }
+                guard let page = page else { return }
+                if searchString.longString == "" && searchString.shortString == ""
+                {
+                    answerCounts[searchString.answer] = numberOfResults
+                }
+                else
+                {
+                    let matches = self.numberOfMatches(in: page, longString: searchString.longString, shortString: searchString.shortString)
+                    answerCounts[searchString.answer] = matches
+                }
+                
+                if analysis.isNot
+                {
+                    //TODO: Fill in
+                }
+            })
+        }
+        
+        group.notify(queue: .main) {
+            completion(answerCounts)
+        }
+    }
+    
+    func perform(search: String, completion: @escaping (String?, Int) -> Void)
+    {
+        guard let url = SiteEncoding.google.url(with: search) else
+        {
+            completion(nil, 0)
+            return
+        }
+        URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
+            DispatchQueue.main.async {
+                if let error = error
+                {
+                    print(error)
+                    completion(nil, 0)
+                    return
+                }
+                guard let pageData = data, let unknownReturnString = NSAttributedString(html: pageData, baseURL: url, documentAttributes: nil) else
+                {
+                    print("Empty Google page for: \(search)")
+                    completion(nil, 0)
+                    return
+                }
+                do
+                {
+                    guard let json = try JSONSerialization.jsonObject(with: pageData, options: []) as? [String: Any] else
+                    {
+                        completion(unknownReturnString.string, 0)
+                        return
+                    }
+                    var snippets = ""
+                    if let items = json["items"] as? [[String: Any]]
+                    {
+                        snippets = items.flatMap { $0["snippet"] as? String }.joined(separator: " ")
+                        snippets += items.flatMap { $0["title"] as? String }.joined(separator: " ")
+                    }
+                    guard let searchInfo = json["searchInformation"] as? [String : Any], let results = searchInfo["totalResults"] as? String, let numResults = Int(results), numResults != 10 else
+                    {
+                        completion(unknownReturnString.string, 0)
+                        return
+                    }
+                    completion(snippets, numResults)
+                }
+                catch
+                {
+                    print(error)
+                    completion(unknownReturnString.string, 0)
+                }
+            }
+        }.resume()
+    }
+
+    private func numberOfMatches(in page: String, longString: String, shortString: String) -> Int
+    {
+        let page = page.lowercased().trimmingCharacters(in: .newlines)
+        let longString = longString.last == "s" ? String(longString[longString.startIndex..<longString.index(before: longString.endIndex)]) : longString
+        var numberOfMatches = page.components(separatedBy: longString.lowercased()).count - 1
+        
+        let longStringComponents = longString.split(separator: " ")
+        var componentCount = 0
+        var division = 0
+        for (index, component) in longStringComponents.enumerated()
+        {
+            var component = component
+            switch component.count
+            {
+            case 5...7:
+                let prefix = component.prefix(4)
+                componentCount += page.components(separatedBy: prefix.lowercased()).count - 1
+                division += 1
+                
+            case 8...:
+                component.removeLast()
+                componentCount += page.components(separatedBy: "\(component.lowercased())").count - 1
+                division += 1
+                
+            default:
+                if Array(2...4).contains(component.count) && !longString.contains(".")
+                {
+                    componentCount += page.components(separatedBy: "\(component.lowercased()) ").count - 1
+                    division += 1
+                }
+                else if index != 0 && component.contains(".")
+                {
+                    let regEx = ".*\\b\(longStringComponents.prefix(index).joined(separator: " ").lowercased())\\b.*\\b\(longStringComponents.suffix(index).joined(separator: " ").lowercased())\\b.*"
+                    guard let matches = matches(for: regEx, in: page) else
+                    {
+                        print("No regex matches")
+                        return -1
+                    }
+                    componentCount += matches.count
+                }
+            }
+        }
+        
+        numberOfMatches += division > 0 ? componentCount / division : componentCount
+        numberOfMatches += page.components(separatedBy: " \(shortString.lowercased()))").count - 1
+        return numberOfMatches
+    }
+    
+    /**
+     Returns all instances within a string that match the given regular expression
+     - Parameter regex: A regular expression
+     - Parameter text: A string to search in
+     */
+    private func matches(for regex: String, in text: String) -> [String]?
+    {
+        do
+        {
+            let regex = try NSRegularExpression(pattern: regex)
+            let results = regex.matches(in: text, range: NSRange(text.startIndex..., in: text))
+            return results.map { String(text[Range($0.range, in: text)!]) }
+        }
+        catch
+        {
+            print("invalid regex: \(error)")
+            return nil
+        }
+    }
+}
+
 class Google
 {
     static let removeFromOption = ["of", "the", "?"]
@@ -15,7 +224,7 @@ class Google
     /**
      Finds matches for the options by Googling the question for every option, and includes the option in the search query.
      - Parameters:
-        - question: The questin being asked
+        - question: The question being asked
         - searchStrings: The possible options
         - completion: The function to call on completion
      */
@@ -48,7 +257,7 @@ class Google
     /**
      Finds matches for the options in a Google page.
      - Parameters:
-        - question: The questin being asked
+        - question: The question being asked
         - searchStrings: The possible options
         - completion: The function to call on completion
      */
@@ -124,7 +333,7 @@ class Google
         let group = DispatchGroup()
         group.enter()
         let allSearchStrs = searchStrings + question.replacingOccurrences(of: quote, with: "").withoutExtraneousWords.components(separatedBy: " ")
-        let searchStr = "\(allSearchStrs.joined(separator: " ").components(separatedBy: " ").joined(separator: ". .")) \(quote)"
+        let searchStr = "\(allSearchStrs.joined(separator: " ").components(separatedBy: " ").joined(separator: " ")) \(quote)"
         if HQTriviaMaster.debug
         {
             print("Search String: \(searchStr)")
@@ -162,8 +371,7 @@ class Google
         {
             group.enter()
             let wordArr = answer.split(separator: " ")
-            let search = wordArr.count > 1 ? QuestionType.replace(in: question, replaceWith: "\(wordArr.joined(separator: ". ."))") :
-                QuestionType.replace(in: question, replaceWith: "\(answer).")
+            let search = wordArr.count > 1 ? question.replacingHotPhrases(with: "\(wordArr.joined(separator: " "))") : question.replacingHotPhrases(with: "\(answer) ")
             let searchStr = queryContainsQuestion ? search.withoutExtraneousWords : answer
             if HQTriviaMaster.debug
             {
@@ -213,7 +421,7 @@ class Google
         for answer in (overridingAnswers.isEmpty ? searchStrings.map({ $0.googleOption }) : overridingAnswers)
         {
             group.enter()
-            let search = QuestionType.replace(in: question, replaceWith: answer).withoutExtraneousWords
+            let search = question.replacingHotPhrases(with: answer).withoutExtraneousWords
             if HQTriviaMaster.debug
             {
                 print("Search String: \(search)")

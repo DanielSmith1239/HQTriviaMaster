@@ -111,6 +111,8 @@ struct AnswerCounts : CustomStringConvertible, CustomDebugStringConvertible
         }
         return string
     }
+    
+    static var invalid = AnswerCounts()
 }
 
 ///A struct that specifies a search string and replacement string

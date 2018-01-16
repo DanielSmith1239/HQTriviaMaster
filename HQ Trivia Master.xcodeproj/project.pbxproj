@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		101350DB2006DAB400FA2D0F /* Website.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101350DA2006DAB400FA2D0F /* Website.swift */; };
 		103FAEC82005226400385363 /* KeychainSwiftDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103FAEC72005226400385363 /* KeychainSwiftDistrib.swift */; };
 		103FAECA20052D7500385363 /* CustomGoogleSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103FAEC920052D7500385363 /* CustomGoogleSearch.swift */; };
 		10EA3B091FF7DBB800A4EFBE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EA3B081FF7DBB800A4EFBE /* Extensions.swift */; };
@@ -27,6 +28,7 @@
 /* Begin PBXFileReference section */
 		05B1FBEA7E29623D0E1780AE /* Pods_HQ_Trivia_MasterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HQ_Trivia_MasterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F0124CE93C6B6FBDF55B6DC /* Pods-HQ Trivia MasterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HQ Trivia MasterUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HQ Trivia MasterUITests/Pods-HQ Trivia MasterUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		101350DA2006DAB400FA2D0F /* Website.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Website.swift; sourceTree = "<group>"; };
 		103FAEC72005226400385363 /* KeychainSwiftDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainSwiftDistrib.swift; sourceTree = "<group>"; };
 		103FAEC920052D7500385363 /* CustomGoogleSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGoogleSearch.swift; sourceTree = "<group>"; };
 		10EA3B081FF7DBB800A4EFBE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -92,12 +94,13 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		F7233D1A1FAFDD0C0076413C /* Website Controllers */ = {
+		F7233D1A1FAFDD0C0076413C /* Websites */ = {
 			isa = PBXGroup;
 			children = (
 				F7ED39F21FAA3A21009F8907 /* Google.swift */,
+				101350DA2006DAB400FA2D0F /* Website.swift */,
 			);
-			path = "Website Controllers";
+			path = Websites;
 			sourceTree = "<group>";
 		};
 		F7BF64801FB3A14C00EB8110 /* Supporting Files */ = {
@@ -133,7 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				F7BF64801FB3A14C00EB8110 /* Supporting Files */,
-				F7233D1A1FAFDD0C0076413C /* Website Controllers */,
+				F7233D1A1FAFDD0C0076413C /* Websites */,
 				F7BF647C1FB3A13800EB8110 /* AnswerController.swift */,
 				103FAEC920052D7500385363 /* CustomGoogleSearch.swift */,
 				10EA3B081FF7DBB800A4EFBE /* Extensions.swift */,
@@ -180,7 +183,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0900;
 				LastUpgradeCheck = 0900;
-				ORGANIZATIONNAME = "Daniel Smith & Michael Schloss";
+				ORGANIZATIONNAME = "Daniel Smith";
 				TargetAttributes = {
 					F7ED39BC1FA95A3D009F8907 = {
 						CreatedOnToolsVersion = 9.0.1;
@@ -290,6 +293,7 @@
 				F7CB119D1FAAA4890040511B /* Shell.swift in Sources */,
 				F7ED39C31FA95A3E009F8907 /* ViewController.swift in Sources */,
 				10EA3B091FF7DBB800A4EFBE /* Extensions.swift in Sources */,
+				101350DB2006DAB400FA2D0F /* Website.swift in Sources */,
 				F7ED39C11FA95A3D009F8907 /* HQTriviaMaster.swift in Sources */,
 				F7BF647D1FB3A13800EB8110 /* AnswerController.swift in Sources */,
 				F7ED39F51FAA4C92009F8907 /* ScreenshotController.swift in Sources */,

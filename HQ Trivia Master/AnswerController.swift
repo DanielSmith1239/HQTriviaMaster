@@ -41,7 +41,7 @@ class AnswerController
      */
     static func answer(for question: String, answers: [String], completion: @escaping (_ answer: Answer) -> ())
     {
-        let questionType = type(forQuestion: question)
+        let questionTypes = question.questionType
         
         func processAnswer(for matches: AnswerCounts)
         {
@@ -64,39 +64,28 @@ class AnswerController
                 }
                 completion(Answer(correctAnswer: largestMatch.0, probability: CGFloat(largestMatch.1) / CGFloat(sum), others: others))
             }
-            
         }
         
         if HQTriviaMaster.debug
         {
-            print("Question type: \(questionType.title)")
-            print("Question search function code: \(questionType.searchFunctionCode)")
+            print("Question types: \(questionTypes)")
+            print("Question search function codes: \(questionTypes.map({ return $0.searchFunctionCode }))")
         }
         
-        switch questionType.searchFunctionCode
+        if questionTypes.contains(.correctSpelling)
         {
-        case 5, 7, 3:
-            //Questions that include "not", questions that are spelling questions, and questions that ask "which of these" cannot be easily answered, and thus require more precise processing
-            matches(for: question, answers: answers) { matches in
-                processAnswer(for: matches)
-            }
-            
-        default:
-            //For everything else, questions have the potential to be answered without needing precision
-            Google.matches(for: question, including: answers) { matches in
-                guard matches.count != 1, matches.largest.1 > 0 else
-                {
-                    //We need precision anyways since the imprecise didn't give us enough accuracy
-                    AnswerController.matches(for: question, answers: answers) { matches in
-                        processAnswer(for: matches)
-                    }
-                    return
-                }
-                processAnswer(for: matches)
-            }
+            let matches = AnswerController.matches(withCorrectlySpelledAnswers: answers)
+            processAnswer(for: matches)
+        }
+        else
+        {
+            _Google().process(question: question, possibleAnswers: answers, completion: { answerCounts in
+                processAnswer(for: answerCounts)
+            })
         }
     }
     
+    /*
     /**
      Dispatches more precise question answering
      - Parameter question: The question being asked
@@ -143,24 +132,7 @@ class AnswerController
                 completion(matches)
             }
         }
-    }
-    
-    /**
-     Determines the type of question being asked
-     - Parameter question: The questin being asked
-     - Returns: An `QuestionType` determining the type of question that is being asked
-     */
-    static func type(forQuestion question: String) -> QuestionType
-    {
-        for type in questionTypes
-        {
-            if type.check(question)
-            {
-                return type
-            }
-        }
-        return QuestionType.other
-    }
+    }*/
     
     /**
      Finds the first answer in a list of answers that is spelled correctly.  Can be done locally as macOS has a built-in spell checker

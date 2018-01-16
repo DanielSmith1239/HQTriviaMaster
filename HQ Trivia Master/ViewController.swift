@@ -239,13 +239,13 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
     ///Determines if every field is empty
     private func allFieldsAreEmpty() -> Bool
     {
-        return questionField.stringValue.isEmpty && optionOneField.stringValue.isEmpty && optionTwoField.stringValue.isEmpty && optionThreeField.stringValue.isEmpty
+        return questionField.stringValue.isEmpty && questionField.stringValue.questionType.isEmpty && optionOneField.stringValue.isEmpty && optionTwoField.stringValue.isEmpty && optionThreeField.stringValue.isEmpty
     }
     
     ///Determines if at least one field is empty
     private func fieldIsEmpty() -> Bool
     {
-        return questionField.stringValue.isEmpty || optionOneField.stringValue.isEmpty || optionTwoField.stringValue.isEmpty || optionThreeField.stringValue.isEmpty
+        return questionField.stringValue.isEmpty || questionField.stringValue.questionType.isEmpty || optionOneField.stringValue.isEmpty || optionTwoField.stringValue.isEmpty || optionThreeField.stringValue.isEmpty
     }
     
     ///Clears all data from UI
@@ -268,11 +268,23 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         self.optionThreeMatchesLabel.stringValue = "---"
     }
     
+    private func updateQuestionType()
+    {
+        var string = "Question Type: "
+        for type in questionField.stringValue.questionType
+        {
+            string += type.title + ", "
+        }
+        questionTypeLabel.stringValue = string.trimmingCharacters(in: CharacterSet(charactersIn: ", "))
+    }
+    
     ///Retrieves the correct answer
     private func getMatches()
     {
         if !fieldIsEmpty()
         {
+            resignFirstResponder()
+            updateQuestionType()
             let options = [optionOneField.stringValue, optionTwoField.stringValue, optionThreeField.stringValue]
             AnswerController.answer(for: questionField.stringValue, answers: options) { answer in
                 if HQTriviaMaster.debug
@@ -362,12 +374,12 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
             print(question, option1, option2, option3, separator: "\n", terminator: "\n")
         }
         
-        self.questionTypeLabel.stringValue = "Question Type: \(AnswerController.type(forQuestion: question).title)"
-        self.optionOneField.stringValue = option1
-        self.optionTwoField.stringValue = option2
-        self.optionThreeField.stringValue = option3
-        self.questionField.stringValue = question
-        if AnswerController.type(forQuestion: question) != QuestionType.correctSpelling
+        updateQuestionType()
+        optionOneField.stringValue = option1
+        optionTwoField.stringValue = option2
+        optionThreeField.stringValue = option3
+        questionField.stringValue = question
+        if !question.questionType.contains(.correctSpelling)
         {
             self.fixSpelling()
         }
