@@ -286,7 +286,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
             resignFirstResponder()
             updateQuestionType()
             let options = [optionOneField.stringValue, optionTwoField.stringValue, optionThreeField.stringValue]
-            AnswerController.answer(for: questionField.stringValue, answers: options) { answer in
+            AnswerController.predictedAnswer(for: questionField.stringValue, answers: options, using: .google) { answer in
                 if HQTriviaMaster.debug
                 {
                     print("Predicted Correct Answer: \(answer.correctAnswer)")

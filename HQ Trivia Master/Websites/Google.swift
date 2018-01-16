@@ -8,8 +8,11 @@
 
 import Foundation
 
-struct _Google : Website
+struct Google : Website
 {
+    static let removeFromOption = ["of", "the", "?"]
+    var siteEncoding : SiteEncoding?
+    
     func process(question: String, possibleAnswers: [String], completion: @escaping (AnswerCounts) -> Void)
     {
         guard possibleAnswers.count == 3 else
@@ -100,7 +103,7 @@ struct _Google : Website
     
     func perform(search: String, completion: @escaping (String?, Int) -> Void)
     {
-        guard let url = SiteEncoding.google.url(with: search) else
+        guard let url = siteEncoding?.url(with: search) else
         {
             completion(nil, 0)
             return
@@ -217,6 +220,7 @@ struct _Google : Website
     }
 }
 
+/*
 class Google
 {
     static let removeFromOption = ["of", "the", "?"]
@@ -643,4 +647,4 @@ class Google
             }.resume()
     }
 }
-
+*/

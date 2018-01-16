@@ -23,13 +23,15 @@ struct SiteEncoding : Equatable, CustomStringConvertible, CustomDebugStringConve
     
     private let name : String
     private let url : URL?
+    private(set) var website : Website
     
     var description : String { return name }
     var debugDescription : String { return name + ": \(url?.absoluteString ?? "No URL")" }
     
-    private init(name: String, url: URL?)
+    private init(name: String, website: Website, url: URL?)
     {
         self.name = name
+        self.website = website
         self.url = url
     }
     
@@ -59,12 +61,18 @@ struct SiteEncoding : Equatable, CustomStringConvertible, CustomDebugStringConve
     static let google : SiteEncoding = {
         guard let apiKey = keychain.get(googleSearchAPIKeyConstant), let searchEngineID = keychain.get(googleSearchSearchEngineIDConstant) else
         {
-            return SiteEncoding(name: "Invalid Google Search.  Missing API Key or SearchEngineID", url: nil)
+            return SiteEncoding(name: "Invalid Google Search.  Missing API Key or SearchEngineID", website: Google(), url: nil)
         }
         let url = URL(string: "https://www.googleapis.com/customsearch/v1?key=\(apiKey)&cx=\(searchEngineID)")
-        return SiteEncoding(name: "Google - Custom Search", url: url)
+        var encoding = SiteEncoding(name: "Google - Custom Search", website: Google(), url: url)
+        encoding.website.siteEncoding = encoding
+        return encoding
     }()
-    
+}
+
+//Extra methods for SiteEncoding verification and what-not
+extension SiteEncoding
+{
     ///Verifies the user has recently inputted Google CSE credentials.  If not, a critical alert is presented prompting for them
     static func checkGoogleAPICredentials(force: Bool = false)
     {

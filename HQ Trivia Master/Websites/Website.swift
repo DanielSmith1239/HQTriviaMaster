@@ -10,6 +10,9 @@ import Foundation
 
 protocol Website
 {
+    static var removeFromOption : [String] { get }
+    var siteEncoding : SiteEncoding? { get set }
+    
     /**
      Processes a question for an internet search.  Easy `QuestionType` the question contains could require slightly different processing.   This method should be ansynchronous and return control as soon as possible.
      - Parameter question: The text entered into the question field in the UI

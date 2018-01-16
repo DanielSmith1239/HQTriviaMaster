@@ -30,8 +30,6 @@ struct Answer
 
 class AnswerController
 {
-    private static let questionTypes : [QuestionType] = [.not, .definition, .otherTwo, .whichOfThese, .midWhich, .correctSpelling, .whose, .who, .howMany, .startsWhich, .isWhat, .startWhat, .endWhat, .midWhat, .whereIs, .other]
-    
     /**
      Attempts to answer a question by using Google.  Questions can range in type, as such this method serves as a delegator to various question types
      - Parameter question: The question being asked
@@ -39,7 +37,7 @@ class AnswerController
      - Parameter completion: A closure accepting the correct answer
      - Parameter answer: An instance on `Answer` containing the correct answer and probabilities for all 3 answers
      */
-    static func answer(for question: String, answers: [String], completion: @escaping (_ answer: Answer) -> ())
+    static func predictedAnswer(for question: String, answers: [String], using siteEncoding: SiteEncoding, completion: @escaping (_ answer: Answer) -> ())
     {
         let questionTypes = question.questionType
         
@@ -79,7 +77,7 @@ class AnswerController
         }
         else
         {
-            _Google().process(question: question, possibleAnswers: answers, completion: { answerCounts in
+            siteEncoding.website.process(question: question, possibleAnswers: answers, completion: { answerCounts in
                 processAnswer(for: answerCounts)
             })
         }
