@@ -9,6 +9,9 @@
 import Foundation
 import Cocoa
 
+private let googleSearchAPIKeyConstant = "googleSearchAPIKey"
+private let googleSearchSearchEngineIDConstant = "googleSearchSearchEngineID"
+
 /**
  Determines what site will be searched for answers
  
@@ -16,6 +19,8 @@ import Cocoa
  */
 struct SiteEncoding : Equatable, CustomStringConvertible, CustomDebugStringConvertible
 {
+    private static let keychain = KeychainSwift()
+    
     private let name : String
     private let url : URL?
     
@@ -52,13 +57,28 @@ struct SiteEncoding : Equatable, CustomStringConvertible, CustomDebugStringConve
     }
     
     static let google : SiteEncoding = {
-        //Your API key
-        let apiKey = "AIzaSyD8_CHjjufyxzrW570qkuxrl5W3LsH3EFc"
-        
-        //Your Search Engine ID
-        let searchEngineId = "006677768737737570095:raoebjow3iy"
-        
-        let url = URL(string: "https://www.googleapis.com/customsearch/v1?key=\(apiKey)&cx=\(searchEngineId)")
+        guard let apiKey = keychain.get(googleSearchAPIKeyConstant), let searchEngineID = keychain.get(googleSearchSearchEngineIDConstant) else
+        {
+            return SiteEncoding(name: "Invalid Google Search.  Missing API Key or SearchEngineID", url: nil)
+        }
+        let url = URL(string: "https://www.googleapis.com/customsearch/v1?key=\(apiKey)&cx=\(searchEngineID)")
         return SiteEncoding(name: "Google - Custom Search", url: url)
     }()
+    
+    ///Verifies the user has recently inputted Google CSE credentials.  If not, a critical alert is presented prompting for them
+    static func checkGoogleAPICredentials(force: Bool = false)
+    {
+        if keychain.get(googleSearchAPIKeyConstant) == nil || keychain.get(googleSearchSearchEngineIDConstant) == nil || force
+        {
+            guard let window = (NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: nil).instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "googleAlert")) as? NSWindowController)?.window else { return }
+            NSApplication.shared.keyWindow?.beginCriticalSheet(window, completionHandler: nil)
+        }
+    }
+    
+    ///Stores the credentials into the user's Secure Keychain
+    static func addGoogleAPICredentials(apiKey: String, searchEngineID: String)
+    {
+        keychain.set(apiKey, forKey: googleSearchAPIKeyConstant)
+        keychain.set(searchEngineID, forKey: googleSearchSearchEngineIDConstant)
+    }
 }

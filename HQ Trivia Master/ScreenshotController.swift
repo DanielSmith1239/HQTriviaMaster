@@ -6,7 +6,6 @@
 //  Copyright © 2017 Daniel Smith. All rights reserved.
 //
 
-import Foundation
 import AppKit
 
 class ScreenshotController
@@ -16,6 +15,7 @@ class ScreenshotController
     /**
      Takes a screenshot given a rectangle
      - Parameter inRect: An `NSRect` that describes the location to take the screenshot
+     - Parameter completion: A closure called when the screenshot has been written to disk
      */
     static func takeScreenshot(inRect: NSRect, completion: @escaping () -> Void)
     {

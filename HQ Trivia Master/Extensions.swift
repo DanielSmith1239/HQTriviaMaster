@@ -6,7 +6,7 @@
 //  Copyright © 2017 Daniel Smith. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 ///Stores information on the number of times a string is seen
 struct AnswerCounts : CustomStringConvertible, CustomDebugStringConvertible
@@ -31,6 +31,21 @@ struct AnswerCounts : CustomStringConvertible, CustomDebugStringConvertible
     var count : Int
     {
         return innerRepresentation.count
+    }
+    
+    var sumOfResults : Int
+    {
+        var sum = 0
+        for integer in innerRepresentation.map({ return $1 })
+        {
+            sum += integer
+        }
+        return sum
+    }
+    
+    var dump : [(String, Int)]
+    {
+        return innerRepresentation.map({ return ($0, $1) })
     }
     
     ///Returns the String and visibility count with the largest visibility count
@@ -122,6 +137,50 @@ private extension Array where Element : StringProtocol
             returnArray.append((element as? String)?.lowercased() ?? "")
         }
         return returnArray
+    }
+}
+
+//Quick formatting for decimal numbers
+extension CGFloat
+{
+    func format(f: String) -> String
+    {
+        return String(format: "%\(f)f", self)
+    }
+}
+
+//Borrowed from https://stackoverflow.com/a/36006764
+extension NSWindow
+{
+    /**
+     Shakes an NSWindow to simulate an error response á la Login window
+     - Parameter intensity: The intensity with which to shake
+     - Parameter duration: How long the shake should last
+     */
+    func shake(with intensity: CGFloat = 0.02, duration: Double = 0.3)
+    {
+        if animations.isEmpty
+        {
+            let numberOfShakes = 3
+            let frame = self.frame
+            let shakeAnimation = CAKeyframeAnimation()
+            
+            let shakePath = CGMutablePath()
+            shakePath.move(to: CGPoint(x: frame.minX, y: frame.minY))
+            
+            for _ in 0...numberOfShakes - 1
+            {
+                shakePath.addLine(to: CGPoint(x: frame.minX - frame.size.width * intensity, y: frame.minY))
+                shakePath.addLine(to: CGPoint(x: frame.minX + frame.size.width * intensity, y: frame.minY))
+            }
+            
+            shakePath.closeSubpath()
+            shakeAnimation.path = shakePath
+            shakeAnimation.duration = duration
+            
+            animations = [NSAnimatablePropertyKey(rawValue: "frameOrigin") : shakeAnimation]
+        }
+        animator().setFrameOrigin(self.frame.origin)
     }
 }
 
