@@ -5,8 +5,9 @@
 
     HQTriviaMaster will not start without these files present.  
     > **Note:** This step may require System Integrity Protection to be disabled.
-2. Visit [Custom Search Engine](https://cse.google.com/cse/) to create a Custom Google Search Engine (CSE).  Record the API Key and Search Engine ID.
-3. When running HQTriviaMaster for the first time, you will be prompted for the CSE API Key and Search Engine ID.  You can change these at anytime by pressing `⌘,` or going to `HQTriviaMaster > Preferences`.
+2. Install the pods (in Terminal with `pod install`)
+3. Visit [Custom Search Engine](https://cse.google.com/cse/) to create a Custom Google Search Engine (CSE).  Record the API Key and Search Engine ID.
+4. When running HQTriviaMaster for the first time, you will be prompted for the CSE API Key and Search Engine ID.  You can change these at anytime by pressing `⌘,` or going to `HQTriviaMaster > Preferences`.
 
 ## Usage
 1. Click on the "Define Boundary" button to set the boundry of where the question will be appearing.
