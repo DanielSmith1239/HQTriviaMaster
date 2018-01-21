@@ -1,13 +1,13 @@
 # HQTriviaMaster
 
 ## Setup
-1. Install [Tesseract OCR](https://github.com/tesseract-ocr/tesseract/wiki) and [ImageMagick](https://www.imagemagick.org/script/download.php) (or in Terminal with `brew install tesseract imagemagick`).  HQTriviaMaster will not start without these files present.  **Note:** This step may require System Integrity Protection to be disabled
-2. Visit [Custom Search Engine](https://cse.google.com/cse/) to create a Custom Google Search Engine (CSE).  Record the API Key and Search Engine ID
-3. When running HQTriviaMaster for the first time, you will be prompted for the CSE API Key and Search Engine ID.  You can change these at anytime by pressing `⌘,` or going to `HQTriviaMaster > Preferences`
+1. Install [Tesseract OCR](https://github.com/tesseract-ocr/tesseract/wiki) and [ImageMagick](https://www.imagemagick.org/script/download.php) (or in Terminal with `brew install tesseract imagemagick`).  HQTriviaMaster will not start without these files present.  **Note:** This step may require System Integrity Protection to be disabled.
+2. Visit [Custom Search Engine](https://cse.google.com/cse/) to create a Custom Google Search Engine (CSE).  Record the API Key and Search Engine ID.
+3. When running HQTriviaMaster for the first time, you will be prompted for the CSE API Key and Search Engine ID.  You can change these at anytime by pressing `⌘,` or going to `HQTriviaMaster > Preferences`.
 
 ## Usage
-1. Click on the "Define Boundary" button to set the boundry of where the question will be appearing
-2. Click on the "Start Scanning" button to begin scanning for questions
+1. Click on the "Define Boundary" button to set the boundry of where the question will be appearing.
+2. Click on the "Start Scanning" button to begin scanning for questions.
 3. Sit back, relax, and let the program answer the questions for you!
 
 ## To Do
