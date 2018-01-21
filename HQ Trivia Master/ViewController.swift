@@ -208,7 +208,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
      
      On failure to read, it repeats the screenshot after a 0.3 second wait.
      
-     On success, it begins to process the information and search for the answer, waiting 20 seconds (this is the amount of time given for each question)
+     On success, it begins to process the information and search for the answer, waiting 10 seconds (this is the amount of time given for each question)
      */
     @objc private func takeScreenshot()
     {
@@ -221,7 +221,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
                     self.setFieldValues(from: text)
                     if !self.fieldIsEmpty()
                     {
-                        self.perform(#selector(ViewController.takeScreenshot), with: nil, afterDelay: 20.0)
+                        self.perform(#selector(ViewController.takeScreenshot), with: nil, afterDelay: 10.0)
                         self.answerButton.isEnabled = true
                         self.resetButton.isEnabled = true
                         self.clearMatches()

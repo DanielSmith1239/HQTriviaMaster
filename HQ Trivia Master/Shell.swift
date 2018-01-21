@@ -64,8 +64,8 @@ class Shell
         var error : [String] = []
         
         let task = Process()
-        task.launchPath = cmd
-        task.arguments = args
+        task.launchPath = "/usr/bin/env"
+        task.arguments = [cmd] + args
         
         let outpipe = Pipe()
         task.standardOutput = outpipe
