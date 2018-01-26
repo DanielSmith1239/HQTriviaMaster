@@ -69,8 +69,8 @@ struct QuestionType : Equatable, CustomStringConvertible, CustomDebugStringConve
     static let definition = QuestionType(title: "Definition", searchFunctionCode: 16) { $0.starts(with: "What") && $0.contains("word") && $0.contains("mean") }
     
     static fileprivate let all : [QuestionType] = [.not, .definition, .otherTwo, .whichOfThese, .midWhich, .correctSpelling, .whose, .who, .howMany, .startsWhich, .isWhat, .startWhat, .endWhat, .midWhat, .whereIs]
-    static fileprivate let uniqueQuestionTypes : [QuestionType] = [.definition, .howMany, .correctSpelling, .whereIs]
-    static fileprivate let startingQuestionTypes : [QuestionType] = [.startWhat, .startsWhich, .whose, .who, .whichOfThese]
+    static fileprivate let uniqueQuestionTypes : [QuestionType] = [.definition, .howMany, .correctSpelling, .whereIs, .whichOfThese]
+    static fileprivate let startingQuestionTypes : [QuestionType] = [.startWhat, .startsWhich, .whose, .who]
     static fileprivate let middleQuestionTypes : [QuestionType] = [.midWhat, .midWhich]
     static fileprivate let endingQuestionTypes : [QuestionType] = [.isWhat, .endWhat, .otherTwo]
 }
