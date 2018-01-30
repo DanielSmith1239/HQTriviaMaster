@@ -3,7 +3,7 @@
 //  HQ Trivia Master
 //
 //  Created by Michael Schloss on 1/29/18.
-//  Copyright © 2018 Daniel Smith & Michael Schloss. All rights reserved.
+//  Copyright © 2018 Daniel Smith. All rights reserved.
 //
 
 import AppKit
