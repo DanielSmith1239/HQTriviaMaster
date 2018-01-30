@@ -53,7 +53,7 @@ class Shell
         }
         else
         {
-            task.currentDirectoryPath = FileManager.default.temporaryDirectory.absoluteString
+            task.currentDirectoryPath = "/" + FileManager.default.temporaryDirectory.pathComponents.filter { !$0.isEmpty && $0 != "/" }.joined(separator: "/")
         }
         task.arguments = args
         task.launch()
