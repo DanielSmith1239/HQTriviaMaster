@@ -47,7 +47,14 @@ class Shell
             task.standardError = FileHandle()
         }
         task.launchPath = "/usr/bin/env"
-        task.currentDirectoryURL = FileManager.default.temporaryDirectory
+        if #available(OSX 10.13, *)
+        {
+            task.currentDirectoryURL = FileManager.default.temporaryDirectory
+        }
+        else
+        {
+            task.currentDirectoryPath = FileManager.default.temporaryDirectory.absoluteString
+        }
         task.arguments = args
         task.launch()
         task.terminationHandler = { _ in completion() }

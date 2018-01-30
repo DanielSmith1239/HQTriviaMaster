@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		103FAEC82005226400385363 /* KeychainSwiftDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103FAEC72005226400385363 /* KeychainSwiftDistrib.swift */; };
 		103FAECA20052D7500385363 /* CustomGoogleSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103FAEC920052D7500385363 /* CustomGoogleSearch.swift */; };
+		109ACC8320201DC900AE1091 /* WorkaroundNSWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109ACC8220201DC900AE1091 /* WorkaroundNSWindow.swift */; };
 		10EA3B091FF7DBB800A4EFBE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EA3B081FF7DBB800A4EFBE /* Extensions.swift */; };
 		10EA3B0D1FF8685100A4EFBE /* InteractableWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EA3B0C1FF8685100A4EFBE /* InteractableWindow.swift */; };
 		F018C12E41F655717A39807C /* Pods_HQ_Trivia_Master.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62F905D06EF0C4DF7CC23CE3 /* Pods_HQ_Trivia_Master.framework */; };
@@ -29,6 +30,7 @@
 		0F0124CE93C6B6FBDF55B6DC /* Pods-HQ Trivia MasterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HQ Trivia MasterUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HQ Trivia MasterUITests/Pods-HQ Trivia MasterUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		103FAEC72005226400385363 /* KeychainSwiftDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainSwiftDistrib.swift; sourceTree = "<group>"; };
 		103FAEC920052D7500385363 /* CustomGoogleSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGoogleSearch.swift; sourceTree = "<group>"; };
+		109ACC8220201DC900AE1091 /* WorkaroundNSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkaroundNSWindow.swift; sourceTree = "<group>"; };
 		10EA3B081FF7DBB800A4EFBE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		10EA3B0B1FF7EEA200A4EFBE /* HQ Trivia Master.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "HQ Trivia Master.entitlements"; sourceTree = "<group>"; };
 		10EA3B0C1FF8685100A4EFBE /* InteractableWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractableWindow.swift; sourceTree = "<group>"; };
@@ -67,6 +69,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		109ACC8120201DB800AE1091 /* Workarounds */ = {
+			isa = PBXGroup;
+			children = (
+				109ACC8220201DC900AE1091 /* WorkaroundNSWindow.swift */,
+			);
+			path = Workarounds;
+			sourceTree = "<group>";
+		};
 		5CDD8F90E1D9E61DBBFACBB0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +142,7 @@
 		F7ED39BF1FA95A3D009F8907 /* HQ Trivia Master */ = {
 			isa = PBXGroup;
 			children = (
+				109ACC8120201DB800AE1091 /* Workarounds */,
 				F7BF64801FB3A14C00EB8110 /* Supporting Files */,
 				F7233D1A1FAFDD0C0076413C /* Website Controllers */,
 				F7BF647C1FB3A13800EB8110 /* AnswerController.swift */,
@@ -286,6 +297,7 @@
 				F7BF647F1FB3A14300EB8110 /* QuestionType.swift in Sources */,
 				F7ED39ED1FA95F8B009F8907 /* SiteEncoding.swift in Sources */,
 				10EA3B0D1FF8685100A4EFBE /* InteractableWindow.swift in Sources */,
+				109ACC8320201DC900AE1091 /* WorkaroundNSWindow.swift in Sources */,
 				103FAECA20052D7500385363 /* CustomGoogleSearch.swift in Sources */,
 				F7CB119D1FAAA4890040511B /* Shell.swift in Sources */,
 				F7ED39C31FA95A3E009F8907 /* ViewController.swift in Sources */,
@@ -359,7 +371,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -410,7 +422,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -432,7 +444,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/HQ Trivia Master/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.danismithproductions.HQ-Trivia-Master";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -455,7 +467,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/HQ Trivia Master/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.danismithproductions.HQ-Trivia-Master";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
