@@ -140,6 +140,14 @@ private extension Array where Element : StringProtocol
     }
 }
 
+extension Array where Element : StringProtocol
+{
+    var random : Element
+    {
+        return self[Int(arc4random_uniform(UInt32(count)))]
+    }
+}
+
 //Quick formatting for decimal numbers
 extension CGFloat
 {
