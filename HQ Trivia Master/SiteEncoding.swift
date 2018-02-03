@@ -45,7 +45,21 @@ struct SiteEncoding : Equatable, CustomStringConvertible, CustomDebugStringConve
         if self == SiteEncoding.google
         {
             guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return nil }
-            components.queryItems = (components.queryItems ?? []) + [URLQueryItem(name: "q", value: urlEncoded)]
+            var queryItems = (components.queryItems ?? []) + [URLQueryItem(name: "q", value: urlEncoded)]
+            var keys = [String]()
+            var count = 0
+            while let apiKey = SiteEncoding.keychain.get(googleSearchAPIKeyConstant + "\(count == 0 ? "" : "\(count)")")
+            {
+                keys.append(apiKey)
+                count += 1
+            }
+            for var item in queryItems where item.name == "key"
+            {
+                guard let index = queryItems.index(of: item) else { continue }
+                item.value = keys.random
+                queryItems[index] = item
+            }
+            components.queryItems = queryItems
             return components.url
         }
         return url.appendingPathComponent(urlEncoded)
@@ -76,9 +90,14 @@ struct SiteEncoding : Equatable, CustomStringConvertible, CustomDebugStringConve
     }
     
     ///Stores the credentials into the user's Secure Keychain
-    static func addGoogleAPICredentials(apiKey: String, searchEngineID: String)
+    static func addGoogleAPICredentials(apiKeys: [String], searchEngineID: String)
     {
-        keychain.set(apiKey, forKey: googleSearchAPIKeyConstant)
+        var count = 0
+        for apiKey in apiKeys where apiKey != ""
+        {
+            keychain.set(apiKey, forKey: googleSearchAPIKeyConstant + "\(count == 0 ? "" : "\(count)")")
+            count += 1
+        }
         keychain.set(searchEngineID, forKey: googleSearchSearchEngineIDConstant)
     }
 }

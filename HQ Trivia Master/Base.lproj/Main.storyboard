@@ -377,36 +377,75 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <stackView distribution="fillEqually" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="1000" horizontalHuggingPriority="100" verticalHuggingPriority="100" horizontalCompressionResistancePriority="100" verticalCompressionResistancePriority="100" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZU2-MT-MHc">
-                                        <rect key="frame" x="187" y="0.0" width="148" height="21"/>
-                                        <subviews>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5wq-i8-0L6">
-                                                <rect key="frame" x="-6" y="-7" width="82" height="32"/>
-                                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="b34-DD-qSV">
-                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="system"/>
-                                                    <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                                                </buttonCell>
-                                                <connections>
-                                                    <action selector="confirmWithSender:" target="Ssq-qd-k4b" id="dPS-hn-VDR"/>
-                                                </connections>
-                                            </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iCu-2N-rvw">
-                                                <rect key="frame" x="72" y="-7" width="82" height="32"/>
-                                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JYd-uY-8ym">
-                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="system"/>
-                                                    <string key="keyEquivalent" base64-UTF8="YES">
+                                    <stackView orientation="horizontal" alignment="top" horizontalStackHuggingPriority="100" verticalStackHuggingPriority="1000" horizontalClippingResistancePriority="100" horizontalHuggingPriority="100" verticalHuggingPriority="100" horizontalCompressionResistancePriority="100" verticalCompressionResistancePriority="100" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZU2-MT-MHc">
+                                        <rect key="frame" x="0.0" y="0.0" width="521" height="21"/>
+                                        <beginningViews>
+                                            <stackView distribution="fillEqually" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="100" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="100" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kPx-gc-wXp">
+                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="21"/>
+                                                <subviews>
+                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="shP-dV-JEw">
+                                                        <rect key="frame" x="-6" y="-7" width="114" height="32"/>
+                                                        <buttonCell key="cell" type="push" title="Add API Key" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TmN-26-0B8">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="addAPIKeyWithSender:" target="Ssq-qd-k4b" id="t3n-WD-WsY"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <visibilityPriorities>
+                                                    <integer value="1000"/>
+                                                </visibilityPriorities>
+                                                <customSpacing>
+                                                    <real value="3.4028234663852886e+38"/>
+                                                </customSpacing>
+                                            </stackView>
+                                        </beginningViews>
+                                        <endViews>
+                                            <stackView distribution="fillEqually" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9uD-QT-ExX">
+                                                <rect key="frame" x="8" y="0.0" width="513" height="21"/>
+                                                <subviews>
+                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iCu-2N-rvw">
+                                                        <rect key="frame" x="159" y="-7" width="82" height="32"/>
+                                                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JYd-uY-8ym">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                            <string key="keyEquivalent" base64-UTF8="YES">
 Gw
 </string>
-                                                    <connections>
-                                                        <action selector="cancelWithSender:" target="Ssq-qd-k4b" id="9ge-Jg-5z3"/>
-                                                    </connections>
-                                                </buttonCell>
-                                            </button>
-                                        </subviews>
+                                                            <connections>
+                                                                <action selector="cancelWithSender:" target="Ssq-qd-k4b" id="9ge-Jg-5z3"/>
+                                                            </connections>
+                                                        </buttonCell>
+                                                    </button>
+                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5wq-i8-0L6">
+                                                        <rect key="frame" x="104" y="-7" width="59" height="32"/>
+                                                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="b34-DD-qSV">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="confirmWithSender:" target="Ssq-qd-k4b" id="dPS-hn-VDR"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="iCu-2N-rvw" firstAttribute="width" secondItem="5wq-i8-0L6" secondAttribute="width" id="GWv-Fw-v00"/>
+                                                </constraints>
+                                                <visibilityPriorities>
+                                                    <integer value="1000"/>
+                                                    <integer value="1000"/>
+                                                </visibilityPriorities>
+                                                <customSpacing>
+                                                    <real value="3.4028234663852886e+38"/>
+                                                    <real value="3.4028234663852886e+38"/>
+                                                </customSpacing>
+                                            </stackView>
+                                        </endViews>
                                         <visibilityPriorities>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
@@ -442,13 +481,14 @@ Gw
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="apiKeyTextField" destination="QiZ-k0-9z9" id="Gj9-tJ-6E2"/>
+                        <outlet property="apiKeyTextField" destination="QiZ-k0-9z9" id="KFr-B8-6mN"/>
                         <outlet property="searchEngineIDTextField" destination="chb-Bi-2vS" id="IfG-6f-S2d"/>
+                        <outlet property="stackView" destination="V3P-MW-o0q" id="D9e-d1-6fj"/>
                     </connections>
                 </viewController>
                 <customObject id="Iry-4J-HsY" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="893" y="654"/>
+            <point key="canvasLocation" x="892.5" y="654"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
