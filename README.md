@@ -1,4 +1,4 @@
-> **Note:** This project will soon be deprecated, as an online version is in the works. 
+> **Note:** This project will soon be deprecated, as an online version is in the works. Check back here for updates.
 
 # HQTriviaMaster
 A neat little macOS program to scan and answer HQ Trivia questions.
