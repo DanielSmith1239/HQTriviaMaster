@@ -55,6 +55,7 @@ Please use the "Issue" tab above (or follow [this link](https://github.com/Danie
 - [ ] Add a way to answer a large amount of questions at once to test the program's accuracy.
 - [ ] Connect to the HQ Trivia web socket to get the questions. This would eliminate the need to OCR.
 - [ ] Integrate an AI learning system to improve accuracy.
+- [ ] Make the UI sexier.
 
 ## Contributers
  [**Daniel Smith**](https://github.com/DanielSmith1239) (owner), [**Michael Schloss**](https://github.com/schlossm).
