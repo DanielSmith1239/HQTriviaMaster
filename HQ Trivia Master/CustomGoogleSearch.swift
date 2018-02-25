@@ -13,6 +13,8 @@ import Cocoa
  */
 class CustomGoogleSearch : NSViewController
 {
+    @IBOutlet private var HQUsernameTextField : NSTextField!
+    @IBOutlet private var HQTokenTextField : NSTextField!
     @IBOutlet private var apiKeyTextField : NSTextField!
     {
         didSet
@@ -40,6 +42,7 @@ class CustomGoogleSearch : NSViewController
             return
         }
         SiteEncoding.addGoogleAPICredentials(apiKeys: apiKeys, searchEngineID: searchEngineID)
+        SiteEncoding.addHQCredentials(username: HQUsernameTextField.stringValue, token: HQTokenTextField.stringValue)
         NSApplication.shared.mainWindow?.endSheet(window)
     }
     

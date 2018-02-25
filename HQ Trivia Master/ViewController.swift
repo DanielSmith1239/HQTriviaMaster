@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowDelegate
+class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowDelegate, HQWebSocketDelegate
 {
     @IBOutlet private var questionField : NSTextField!
     @IBOutlet private var optionOneField : NSTextField!
@@ -21,6 +21,9 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
     @IBOutlet private var startScanningButton : NSButton!
     @IBOutlet private var answerButton : NSButton!
     @IBOutlet private var resetButton : NSButton!
+    @IBOutlet weak var defineBoundryButton: NSButton!
+    @IBOutlet weak var modeSegmentedControl: NSSegmentedControl!
+    @IBOutlet weak var ocrButtonStackView: NSStackView!
     
     @IBOutlet private var optionOneCorrectBox : NSBox!
     @IBOutlet private var optionTwoCorrectBox : NSBox!
@@ -35,6 +38,8 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
     private lazy var labels = { return [optionOneField : optionOneMatchesLabel, optionTwoField : optionTwoMatchesLabel, optionThreeField : optionThreeMatchesLabel] }()
     private var screenshotRect = NSRect.zero
     private var interactableWindow : InteractableWindow?
+    
+    let hqConnectionController = HQConnectionController()
     
     override func viewDidLoad()
     {
@@ -57,6 +62,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
                 }
             })
         }
+        
         let hasRequiredFiles = Shell.checkForRequiredFiles()
         if !hasRequiredFiles.hasConvert || !hasRequiredFiles.hasTesseract, let window = view.window
         {
@@ -78,7 +84,10 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
             alert.beginSheetModal(for: window, completionHandler: { _ in exit(-1) })
             return
         }
+        
         SiteEncoding.checkGoogleAPICredentials()
+        hqConnectionController.delegate = self
+        configureForMode(modeIndex: modeSegmentedControl.indexOfSelectedItem)
     }
     
     @IBAction func showGoogleAPIChangeWindow(sender: Any)
@@ -140,6 +149,53 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
             window.becomeFirstResponder()
             view.window?.resignFirstResponder()
             interactableWindow = window
+        }
+    }
+    
+    @IBAction func modeSegmentedControlChanged(_ sender: NSSegmentedControl)
+    {
+        configureForMode(modeIndex: sender.indexOfSelectedItem)
+    }
+    
+    private func configureForMode(modeIndex: Int)
+    {
+        let ocrIndex = 0
+        let isOcr = modeIndex == ocrIndex
+        if isOcr { setIsLive(false) }
+        configFieldsForMode(isOcr: isOcr)
+        hqConnectionController.shouldCheckForHQGame(shouldCheckForGame: !isOcr)
+    }
+    
+    private func configFieldsForMode(isOcr: Bool)
+    {
+        questionField.isEnabled = isOcr
+        optionOneField.isEnabled = isOcr
+        optionTwoField.isEnabled = isOcr
+        optionThreeField.isEnabled = isOcr
+        ocrButtonStackView.isHidden = !isOcr
+    }
+
+    func recievedQuestion(hqQuestion: HQQuestion)
+    {
+        print("got question")
+        recievedQuestionFromSocket(hqQuestion)
+    }
+    
+    func broadcastStarted()
+    {
+        setIsLive(true)
+    }
+    
+    func broadcastEnded()
+    {
+        print("Broadcast ended.")
+        setIsLive(false)
+    }
+    
+    private func setIsLive(_ isLive: Bool)
+    {
+        DispatchQueue.main.async() {
+            self.modeSegmentedControl.layer?.backgroundColor = isLive ? NSColor.red.cgColor : NSColor.clear.cgColor
         }
     }
     
@@ -205,9 +261,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
     
     /**
      Takes the screenshot.
-     
      On failure to read, it repeats the screenshot after a 0.3 second wait.
-     
      On success, it begins to process the information and search for the answer, waiting 10 seconds (this is the amount of time given for each question)
      */
     @objc private func takeScreenshot()
@@ -234,6 +288,13 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
                 }
             }
         }
+    }
+    
+    private func recievedQuestionFromSocket(_ hqQuestion: HQQuestion)
+    {
+        setFieldValues(hqQuestion: hqQuestion)
+        clearMatches()
+        getMatches()
     }
     
     ///Determines if every field is empty
@@ -297,7 +358,6 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
                 NSAnimationContext.runAnimationGroup({ context in
                     context.duration = 0.2
                     context.allowsImplicitAnimation = true
-                    
                     switch options.index(of: answer.correctAnswer) ?? -1
                     {
                     case 0:
@@ -371,6 +431,15 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         {
             self.fixSpelling()
         }
+    }
+    
+    private func setFieldValues(hqQuestion: HQQuestion)
+    {
+        self.questionTypeLabel.stringValue = "Question Type: \(hqQuestion.questionType.title)"
+        self.questionField.stringValue = hqQuestion.question
+        self.optionOneField.stringValue = hqQuestion.possibleAnswers[0]
+        self.optionTwoField.stringValue = hqQuestion.possibleAnswers[1]
+        self.optionThreeField.stringValue = hqQuestion.possibleAnswers[2]
     }
     
     ///Auto-Correct

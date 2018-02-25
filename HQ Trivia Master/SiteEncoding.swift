@@ -12,6 +12,9 @@ import Cocoa
 private let googleSearchAPIKeyConstant = "googleSearchAPIKey"
 private let googleSearchSearchEngineIDConstant = "googleSearchSearchEngineID"
 
+private let hqUsernameConstant = "hqUsername"
+private let hqTokenConstant = "hqToken"
+
 /**
  Determines what site will be searched for answers
  
@@ -26,6 +29,10 @@ struct SiteEncoding : Equatable, CustomStringConvertible, CustomDebugStringConve
     
     var description : String { return name }
     var debugDescription : String { return name + ": \(url?.absoluteString ?? "No URL")" }
+    
+    static var hqCredentials: (username: String?, token: String?) {
+        return (SiteEncoding.keychain.get(hqUsernameConstant), SiteEncoding.keychain.get(hqTokenConstant))
+    }
     
     private init(name: String, url: URL?)
     {
@@ -99,5 +106,10 @@ struct SiteEncoding : Equatable, CustomStringConvertible, CustomDebugStringConve
             count += 1
         }
         keychain.set(searchEngineID, forKey: googleSearchSearchEngineIDConstant)
+    }
+    
+    static func addHQCredentials(username: String, token: String) {
+        keychain.set(username, forKey: hqUsernameConstant)
+        keychain.set(token, forKey: hqTokenConstant)
     }
 }

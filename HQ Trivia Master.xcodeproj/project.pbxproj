@@ -13,13 +13,19 @@
 		10EA3B091FF7DBB800A4EFBE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EA3B081FF7DBB800A4EFBE /* Extensions.swift */; };
 		10EA3B0D1FF8685100A4EFBE /* InteractableWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EA3B0C1FF8685100A4EFBE /* InteractableWindow.swift */; };
 		F018C12E41F655717A39807C /* Pods_HQ_Trivia_Master.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62F905D06EF0C4DF7CC23CE3 /* Pods_HQ_Trivia_Master.framework */; };
+		F704DAE2203F635D006235F3 /* Broadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = F704DADF203F635D006235F3 /* Broadcast.swift */; };
+		F704DAE3203F635D006235F3 /* HQQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F704DAE0203F635D006235F3 /* HQQuestion.swift */; };
+		F704DAE4203F635D006235F3 /* HQGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = F704DAE1203F635D006235F3 /* HQGame.swift */; };
+		F704DAE7203F6374006235F3 /* HQWebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F704DAE5203F6374006235F3 /* HQWebSocketManager.swift */; };
+		F704DAE8203F6374006235F3 /* HQConnectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F704DAE6203F6374006235F3 /* HQConnectionController.swift */; };
+		F7548A612040A248009415CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7548A602040A248009415CA /* Main.storyboard */; };
 		F7BF647D1FB3A13800EB8110 /* AnswerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF647C1FB3A13800EB8110 /* AnswerController.swift */; };
 		F7BF647F1FB3A14300EB8110 /* QuestionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF647E1FB3A14300EB8110 /* QuestionType.swift */; };
 		F7CB119D1FAAA4890040511B /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CB119C1FAAA4890040511B /* Shell.swift */; };
+		F7CF1D8C2040A5C4005A8498 /* HQWebSocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CF1D8B2040A5C4005A8498 /* HQWebSocketDelegate.swift */; };
 		F7ED39C11FA95A3D009F8907 /* HQTriviaMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED39C01FA95A3D009F8907 /* HQTriviaMaster.swift */; };
 		F7ED39C31FA95A3E009F8907 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED39C21FA95A3E009F8907 /* ViewController.swift */; };
 		F7ED39C51FA95A3E009F8907 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7ED39C41FA95A3E009F8907 /* Assets.xcassets */; };
-		F7ED39C81FA95A3E009F8907 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7ED39C61FA95A3E009F8907 /* Main.storyboard */; };
 		F7ED39ED1FA95F8B009F8907 /* SiteEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED39EC1FA95F8B009F8907 /* SiteEncoding.swift */; };
 		F7ED39F31FAA3A21009F8907 /* Google.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED39F21FAA3A21009F8907 /* Google.swift */; };
 		F7ED39F51FAA4C92009F8907 /* ScreenshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED39F41FAA4C92009F8907 /* ScreenshotController.swift */; };
@@ -40,16 +46,22 @@
 		62F905D06EF0C4DF7CC23CE3 /* Pods_HQ_Trivia_Master.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HQ_Trivia_Master.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		97BC2E51F3AB86022081E3ED /* Pods_HQ_Trivia_MasterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HQ_Trivia_MasterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC7E7B2A149056AF5E5AEC7A /* Pods-HQ Trivia Master.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HQ Trivia Master.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HQ Trivia Master/Pods-HQ Trivia Master.debug.xcconfig"; sourceTree = "<group>"; };
+		F704DADF203F635D006235F3 /* Broadcast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Broadcast.swift; sourceTree = "<group>"; };
+		F704DAE0203F635D006235F3 /* HQQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HQQuestion.swift; sourceTree = "<group>"; };
+		F704DAE1203F635D006235F3 /* HQGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HQGame.swift; sourceTree = "<group>"; };
+		F704DAE5203F6374006235F3 /* HQWebSocketManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HQWebSocketManager.swift; sourceTree = "<group>"; };
+		F704DAE6203F6374006235F3 /* HQConnectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HQConnectionController.swift; sourceTree = "<group>"; };
+		F7548A602040A248009415CA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		F7BF647C1FB3A13800EB8110 /* AnswerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerController.swift; sourceTree = "<group>"; };
 		F7BF647E1FB3A14300EB8110 /* QuestionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionType.swift; sourceTree = "<group>"; };
 		F7CB119C1FAAA4890040511B /* Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		F7CB119F1FAAB94D0040511B /* iPicUploader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iPicUploader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7CF1D8B2040A5C4005A8498 /* HQWebSocketDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HQWebSocketDelegate.swift; sourceTree = "<group>"; };
 		F7CF6A4F1FAA910600CEB8A1 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		F7ED39BD1FA95A3D009F8907 /* HQ Trivia Master.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HQ Trivia Master.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7ED39C01FA95A3D009F8907 /* HQTriviaMaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HQTriviaMaster.swift; sourceTree = "<group>"; };
 		F7ED39C21FA95A3E009F8907 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F7ED39C41FA95A3E009F8907 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F7ED39C71FA95A3E009F8907 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F7ED39C91FA95A3E009F8907 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7ED39EC1FA95F8B009F8907 /* SiteEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteEncoding.swift; sourceTree = "<group>"; };
 		F7ED39F21FAA3A21009F8907 /* Google.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Google.swift; sourceTree = "<group>"; };
@@ -102,12 +114,32 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		F704DADE203F635D006235F3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F704DADF203F635D006235F3 /* Broadcast.swift */,
+				F704DAE0203F635D006235F3 /* HQQuestion.swift */,
+				F704DAE1203F635D006235F3 /* HQGame.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		F7233D1A1FAFDD0C0076413C /* Website Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				F7ED39F21FAA3A21009F8907 /* Google.swift */,
 			);
 			path = "Website Controllers";
+			sourceTree = "<group>";
+		};
+		F7548A5920407862009415CA /* Web Socket */ = {
+			isa = PBXGroup;
+			children = (
+				F704DAE6203F6374006235F3 /* HQConnectionController.swift */,
+				F704DAE5203F6374006235F3 /* HQWebSocketManager.swift */,
+				F7CF1D8B2040A5C4005A8498 /* HQWebSocketDelegate.swift */,
+			);
+			path = "Web Socket";
 			sourceTree = "<group>";
 		};
 		F7BF64801FB3A14C00EB8110 /* Supporting Files */ = {
@@ -142,6 +174,8 @@
 		F7ED39BF1FA95A3D009F8907 /* HQ Trivia Master */ = {
 			isa = PBXGroup;
 			children = (
+				F7548A5920407862009415CA /* Web Socket */,
+				F704DADE203F635D006235F3 /* Models */,
 				109ACC8120201DB800AE1091 /* Workarounds */,
 				F7BF64801FB3A14C00EB8110 /* Supporting Files */,
 				F7233D1A1FAFDD0C0076413C /* Website Controllers */,
@@ -155,7 +189,7 @@
 				F7CB119C1FAAA4890040511B /* Shell.swift */,
 				F7ED39EC1FA95F8B009F8907 /* SiteEncoding.swift */,
 				F7ED39C21FA95A3E009F8907 /* ViewController.swift */,
-				F7ED39C61FA95A3E009F8907 /* Main.storyboard */,
+				F7548A602040A248009415CA /* Main.storyboard */,
 			);
 			path = "HQ Trivia Master";
 			sourceTree = "<group>";
@@ -227,8 +261,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7548A612040A248009415CA /* Main.storyboard in Resources */,
 				F7ED39C51FA95A3E009F8907 /* Assets.xcassets in Resources */,
-				F7ED39C81FA95A3E009F8907 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,11 +294,11 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-HQ Trivia Master/Pods-HQ Trivia Master-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/GPUImage/GPUImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftWebSocket/SwiftWebSocket.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GPUImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftWebSocket.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -296,31 +330,26 @@
 				F7ED39F31FAA3A21009F8907 /* Google.swift in Sources */,
 				F7BF647F1FB3A14300EB8110 /* QuestionType.swift in Sources */,
 				F7ED39ED1FA95F8B009F8907 /* SiteEncoding.swift in Sources */,
+				F704DAE2203F635D006235F3 /* Broadcast.swift in Sources */,
 				10EA3B0D1FF8685100A4EFBE /* InteractableWindow.swift in Sources */,
 				109ACC8320201DC900AE1091 /* WorkaroundNSWindow.swift in Sources */,
+				F704DAE8203F6374006235F3 /* HQConnectionController.swift in Sources */,
+				F704DAE3203F635D006235F3 /* HQQuestion.swift in Sources */,
 				103FAECA20052D7500385363 /* CustomGoogleSearch.swift in Sources */,
 				F7CB119D1FAAA4890040511B /* Shell.swift in Sources */,
 				F7ED39C31FA95A3E009F8907 /* ViewController.swift in Sources */,
+				F704DAE4203F635D006235F3 /* HQGame.swift in Sources */,
 				10EA3B091FF7DBB800A4EFBE /* Extensions.swift in Sources */,
 				F7ED39C11FA95A3D009F8907 /* HQTriviaMaster.swift in Sources */,
+				F704DAE7203F6374006235F3 /* HQWebSocketManager.swift in Sources */,
 				F7BF647D1FB3A13800EB8110 /* AnswerController.swift in Sources */,
 				F7ED39F51FAA4C92009F8907 /* ScreenshotController.swift in Sources */,
 				103FAEC82005226400385363 /* KeychainSwiftDistrib.swift in Sources */,
+				F7CF1D8C2040A5C4005A8498 /* HQWebSocketDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		F7ED39C61FA95A3E009F8907 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F7ED39C71FA95A3E009F8907 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		F7ED39E11FA95A3E009F8907 /* Debug */ = {
@@ -437,7 +466,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 7SSRC7UGJ6;
+				DEVELOPMENT_TEAM = 8BE777GSFM;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -460,7 +489,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 7SSRC7UGJ6;
+				DEVELOPMENT_TEAM = 8BE777GSFM;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

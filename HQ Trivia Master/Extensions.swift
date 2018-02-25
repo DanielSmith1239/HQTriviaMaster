@@ -330,4 +330,9 @@ extension String
         let legalCharacters = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890&-_. ").inverted
         return fixedText.trimmingCharacters(in: legalCharacters)
     }
+    
+    var webSocketUrl : URL?
+    {
+        return URL(string: self.replacingOccurrences(of: "https", with: "wss"))
+    }
 }
