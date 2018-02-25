@@ -22,7 +22,7 @@ A neat little macOS program to scan and answer HQ Trivia questions.
     > **Note:** You can add as many API Keys as you'd like.  Simply click `Add Key` while editing CSE information within HQTriviaMaster.
     
 ### Web Socket
-1. Follow instructions [here for iOS](https://jasdev.me/intercepting-ios-traffic), or [here for Android](https://blog.heckel.xyz/2013/07/01/how-to-use-mitmproxy-to-read-and-modify-https-traffic-of-your-phone/) to set up (mitmproxy)[https://mitmproxy.org].
+1. Follow instructions [here for iOS](https://jasdev.me/intercepting-ios-traffic), or [here for Android](https://blog.heckel.xyz/2013/07/01/how-to-use-mitmproxy-to-read-and-modify-https-traffic-of-your-phone/) to set up [mitmproxy](https://mitmproxy.org).
 
     > **Note:** On iOS, make sure to "trust" the mitmproxy certificate by opening Settings, and going to General > About > Certificate Trust Settings.
 2. Open the HQ Trivia app on your phone while running mitmproxy.
