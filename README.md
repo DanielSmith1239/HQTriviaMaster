@@ -27,31 +27,35 @@ A neat little macOS program to scan and answer HQ Trivia questions.
 4. Sit back, relax, and let the program answer the questions for you!
 
 ## FAQ
-> HQTriviaMaster won't build!
+
+**HQTriviaMaster won't build!**
 
 Ensure that you've installed the Pods (Step 2 under `Setup`) and that you've opened the project properly (Setup 4 under `Setup`)
 
-> The app isn't scanning any of the questions!
+**The app isn't scanning any of the questions!**
 
 Tesseract is a finicky thing built about 30 years ago.  The best guidance is to make sure the boundary fully goes over the question and answers with some padding on all 4 sides.  You can also try increasing/decreasing the window size.
 
-> I've defined a boundary and HQTriviaMaster is scanning the questions, but I'm not getting any results!
+**I've defined a boundary and HQTriviaMaster is scanning the questions, but I'm not getting any results!**
 
 This means your CSE is returning no data to the app.  Please ensure your CSE is activated and that it is searching the web (you may need to add `https://www.google.com` under "Sites to Search").
 
-> I'm getting results, but they're completely wrong or very innacurate!
+**I'm getting results, but they're completely wrong or very innacurate!**
 
 The accuracy can depend on a number of things, including but not limited to: how HQ formats the question, the type of question, the sites you've included in your CSE for searching, and Tesseract's scan of the question.  HQTriviaMaster attempts to do its best at determining the type of question being asked, and formatting search strings based on that information.  We are currently working on better question analysis to further improve accuracy.
 
-> I have some other feedback!
+**I have some other feedback!**
 
 Please use the "Issue" tab above (or follow [this link](https://github.com/DanielSmith1239/HQTriviaMaster/issues/)) and submit your issue.  Always remember to include a copy of the **full** log Xcode prints to its console.  If the issue is UI related, please also include a screenshot or video of the issue.
 
-**Note:** Your issue may already be present.  If that's the case, don't open another issue, but rather add your information to the already opened issue
+> **Note:** Your issue may already be present.  If that's the case, don't open another issue, but rather add your information to the already opened issue
 
 ## To Do
 - [ ] Improve accuracy (only 80% success rate right now).
 - [ ] Add a way to answer a large amount of questions at once to test the program's accuracy.
+- [ ] Connect to the HQ Trivia web socket to get the questions. This would eliminate the need to OCR.
+- [ ] Integrate an AI learning system to improve accuracy.
+- [ ] Make the UI sexier.
 
 ## Contributers
  [**Daniel Smith**](https://github.com/DanielSmith1239) (owner), [**Michael Schloss**](https://github.com/schlossm).
