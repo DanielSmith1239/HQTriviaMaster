@@ -391,9 +391,9 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         let correctProbabilityString = correctPercentage.format(f: correctPercentage == floor(correctPercentage) ? ".0" : ".2")
         let firstOtherAnswerProbabilityString = firstCorrectPercentage.format(f: firstCorrectPercentage == floor(firstCorrectPercentage) ? ".0" : ".2")
         let lastOtherAnswerProbabilityString = lastCorrectPercentage.format(f: lastCorrectPercentage == floor(lastCorrectPercentage) ? ".0" : ".2")
-        labels.first(where: { $0.0.stringValue == answer.correctAnswer })?.1?.stringValue = "Probability: \(correctProbabilityString.isEmpty ? "0" : correctProbabilityString)%"
-        labels.first(where: { $0.0.stringValue == answer.others.first?.0 })?.1?.stringValue = "Probability: \(firstOtherAnswerProbabilityString.isEmpty ? "0" : firstOtherAnswerProbabilityString)%"
-        labels.first(where: { $0.0.stringValue == answer.others.last?.0 })?.1?.stringValue = "Probability: \(lastOtherAnswerProbabilityString.isEmpty ? "0" : lastOtherAnswerProbabilityString)%"
+        labels.first(where: { $0.0.stringValue.withoutExtraneousWords == answer.correctAnswer })?.1?.stringValue = "Probability: \(correctProbabilityString.isEmpty ? "0" : correctProbabilityString)%"
+        labels.first(where: { $0.0.stringValue.withoutExtraneousWords == answer.others.first?.0 })?.1?.stringValue = "Probability: \(firstOtherAnswerProbabilityString.isEmpty ? "0" : firstOtherAnswerProbabilityString)%"
+        labels.first(where: { $0.0.stringValue.withoutExtraneousWords == answer.others.last?.0 })?.1?.stringValue = "Probability: \(lastOtherAnswerProbabilityString.isEmpty ? "0" : lastOtherAnswerProbabilityString)%"
     }
     
     ///Sets the values in UI
@@ -467,4 +467,3 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         }
     }
 }
-

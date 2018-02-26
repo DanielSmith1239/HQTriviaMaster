@@ -153,7 +153,7 @@ class Google
      - Parameter queryContainsQuestion: Determines whether to only search for the answer or for the question + answer.  Defaults to `false`
      - Parameter completion: A closure called once all results have been tallied
      */
-    static func matches(for question: String, withReplacingLargestAnswerIn searchStrings: [String], queryContainsQuestion: Bool = false, completion: @escaping (AnswerCounts) -> ())
+    static func matches(for question: String, withReplacingLargestAnswerIn searchStrings: [String], queryContainsQuestion: Bool = false, withInText: Bool = false, completion: @escaping (AnswerCounts) -> ())
     {
         var answerCounts = AnswerCounts()
         var answerResults = AnswerCounts()
@@ -162,8 +162,11 @@ class Google
         {
             group.enter()
             let wordArr = answer.split(separator: " ")
-            let search = wordArr.count > 1 ? QuestionType.replace(in: question, replaceWith: "\(wordArr.joined(separator: ". ."))") :
+            let inTextSearch = wordArr.count > 1 ? QuestionType.replace(in: question, replaceWith: "\(wordArr.joined(separator: ". ."))") :
                 QuestionType.replace(in: question, replaceWith: "\(answer).")
+            let search = withInText ? inTextSearch :
+                QuestionType.replace(in: question, replaceWith: answer)
+            
             let searchStr = queryContainsQuestion ? search.withoutExtraneousWords : answer
             if HQTriviaMaster.debug
             {
@@ -188,6 +191,11 @@ class Google
             fixForSameNumberMatches(answerCounts, numResults: answerResults, shouldAddResults: false) { newAnswerCount in
                 answerCounts = newAnswerCount
                 let largestAnswer = answerCounts.largest
+                /*
+                 If the question contains any word in the predicted correct answer, switch the predeicted correct answer and the answer with the second largest amount of matches.
+                 
+                 This is, of course, a workaround that will hopefully be fixed at some point.
+                */
                 guard `is`(answer: largestAnswer.0, inQuestion: question) else
                 {
                     completion(answerCounts)
@@ -310,6 +318,10 @@ class Google
      */
     private static func fixForSameNumberMatches(_ matches: AnswerCounts, numResults: AnswerCounts, shouldAddResults: Bool = true, completion: @escaping (AnswerCounts) -> ())
     {
+        // The largest difference (percentage) between the first and second largest AnswerCount that would requier the program to take the number of results into account.
+        // Feel free to play around with this number.
+        let useNumResultsThreshold = 0.3
+        
         guard matches.countsOfResults.count != matches.count else
         {
             completion(matches)
@@ -321,9 +333,14 @@ class Google
         let largest = numResults.largest
         let largestResults = largest.1
         tempResults[largest.0] = 0
-        let secondLargestResults = tempResults.largest.1
+        let secondLargest = tempResults.largest
+        let secondLargestResults = secondLargest.1
         
-        if largestResults > 0, secondLargestResults > 0, shouldAddResults
+        let difference =  matches.getPercentage(ofAnswer: largest) - matches.getPercentage(ofAnswer: secondLargest)
+        
+        if largestResults > 0,
+            secondLargestResults > 0,
+            shouldAddResults
         {
             let percentDifference = (Double(secondLargestResults) / Double(largestResults)) * 100.0
             if percentDifference >= 70
@@ -336,6 +353,12 @@ class Google
                 returnCounts[largest.0] = largerNum + 1
             }
             completion(returnCounts)
+        }
+        else if difference <= useNumResultsThreshold,
+            [largest.0, tempResults.largest.0].contains(matches.largest.0)
+        {
+            returnCounts[matches.largest.0] += Int((difference * Double(matches.sumOfResults)) * 2)
+            print("Adjusted for number of Google results.")
         }
         else
         {

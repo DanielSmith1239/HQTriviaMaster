@@ -111,6 +111,20 @@ struct AnswerCounts : CustomStringConvertible, CustomDebugStringConvertible
         }
         return string
     }
+    
+    func getPercentage(ofAnswerString answerStr: String) -> Double
+    {
+        guard let results = innerRepresentation[answerStr] else
+        {
+            return -1.0
+        }
+        return getPercentage(ofAnswer: (answerStr, results))
+    }
+    
+    func getPercentage(ofAnswer answer: (String, Int)) -> Double
+    {
+        return Double(answer.1) / Double(sumOfResults)
+    }
 }
 
 ///A struct that specifies a search string and replacement string
