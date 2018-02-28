@@ -391,11 +391,13 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         let correctProbabilityString = correctPercentage.format(f: correctPercentage == floor(correctPercentage) ? ".0" : ".2")
         let firstOtherAnswerProbabilityString = firstCorrectPercentage.format(f: firstCorrectPercentage == floor(firstCorrectPercentage) ? ".0" : ".2")
         let lastOtherAnswerProbabilityString = lastCorrectPercentage.format(f: lastCorrectPercentage == floor(lastCorrectPercentage) ? ".0" : ".2")
-        labels.first(where: { $0.0.stringValue.withoutExtraneousWords == answer.correctAnswer })?.1?.stringValue = "Probability: \(correctProbabilityString.isEmpty ? "0" : correctProbabilityString)%"
-        labels.first(where: { $0.0.stringValue.withoutExtraneousWords == answer.others.first?.0 })?.1?.stringValue = "Probability: \(firstOtherAnswerProbabilityString.isEmpty ? "0" : firstOtherAnswerProbabilityString)%"
-        labels.first(where: { $0.0.stringValue.withoutExtraneousWords == answer.others.last?.0 })?.1?.stringValue = "Probability: \(lastOtherAnswerProbabilityString.isEmpty ? "0" : lastOtherAnswerProbabilityString)%"
+        labels.first(where: { eqealsIgnoringExtraWords($0.0.stringValue.withoutExtraneousWords, answer.correctAnswer) })?.1?.stringValue = "Probability: \(correctProbabilityString.isEmpty ? "0" : correctProbabilityString)%"
+        labels.first(where: { eqealsIgnoringExtraWords($0.0.stringValue.withoutExtraneousWords, (answer.others.first?.0)!)})?.1?.stringValue = "Probability: \(firstOtherAnswerProbabilityString.isEmpty ? "0" : firstOtherAnswerProbabilityString)%"
+        labels.first(where: { eqealsIgnoringExtraWords($0.0.stringValue.withoutExtraneousWords, (answer.others.last?.0)!) })?.1?.stringValue = "Probability: \(lastOtherAnswerProbabilityString.isEmpty ? "0" : lastOtherAnswerProbabilityString)%"
     }
     
+    private func eqealsIgnoringExtraWords(_ str1: String, _ str2: String) -> Bool { return str1.withoutExtraneousWords == str2.withoutExtraneousWords }
+
     ///Sets the values in UI
     private func setFieldValues(from text: String)
     {

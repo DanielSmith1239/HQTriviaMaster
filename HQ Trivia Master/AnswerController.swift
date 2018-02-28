@@ -113,8 +113,12 @@ class AnswerController
             Google.numberOfResultsBasedMatches(for: question, including: answers) { matches in
                 completion(matches)
             }
-        case 1, 3, 4, 9, 16:
+        case 4, 9, 16:
             Google.matches(for: question, withReplacingLargestAnswerIn: answers, queryContainsQuestion: true) { matches in
+                completion(matches)
+            }
+        case 1, 3:
+            Google.matches(for: question, withReplacingLargestAnswerIn: answers, queryContainsQuestion: true, withInText: true) { matches in
                 completion(matches)
             }
         case 2, 6, 8:
