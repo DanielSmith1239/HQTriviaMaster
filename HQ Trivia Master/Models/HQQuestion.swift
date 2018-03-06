@@ -12,19 +12,18 @@ struct HQQuestion
 {
     var question: String
     var possibleAnswers: [String]
-    var category: String
-    var questionType: QuestionType
-    var questionNumber: Int
+    var category: String?
+    var questionNumber: Int?
+    var questionType: QuestionType { return AnswerController.type(forQuestion: question) }
     
     init(_ json: [String: Any])
     {
         possibleAnswers = [String]()
         
         question = json["question"] as? String ?? "Error"
-        category = json["category"] as? String ?? "Error"
-        questionType = AnswerController.type(forQuestion: question)
-        questionNumber = json["questionNumber"] as? Int ?? 0
-        
+        category = json["category"] as? String
+        questionNumber = json["questionNumber"] as? Int
+
         if let answers = json["answers"] as? [[String: Any]]
         {
             for answer in answers
@@ -33,5 +32,11 @@ struct HQQuestion
                 possibleAnswers.append(text)
             }
         }
+    }
+    
+    init(questionText: String, answers: [String])
+    {
+        question = questionText
+        possibleAnswers = answers
     }
 }

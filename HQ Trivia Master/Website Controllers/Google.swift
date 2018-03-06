@@ -19,18 +19,51 @@ class Google
         - searchStrings: The possible options
         - completion: The function to call on completion
      */
-    static func matches(for question: String, including searchStrings: [String], completion: @escaping (AnswerCounts) -> ())
+    static func matches(for hqQuestion: HQQuestion, completion: @escaping (AnswerCounts) -> ())
     {
         var answerCounts = AnswerCounts()
         let group = DispatchGroup()
-        for answer in searchStrings
+        for answer in hqQuestion.possibleAnswers
         {
             group.enter()
             if HQTriviaMaster.debug
             {
-                print("Search String: \(question) \(answer)")
+                print("Search String: \(hqQuestion.question) \(answer)")
             }
-            getGooglePage(for: "\(question) \(answer)") { page, _ in
+            getGooglePage(for: "\(hqQuestion.question) \(answer)") { page, _ in
+                defer
+                {
+                    group.leave()
+                }
+                guard let page = page else { return }
+                let matches = numberOfMatches(in: page, longString: answer, shortString: answer)
+                answerCounts[answer] = matches
+            }
+        }
+        group.notify(queue: .main) {
+            completion(answerCounts)
+        }
+    }
+    
+    /**
+     Finds matches for the options by Googling the question for every option, and includes the option in the search query.
+     - Parameters:
+     - question: The questin being asked
+     - searchStrings: The possible options
+     - completion: The function to call on completion
+     */
+    static func matches(withCategory hqQuestion: HQQuestion, completion: @escaping (AnswerCounts) -> ())
+    {
+        var answerCounts = AnswerCounts()
+        let group = DispatchGroup()
+        for answer in hqQuestion.possibleAnswers
+        {
+            group.enter()
+            if HQTriviaMaster.debug
+            {
+                print("Search String: \(hqQuestion.question) \(answer)\(hqQuestion.category ?? "")")
+            }
+            getGooglePage(for: "\(hqQuestion.question) \(answer)\(hqQuestion.category ?? "")") { page, _ in
                 defer
                 {
                     group.leave()
@@ -52,22 +85,22 @@ class Google
         - searchStrings: The possible options
         - completion: The function to call on completion
      */
-    static func matches(for question: String, notIncluding searchStrings: [String], completion: @escaping (AnswerCounts) -> ())
+    static func matches(forNotHqQuestionFIX hqQuestion: HQQuestion, completion: @escaping (AnswerCounts) -> ())
     {
         var answerCounts = AnswerCounts()
         let group = DispatchGroup()
         group.enter()
         if HQTriviaMaster.debug
         {
-            print("Search String: \(question)")
+            print("Search String: \(hqQuestion.question)")
         }
-        getGooglePage(for: question) { page, _ in
+        getGooglePage(for: hqQuestion.question) { page, _ in
             defer
             {
                 group.leave()
             }
             guard let page = page else { return }
-            for answer in searchStrings.map({ $0.withoutExtraneousWords })
+            for answer in hqQuestion.possibleAnswers.map({ $0.withoutExtraneousWords })
             {
                 let matches = numberOfMatches(in: page, longString: answer, shortString: answer.withoutExtraneousWords.lowercased())
                 answerCounts[answer] = matches
@@ -85,22 +118,22 @@ class Google
         - searchStrings: The possible options
         - completion: The function to call on completion
      */
-    static func matches(for question: String, includingAll searchStrings: [String], completion: @escaping (AnswerCounts) -> ())
+    static func matches(forAllIn hqQuestion: HQQuestion, completion: @escaping (AnswerCounts) -> ())
     {
         var answerCounts = AnswerCounts()
         let group = DispatchGroup()
         group.enter()
         if HQTriviaMaster.debug
         {
-            print("Search String: \(question) \(searchStrings[0]) \(searchStrings[1]) \(searchStrings[2])")
+            print("Search String: \(hqQuestion.question) \(hqQuestion.possibleAnswers[0]) \(hqQuestion.possibleAnswers[1]) \(hqQuestion.possibleAnswers[2])")
         }
-        getGooglePage(for: "\(question) \(searchStrings[0]) \(searchStrings[1]) \(searchStrings[2])") { page, _ in
+        getGooglePage(for: "\(hqQuestion.question) \(hqQuestion.possibleAnswers[0]) \(hqQuestion.possibleAnswers[1]) \(hqQuestion.possibleAnswers[2])") { page, _ in
             defer
             {
                 group.leave()
             }
             guard let searchPage = page?.lowercased() else { return }
-            for answer in searchStrings
+            for answer in hqQuestion.possibleAnswers
             {
                 let matches = numberOfMatches(in: searchPage, longString: answer, shortString: answer)
                 answerCounts[answer] = matches
@@ -118,12 +151,12 @@ class Google
         - searchStrings: The possible options
         - completion: The function to call on completion
      */
-    static func matches(for question: String, including quote: String, andIncluding searchStrings: [String], completion: @escaping (AnswerCounts) -> ())
+    static func matches(forWithQuote hqQuestion: HQQuestion, withQuote quote: String, completion: @escaping (AnswerCounts) -> ())
     {
         var answerCounts = AnswerCounts()
         let group = DispatchGroup()
         group.enter()
-        let allSearchStrs = searchStrings + question.replacingOccurrences(of: quote, with: "").withoutExtraneousWords.components(separatedBy: " ")
+        let allSearchStrs = hqQuestion.possibleAnswers + hqQuestion.question.replacingOccurrences(of: quote, with: "").withoutExtraneousWords.components(separatedBy: " ")
         let searchStr = "\(allSearchStrs.joined(separator: " ").components(separatedBy: " ").joined(separator: ". .")) \(quote)"
         if HQTriviaMaster.debug
         {
@@ -135,7 +168,7 @@ class Google
                 group.leave()
             }
             guard let page = page else { return }
-            for answer in searchStrings
+            for answer in hqQuestion.possibleAnswers
             {
                 let matches = numberOfMatches(in: page, longString: answer, shortString: answer)
                 answerCounts[answer] = matches
@@ -153,19 +186,19 @@ class Google
      - Parameter queryContainsQuestion: Determines whether to only search for the answer or for the question + answer.  Defaults to `false`
      - Parameter completion: A closure called once all results have been tallied
      */
-    static func matches(for question: String, withReplacingLargestAnswerIn searchStrings: [String], queryContainsQuestion: Bool = false, withInText: Bool = false, completion: @escaping (AnswerCounts) -> ())
+    static func matches(replacingLargestAnswerIn hqQuestion: HQQuestion, queryContainsQuestion: Bool = false, withInText: Bool = false, completion: @escaping (AnswerCounts) -> ())
     {
         var answerCounts = AnswerCounts()
         var answerResults = AnswerCounts()
         let group = DispatchGroup()
-        for answer in searchStrings.map({ $0.googleOption })
+        for answer in hqQuestion.possibleAnswers.map({ $0.googleOption })
         {
             group.enter()
             let wordArr = answer.split(separator: " ")
-            let inTextSearch = wordArr.count > 1 ? QuestionType.replace(in: question, replaceWith: "\(wordArr.joined(separator: ". ."))") :
-                QuestionType.replace(in: question, replaceWith: "\(answer).")
+            let inTextSearch = wordArr.count > 1 ? QuestionType.replace(in: hqQuestion.question, replaceWith: "\(wordArr.joined(separator: ". ."))") :
+                QuestionType.replace(in: hqQuestion.question, replaceWith: "\(answer).")
             let search = withInText ? inTextSearch :
-                QuestionType.replace(in: question, replaceWith: answer)
+                QuestionType.replace(in: hqQuestion.question, replaceWith: answer)
             
             let searchStr = queryContainsQuestion ? search.withoutExtraneousWords : answer
             if HQTriviaMaster.debug
@@ -196,7 +229,7 @@ class Google
                  
                  This is, of course, a workaround that will hopefully be fixed at some point.
                 */
-                guard `is`(answer: largestAnswer.0, inQuestion: question) else
+                guard `is`(answer: largestAnswer.0, inQuestion: hqQuestion.question) else
                 {
                     completion(answerCounts)
                     return
@@ -243,14 +276,14 @@ class Google
         - searchStrings: The possible options
         - completion: The function to call on completion
      */
-    static func inverseMatches(for question: String, with searchStrings: [String], completion: @escaping (AnswerCounts) -> ())
+    static func inverseMatches(for hqQuestion: HQQuestion, completion: @escaping (AnswerCounts) -> ())
     {
         let toReplace = ["not ", "never ", "no "]
-        var temp = question.lowercased()
+        var temp = hqQuestion.question.lowercased()
         toReplace.forEach {
             temp = temp.replacingOccurrences(of: $0, with: "")
         }
-        matches(for: temp.withoutExtraneousWords, withReplacingLargestAnswerIn: searchStrings, queryContainsQuestion: true) { matches in
+        matches(replacingLargestAnswerIn: hqQuestion, queryContainsQuestion: true) { matches in
             var invertedNumberOfResults = matches
             let most = invertedNumberOfResults.largest
             let smallest = invertedNumberOfResults.smallest

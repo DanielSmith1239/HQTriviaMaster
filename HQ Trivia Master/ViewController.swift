@@ -335,12 +335,13 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         if !fieldIsEmpty()
         {
             let options = [optionOneField.stringValue, optionTwoField.stringValue, optionThreeField.stringValue]
-            AnswerController.answer(for: questionField.stringValue, answers: options) { answer in
+            let hQQuestion = HQQuestion(questionText: questionField.stringValue, answers: options)
+            AnswerController.answer(for: hQQuestion) { answer in
                 if HQTriviaMaster.debug
                 {
                     print("Predicted Correct Answer: \(answer.correctAnswer)")
                 }
-                
+                                
                 //No answer was able to be determined
                 if answer.probability == 0 && answer.correctAnswer == ""
                 {
@@ -392,8 +393,8 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         let firstOtherAnswerProbabilityString = firstCorrectPercentage.format(f: firstCorrectPercentage == floor(firstCorrectPercentage) ? ".0" : ".2")
         let lastOtherAnswerProbabilityString = lastCorrectPercentage.format(f: lastCorrectPercentage == floor(lastCorrectPercentage) ? ".0" : ".2")
         labels.first(where: { eqealsIgnoringExtraWords($0.0.stringValue.withoutExtraneousWords, answer.correctAnswer) })?.1?.stringValue = "Probability: \(correctProbabilityString.isEmpty ? "0" : correctProbabilityString)%"
-        labels.first(where: { eqealsIgnoringExtraWords($0.0.stringValue.withoutExtraneousWords, (answer.others.first?.0)!)})?.1?.stringValue = "Probability: \(firstOtherAnswerProbabilityString.isEmpty ? "0" : firstOtherAnswerProbabilityString)%"
-        labels.first(where: { eqealsIgnoringExtraWords($0.0.stringValue.withoutExtraneousWords, (answer.others.last?.0)!) })?.1?.stringValue = "Probability: \(lastOtherAnswerProbabilityString.isEmpty ? "0" : lastOtherAnswerProbabilityString)%"
+        labels.first(where: { eqealsIgnoringExtraWords($0.0.stringValue.withoutExtraneousWords, (answer.others.first?.0) ?? "")})?.1?.stringValue = "Probability: \(firstOtherAnswerProbabilityString.isEmpty ? "0" : firstOtherAnswerProbabilityString)%"
+        labels.first(where: { eqealsIgnoringExtraWords($0.0.stringValue.withoutExtraneousWords, (answer.others.last?.0) ?? "") })?.1?.stringValue = "Probability: \(lastOtherAnswerProbabilityString.isEmpty ? "0" : lastOtherAnswerProbabilityString)%"
     }
     
     private func eqealsIgnoringExtraWords(_ str1: String, _ str2: String) -> Bool { return str1.withoutExtraneousWords == str2.withoutExtraneousWords }

@@ -17,10 +17,15 @@ class HQWebSocketManager
     {
         let credentials = SiteEncoding.hqCredentials
         
+        guard let tokenString = credentials.token else
+        {
+            return
+        }
+        let token = tokenString.contains("Bearer ") ? tokenString : "Bearer \(tokenString)"
+
         var request = URLRequest(url: url)
         request.timeoutInterval = 5
         request.addValue("iPhone/11.2.5", forHTTPHeaderField: "x-hq-client")
-        let token = credentials.token!.contains("Bearer ") ? credentials.token! : "Bearer \(credentials.token ?? "")"
         request.addValue(token, forHTTPHeaderField: "Authorization")
         request.addValue("MQ==", forHTTPHeaderField: "x-hq-stk")
         request.addValue("api-quiz.hype.space", forHTTPHeaderField: "Host")

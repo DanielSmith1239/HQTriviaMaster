@@ -59,11 +59,15 @@ class HQConnectionController
     {
         let credentials = SiteEncoding.hqCredentials
         let url = URL(string: "https://api-quiz.hype.space/shows/now?type=hq&userId=\(credentials.username ?? "")")!
-
+        guard let tokenString = credentials.token else
+        {
+            return
+        }
+        let token = tokenString.contains("Bearer ") ? tokenString : "Bearer \(tokenString)"
+        
         var request = URLRequest(url: url)
         request.addValue("iPhone/11.2.5", forHTTPHeaderField: "x-hq-client")
-        request.addValue("Bearer \(credentials.token ?? "")", forHTTPHeaderField: "Authorization")
-
+        request.addValue(token, forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error
             {

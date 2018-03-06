@@ -18,6 +18,7 @@
 		F704DAE4203F635D006235F3 /* HQGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = F704DAE1203F635D006235F3 /* HQGame.swift */; };
 		F704DAE7203F6374006235F3 /* HQWebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F704DAE5203F6374006235F3 /* HQWebSocketManager.swift */; };
 		F704DAE8203F6374006235F3 /* HQConnectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F704DAE6203F6374006235F3 /* HQConnectionController.swift */; };
+		F71AF2C920488CFE0043295C /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71AF2C820488CFE0043295C /* TestController.swift */; };
 		F7548A612040A248009415CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7548A602040A248009415CA /* Main.storyboard */; };
 		F7BF647D1FB3A13800EB8110 /* AnswerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF647C1FB3A13800EB8110 /* AnswerController.swift */; };
 		F7BF647F1FB3A14300EB8110 /* QuestionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF647E1FB3A14300EB8110 /* QuestionType.swift */; };
@@ -51,6 +52,7 @@
 		F704DAE1203F635D006235F3 /* HQGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HQGame.swift; sourceTree = "<group>"; };
 		F704DAE5203F6374006235F3 /* HQWebSocketManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HQWebSocketManager.swift; sourceTree = "<group>"; };
 		F704DAE6203F6374006235F3 /* HQConnectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HQConnectionController.swift; sourceTree = "<group>"; };
+		F71AF2C820488CFE0043295C /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		F7548A602040A248009415CA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		F7BF647C1FB3A13800EB8110 /* AnswerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerController.swift; sourceTree = "<group>"; };
 		F7BF647E1FB3A14300EB8110 /* QuestionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionType.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				F7CB119C1FAAA4890040511B /* Shell.swift */,
 				F7ED39EC1FA95F8B009F8907 /* SiteEncoding.swift */,
 				F7ED39C21FA95A3E009F8907 /* ViewController.swift */,
+				F71AF2C820488CFE0043295C /* TestController.swift */,
 				F7548A602040A248009415CA /* Main.storyboard */,
 			);
 			path = "HQ Trivia Master";
@@ -342,6 +345,7 @@
 				10EA3B091FF7DBB800A4EFBE /* Extensions.swift in Sources */,
 				F7ED39C11FA95A3D009F8907 /* HQTriviaMaster.swift in Sources */,
 				F704DAE7203F6374006235F3 /* HQWebSocketManager.swift in Sources */,
+				F71AF2C920488CFE0043295C /* TestController.swift in Sources */,
 				F7BF647D1FB3A13800EB8110 /* AnswerController.swift in Sources */,
 				F7ED39F51FAA4C92009F8907 /* ScreenshotController.swift in Sources */,
 				103FAEC82005226400385363 /* KeychainSwiftDistrib.swift in Sources */,
