@@ -119,6 +119,7 @@
 		F704DADE203F635D006235F3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F7BF647E1FB3A14300EB8110 /* QuestionType.swift */,
 				F704DADF203F635D006235F3 /* Broadcast.swift */,
 				F704DAE0203F635D006235F3 /* HQQuestion.swift */,
 				F704DAE1203F635D006235F3 /* HQGame.swift */,
@@ -129,9 +130,40 @@
 		F7233D1A1FAFDD0C0076413C /* Website Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				103FAEC920052D7500385363 /* CustomGoogleSearch.swift */,
 				F7ED39F21FAA3A21009F8907 /* Google.swift */,
 			);
 			path = "Website Controllers";
+			sourceTree = "<group>";
+		};
+		F73D57B32056C9CA0029756C /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				10EA3B081FF7DBB800A4EFBE /* Extensions.swift */,
+				F7ED39EC1FA95F8B009F8907 /* SiteEncoding.swift */,
+				F7CB119C1FAAA4890040511B /* Shell.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		F73D57B42056C9EE0029756C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F7ED39F41FAA4C92009F8907 /* ScreenshotController.swift */,
+				F7BF647C1FB3A13800EB8110 /* AnswerController.swift */,
+				F71AF2C820488CFE0043295C /* TestController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		F73D57B52056CA1F0029756C /* View Stuff */ = {
+			isa = PBXGroup;
+			children = (
+				10EA3B0C1FF8685100A4EFBE /* InteractableWindow.swift */,
+				F7ED39C21FA95A3E009F8907 /* ViewController.swift */,
+				F7548A602040A248009415CA /* Main.storyboard */,
+			);
+			path = "View Stuff";
 			sourceTree = "<group>";
 		};
 		F7548A5920407862009415CA /* Web Socket */ = {
@@ -176,23 +208,15 @@
 		F7ED39BF1FA95A3D009F8907 /* HQ Trivia Master */ = {
 			isa = PBXGroup;
 			children = (
+				F73D57B52056CA1F0029756C /* View Stuff */,
+				F73D57B42056C9EE0029756C /* Controllers */,
+				F73D57B32056C9CA0029756C /* Helpers */,
 				F7548A5920407862009415CA /* Web Socket */,
 				F704DADE203F635D006235F3 /* Models */,
 				109ACC8120201DB800AE1091 /* Workarounds */,
 				F7BF64801FB3A14C00EB8110 /* Supporting Files */,
 				F7233D1A1FAFDD0C0076413C /* Website Controllers */,
-				F7BF647C1FB3A13800EB8110 /* AnswerController.swift */,
-				103FAEC920052D7500385363 /* CustomGoogleSearch.swift */,
-				10EA3B081FF7DBB800A4EFBE /* Extensions.swift */,
 				F7ED39C01FA95A3D009F8907 /* HQTriviaMaster.swift */,
-				10EA3B0C1FF8685100A4EFBE /* InteractableWindow.swift */,
-				F7BF647E1FB3A14300EB8110 /* QuestionType.swift */,
-				F7ED39F41FAA4C92009F8907 /* ScreenshotController.swift */,
-				F7CB119C1FAAA4890040511B /* Shell.swift */,
-				F7ED39EC1FA95F8B009F8907 /* SiteEncoding.swift */,
-				F7ED39C21FA95A3E009F8907 /* ViewController.swift */,
-				F71AF2C820488CFE0043295C /* TestController.swift */,
-				F7548A602040A248009415CA /* Main.storyboard */,
 			);
 			path = "HQ Trivia Master";
 			sourceTree = "<group>";

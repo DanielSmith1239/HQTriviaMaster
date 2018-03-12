@@ -53,7 +53,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
         {
             let alert = NSAlert()
             alert.messageText = "System Integrity Protection Enabled"
-            alert.informativeText = "System Integrety Protection (SIP) is enabled.  HQ Trivia Master may have issues communicating with Tesseract and ImageMagick.  If you experience issues, you will need to disable SIP.  To disable SIP, reboot to Recovery and run \"csrutil disable\" in Terminal"
+            alert.informativeText = "System Integrety Protection (SIP) is enabled. HQ Trivia Master may have issues communicating with Tesseract and ImageMagick. If you experience issues, you will need to disable SIP. To disable SIP, reboot to Recovery and run \"csrutil disable\" in Terminal"
             alert.showsSuppressionButton = true
             alert.beginSheetModal(for: window, completionHandler: { _ in
                 if alert.suppressionButton?.state == .on
@@ -71,13 +71,13 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
             switch hasRequiredFiles
             {
             case (false, false):
-                alert.informativeText = "You are missing Tesseract and ImageMagick.  You can install them by running \"brew install tesseract imagemagick\" if you have Homebrew installed."
+                alert.informativeText = "You are missing Tesseract and ImageMagick. You can install them by running \"brew install tesseract imagemagick\" if you have Homebrew installed."
                 
             case (false, true):
-                alert.informativeText = "You are missing ImageMagick.  You can install it by running \"brew install imagemagick\" if you have Homebrew installed."
+                alert.informativeText = "You are missing ImageMagick. You can install it by running \"brew install imagemagick\" if you have Homebrew installed."
                 
             case (true, false):
-                alert.informativeText = "You are missing Tesseract.  You can install it by running \"brew install tesseract\" if you have Homebrew installed."
+                alert.informativeText = "You are missing Tesseract. You can install it by running \"brew install tesseract\" if you have Homebrew installed."
                 
             default: return
             }
@@ -341,7 +341,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, InteractableWindowD
                 {
                     print("Predicted Correct Answer: \(answer.correctAnswer)")
                 }
-                                
+                
                 //No answer was able to be determined
                 if answer.probability == 0 && answer.correctAnswer == ""
                 {
