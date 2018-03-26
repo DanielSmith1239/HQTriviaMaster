@@ -84,4 +84,4 @@ Please use the "Issue" tab above (or follow [this link](https://github.com/Danie
  Also thanks to [Gordon Jacobs](https://github.com/gjacobs314) for letting me bounce ideas off him while working on the web socket feature.
  
 ## License
- [MIT License](https://github.com/DanielSmith1239/HQTriviaMaster/blob/master/LICENSE)
+ [GNU GPL v3 License](https://github.com/DanielSmith1239/HQTriviaMaster/blob/master/LICENSE)
