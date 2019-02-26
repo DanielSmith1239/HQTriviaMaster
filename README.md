@@ -1,7 +1,7 @@
 # HQTriviaMaster
 A neat little macOS program to scan and answer HQ Trivia questions.
 
-> Note: Keep an eye out here for a **mobile version**, hopefully coming soon. I'm busy working on that version, so I probably won't be able to help solve any more issues.
+> I don't really have time to maintain this project right now, so consider this program **as-is**.
 
 **Minimum macOS Version:** 10.12
 
